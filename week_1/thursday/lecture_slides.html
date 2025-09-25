@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Fundamentals - Lecture Slides</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f8f8 0%, #2a2f3c 50%, #746767 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .slideshow-container {
+            max-width: 1200px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        h1 {
+            color: #2a2f3c;
+            font-size: 3em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #746767;
+            padding-bottom: 15px;
+        }
+        
+        h2 {
+            color: #746767;
+            font-size: 2.2em;
+            margin: 30px 0 20px;
+        }
+        
+        h3 {
+            color: #2a2f3c;
+            font-size: 1.8em;
+            margin: 25px 0 15px;
+        }
+        
+        p, li {
+            line-height: 1.6;
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        pre {
+            background: #f5f5f5;
+            color: #333;
+            border-left: 4px solid #746767;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #333;
+        }
+        
+        code {
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 3px;
+            color: #746767;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border: 2px solid #746767;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #2a2f3c;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #2a2f3c;
+            color: #e5e6d0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #746767;
+            transform: scale(1.05);
+        }
+        
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        
+        .slide-counter {
+            background: #746767;
+            color: #e5e6d0;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #746767 0%, #2a2f3c 100%);
+            color: #e5e6d0;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        th {
+            background: #2a2f3c;
+            color: #e5e6d0;
+            font-weight: bold;
+        }
+        
+        td {
+            background: #f8f8f8;
+        }
+        
+        tr:nth-child(even) td {
+            background: white;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .important {
+            background: #f0f0f0;
+            border-left: 4px solid #746767;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .demo-box {
+            background: #f0f0f0;
+            border: 2px dashed #746767;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .demo-box h4 {
+            color: #2a2f3c;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        strong {
+            color: #2a2f3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Introduction to HTML</h1>
+            <h2>Web Page Structure & Fundamentals</h2>
+            <div style="margin-top: 50px;">
+                <h3>Today's Topics:</h3>
+                <ul>
+                    <li>Web servers and web pages</li>
+                    <li>HTML basics and structure</li>
+                    <li>CSS fundamentals</li>
+                    <li>Document structure (Head & Body)</li>
+                    <li>Text elements (Block vs Inline)</li>
+                    <li>Semantic HTML</li>
+                    <li>Links, lists, and images</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: Evolution of Web Pages -->
+        <div class="slide">
+            <h1>Evolution of the Web</h1>
+            <h2>From Static to Dynamic</h2>
+            
+            <h3>Early Web Pages (1990s)</h3>
+            <ul>
+                <li><strong>Mostly text with hyperlinks</strong> - Think early Wikipedia, academic papers, documentation sites</li>
+                <li><strong>Static content - same for everyone</strong> - Every visitor saw identical content, like a digital brochure</li>
+                <li><strong>Simple "Hypertext" documents</strong> - Basic linking between pages, similar to clicking through a PowerPoint</li>
+                <li><strong>Limited images and no interactivity</strong> - Small GIFs, no videos, no user input beyond clicking links</li>
+            </ul>
+            
+            <h3>Modern Web Applications</h3>
+            <ul>
+                <li><strong>Rich multimedia content</strong> - YouTube videos, Spotify streaming, Instagram galleries, interactive maps</li>
+                <li><strong>Dynamic and personalized experiences</strong> - Amazon recommendations, Netflix homepage, Facebook feed tailored to you</li>
+                <li><strong>Interactive user interfaces</strong> - Gmail drag-and-drop, Google Docs real-time editing, online banking transactions</li>
+                <li><strong>Server-side processing and databases</strong> - Shopping carts remembering items, user accounts, search results from billions of pages</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: How Web Pages Work -->
+        <div class="slide">
+            <h1>Client-Server Architecture</h1>
+            <h2>How Web Pages Are Delivered</h2>
+            
+            <div class="example-box">
+                <h3>The Request-Response Cycle:</h3>
+                <ol>
+                    <li><strong>Client (Browser)</strong> sends HTTP request</li>
+                    <li><strong>Web Server</strong> processes the request</li>
+                    <li><strong>Server</strong> may connect to Application/Database servers</li>
+                    <li><strong>Server</strong> sends HTTP response with HTML</li>
+                    <li><strong>Browser</strong> renders the HTML page</li>
+                </ol>
+            </div>
+            
+            <h3>Key Components:</h3>
+            <ul>
+                <li><strong>Web Server:</strong> Stores and delivers web content</li>
+                <li><strong>Application Server:</strong> Runs server-side code</li>
+                <li><strong>Database Server:</strong> Manages data storage</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: HTML Document Structure -->
+        <div class="slide">
+            <h1>HTML Document Structure</h1>
+            <h2>The Foundation of Every Web Page</h2>
+            
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Welcome!&lt;/h1&gt;
+    &lt;p&gt;Your content goes here.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h3>Essential Components:</h3>
+            <ul>
+                <li><code>&lt;!DOCTYPE html&gt;</code> - Declares HTML5</li>
+                <li><code>&lt;html&gt;</code> - Root element</li>
+                <li><code>&lt;head&gt;</code> - Metadata (not displayed)</li>
+                <li><code>&lt;body&gt;</code> - Visible content</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: HTML Elements & Attributes -->
+        <div class="slide">
+            <h1>HTML Elements & Attributes</h1>
+            
+            <h2>Element Structure</h2>
+            <pre><code>&lt;tagname attribute="value"&gt;Content&lt;/tagname&gt;</code></pre>
+            
+            <h2>Common Attributes</h2>
+            <table>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td>Unique identifier</td>
+                    <td><code>&lt;div id="header"&gt;</code></td>
+                </tr>
+                <tr>
+                    <td><code>class</code></td>
+                    <td>CSS styling hook</td>
+                    <td><code>&lt;p class="highlight"&gt;</code></td>
+                </tr>
+                <tr>
+                    <td><code>href</code></td>
+                    <td>Link destination</td>
+                    <td><code>&lt;a href="page.html"&gt;</code></td>
+                </tr>
+                <tr>
+                    <td><code>src</code></td>
+                    <td>Resource location</td>
+                    <td><code>&lt;img src="photo.jpg"&gt;</code></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 6: Block vs Inline Elements -->
+        <div class="slide">
+            <h1>Block vs Inline Elements</h1>
+            
+            <div class="two-column">
+                <div>
+                    <h2>Block Elements</h2>
+                    <ul>
+                        <li>Start on a new line</li>
+                        <li>Take full width available</li>
+                        <li>Stack vertically</li>
+                    </ul>
+                    
+                    <div class="demo-box">
+                        <h4>Try This Code:</h4>
+                        <pre><code>&lt;div&gt;This is a div block&lt;/div&gt;
+&lt;p&gt;This is a paragraph&lt;/p&gt;
+&lt;h2&gt;This is a heading&lt;/h2&gt;
+&lt;section&gt;
+  &lt;p&gt;Content in a section&lt;/p&gt;
+&lt;/section&gt;
+&lt;blockquote&gt;
+  A famous quote
+&lt;/blockquote&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2>Inline Elements</h2>
+                    <ul>
+                        <li>Flow with text</li>
+                        <li>Only take needed width</li>
+                        <li>Stay on same line</li>
+                    </ul>
+                    
+                    <div class="demo-box">
+                        <h4>Try This Code:</h4>
+                        <pre><code>&lt;p&gt;This text is &lt;strong&gt;bold&lt;/strong&gt; 
+and this is &lt;em&gt;italic&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Visit &lt;a href="#"&gt;this link&lt;/a&gt; or 
+use &lt;code&gt;inline code&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;span&gt;Span 1&lt;/span&gt; 
+&lt;span&gt;Span 2&lt;/span&gt; 
+&lt;span&gt;Span 3&lt;/span&gt;&lt;/p&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="important">
+                <h4>Styling Hook:</h4>
+                <p>The primary purpose of <code>&lt;span&gt;</code> is to serve as a hook for applying CSS styles or manipulating content with JavaScript. By assigning <code>class</code> or <code>id</code> attributes to a <code>&lt;span&gt;</code>, specific styling rules can be targeted to that portion of the text or content.</p>
+                <pre><code>&lt;p&gt;This is some &lt;span style="color: red;"&gt;important&lt;/span&gt; text.&lt;/p&gt;</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 7: Nesting Rules -->
+        <div class="slide">
+            <h1>Nesting Rules: Block vs Inline</h1>
+            <h2>Understanding What Can Go Inside What</h2>
+            
+            <div class="example-box">
+                <h3>Rule 1: Inline Elements Inside Block Elements ✓</h3>
+                <p><strong>Valid:</strong></p>
+                <pre><code>&lt;p&gt;This is a paragraph with a &lt;strong&gt;bold word&lt;/strong&gt; inside.&lt;/p&gt;</code></pre>
+                <p>This works because inline elements naturally fit within block-level containers.</p>
+            </div>
+            
+            <div class="important" style="border-left-color: red;">
+                <h3>Rule 2: Block Elements Cannot Go Inside Inline ✗</h3>
+                <p><strong>Invalid:</strong></p>
+                <pre><code>&lt;strong&gt;&lt;p&gt;This is a bold tag with a paragraph inside it.&lt;/p&gt;&lt;/strong&gt;</code></pre>
+                <p>This is incorrect because a block-level <code>&lt;p&gt;</code> element cannot be placed inside an inline <code>&lt;strong&gt;</code> element.</p>
+            </div>
+            
+            <div class="example-box">
+                <h3>Rule 3: Block Elements Can Contain Both</h3>
+                <p>Block-level elements can contain both inline and other block-level elements. They typically start on a new line and take up the full width of their container.</p>
+                
+                <p><strong>Valid - Block inside Block:</strong></p>
+                <pre><code>&lt;div&gt;&lt;p&gt;This is a paragraph inside a div.&lt;/p&gt;&lt;/div&gt;</code></pre>
+                
+                <p><strong>Valid - Mixed nesting:</strong></p>
+                <pre><code>&lt;div&gt;&lt;p&gt;This paragraph contains a &lt;span&gt;nested span&lt;/span&gt;.&lt;/p&gt;&lt;/div&gt;</code></pre>
+            </div>
+            
+            <h3>More Examples:</h3>
+            <div class="two-column">
+                <div class="demo-box">
+                    <h4>✓ Correct Nesting</h4>
+                    <pre><code>&lt;div&gt;
+  &lt;h2&gt;Title&lt;/h2&gt;
+  &lt;p&gt;Text with &lt;em&gt;emphasis&lt;/em&gt;&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Item with &lt;strong&gt;bold&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <div class="demo-box" style="border-color: red;">
+                    <h4>✗ Incorrect Nesting</h4>
+                    <pre><code>&lt;a href="#"&gt;
+  &lt;div&gt;Link with div inside&lt;/div&gt;
+&lt;/a&gt;
+
+&lt;span&gt;
+  &lt;p&gt;Paragraph in span&lt;/p&gt;
+&lt;/span&gt;
+
+&lt;em&gt;
+  &lt;h1&gt;Heading in emphasis&lt;/h1&gt;
+&lt;/em&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Text Elements -->
+        <div class="slide">
+            <h1>Text Elements</h1>
+            
+            <h2>Headings</h2>
+            <pre><code>&lt;h1&gt;Main Title&lt;/h1&gt;
+&lt;h2&gt;Section Title&lt;/h2&gt;
+&lt;h3&gt;Subsection&lt;/h3&gt;</code></pre>
+            
+            <h2>Paragraphs & Text Formatting</h2>
+            <pre><code>&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;strong&gt;Bold text&lt;/strong&gt;
+&lt;em&gt;Italic text&lt;/em&gt;
+&lt;mark&gt;Highlighted text&lt;/mark&gt;</code></pre>
+            
+            <h2>Special Text Blocks</h2>
+            <pre><code>&lt;blockquote&gt;A quotation&lt;/blockquote&gt;
+&lt;pre&gt;Preformatted text&lt;/pre&gt;
+&lt;address&gt;Contact info&lt;/address&gt;</code></pre>
+        </div>
+
+        <!-- Slide 9: Semantic HTML5 -->
+        <div class="slide">
+            <h1>Semantic HTML5 Elements</h1>
+            
+            <div class="important">
+                <h3>What is Semantic HTML?</h3>
+                <p>The purpose of semantic HTML is <strong>to add meaning and structure to web page content, improving accessibility for assistive technologies, enhancing search engine optimization (SEO) for better indexing, and increasing code maintainability by making it more readable and understandable for developers</strong>. By using tags like <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;section&gt;</code>, you communicate the content's role and intent, which helps browsers, machines, and users alike.</p>
+            </div>
+            
+            <h3>Common Semantic Elements:</h3>
+            <ul>
+                <li><code>&lt;nav&gt;</code> - Navigation links</li>
+                <li><code>&lt;header&gt;</code> - Page or section header</li>
+                <li><code>&lt;main&gt;</code> - Main content area</li>
+                <li><code>&lt;article&gt;</code> - Self-contained content</li>
+                <li><code>&lt;section&gt;</code> - Thematic grouping</li>
+                <li><code>&lt;aside&gt;</code> - Sidebar content</li>
+                <li><code>&lt;footer&gt;</code> - Page or section footer</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Creating Lists -->
+        <div class="slide">
+            <h1>HTML Lists</h1>
+            
+            <div class="two-column">
+                <div>
+                    <h2>Unordered Lists</h2>
+                    <pre><code>&lt;ul&gt;
+  &lt;li&gt;First item&lt;/li&gt;
+  &lt;li&gt;Second item&lt;/li&gt;
+  &lt;li&gt;Third item&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                    
+                    <h2>Definition Lists</h2>
+                    <pre><code>&lt;dl&gt;
+  &lt;dt&gt;Term&lt;/dt&gt;
+  &lt;dd&gt;Definition&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+                </div>
+                
+                <div>
+                    <h2>Ordered Lists</h2>
+                    <pre><code>&lt;ol&gt;
+  &lt;li&gt;Step one&lt;/li&gt;
+  &lt;li&gt;Step two&lt;/li&gt;
+  &lt;li&gt;Step three&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+                    
+                    <h3>List Tips:</h3>
+                    <ul>
+                        <li>Lists can be nested</li>
+                        <li>Use CSS to style bullets</li>
+                        <li>Semantic for navigation menus</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Creating Links -->
+        <div class="slide">
+            <h1>Hyperlinks</h1>
+            <h2>The Foundation of the Web</h2>
+            
+            <h3>Basic Link Structure</h3>
+            <pre><code>&lt;a href="destination"&gt;Link Text&lt;/a&gt;</code></pre>
+            
+            <h3>Types of Links</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>External</td>
+                    <td><code>&lt;a href="https://example.com"&gt;Visit&lt;/a&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Internal (same folder)</td>
+                    <td><code>&lt;a href="page.html"&gt;Next Page&lt;/a&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Parent folder</td>
+                    <td><code>&lt;a href="../index.html"&gt;Home&lt;/a&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Subfolder</td>
+                    <td><code>&lt;a href="pages/about.html"&gt;About&lt;/a&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Page anchor</td>
+                    <td><code>&lt;a href="#section1"&gt;Jump to Section&lt;/a&gt;</code></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 12: File Paths -->
+        <div class="slide">
+            <h1>Understanding File Paths</h1>
+            
+            <h2>Practice Exercise: Create This File Structure</h2>
+            
+            <div class="demo-box">
+                <h4>Create these folders and files on your computer:</h4>
+                <pre><code>my-website/
+├── index.html
+├── about.html
+├── pages/
+│   ├── contact.html
+│   └── services.html
+├── blog/
+│   ├── post1.html
+│   └── post2.html
+└── assets/
+    └── styles.css</code></pre>
+            </div>
+
+            <h3>Add Links in index.html:</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Path Practice&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Navigation Practice&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="about.html"&gt;About (same folder)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="pages/contact.html"&gt;Contact (subfolder)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="pages/services.html"&gt;Services (subfolder)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="blog/post1.html"&gt;Blog Post 1&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h3>Add Links in pages/contact.html:</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Contact&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Contact Page&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="../index.html"&gt;Home (parent)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="../about.html"&gt;About (parent)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="services.html"&gt;Services (same folder)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="../blog/post1.html"&gt;Blog (sibling folder)&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="important">
+                <strong>Try it:</strong> Open index.html in your browser and click the links. Notice how the paths work!
+            </div>
+        </div>
+
+        <!-- Slide 13: Images -->
+        <div class="slide">
+            <h1>Working with Images</h1>
+            
+            <h2>The Image Element</h2>
+            <pre><code>&lt;img src="path/to/image.jpg" alt="Description"&gt;</code></pre>
+            
+            <h3>Required Attributes:</h3>
+            <ul>
+                <li><code>src</code> - Path to image file</li>
+                <li><code>alt</code> - Alternative text (accessibility)</li>
+            </ul>
+            
+            <h3>Image Sources - Local vs URL:</h3>
+            <div class="demo-box">
+                <h4>Local Image (in your project folder):</h4>
+                <pre><code>&lt;img src="images/logo.png" alt="Company Logo"&gt;
+&lt;img src="../photos/profile.jpg" alt="Profile Photo"&gt;</code></pre>
+                
+                <h4>External Image (from the web):</h4>
+                <pre><code>&lt;img src="https://example.com/image.jpg" alt="Example Image"&gt;
+&lt;img src="https://picsum.photos/200/300" alt="Random Placeholder"&gt;</code></pre>
+            </div>
+            
+            <h3>Optional Attributes:</h3>
+            <ul>
+                <li><code>width</code> and <code>height</code> - Dimensions (in pixels or %)</li>
+                <li><code>title</code> - Tooltip text on hover</li>
+                <li><code>loading="lazy"</code> - Defer loading until needed</li>
+            </ul>
+            
+            <div class="important">
+                <strong>Notes:</strong>
+                <ul style="margin-left: 0; list-style-position: inside;">
+                    <li><code>&lt;img&gt;</code> is an inline element and self-closing!</li>
+                    <li>Using external URLs means relying on another server - images may disappear</li>
+                    <li>Local images are more reliable but increase your project size</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: CSS Basics -->
+        <div class="slide">
+            <h1>CSS Fundamentals</h1>
+            <h2>Styling Your HTML</h2>
+            
+            <h3>CSS Rule Structure</h3>
+            <pre><code>selector {
+    property: value;
+    property: value;
+}</code></pre>
+            
+            <h3>Types of Selectors</h3>
+            <table>
+                <tr>
+                    <th>Selector Type</th>
+                    <th>Example</th>
+                    <th>Targets</th>
+                </tr>
+                <tr>
+                    <td>Element</td>
+                    <td><code>p { }</code></td>
+                    <td>All &lt;p&gt; elements</td>
+                </tr>
+                <tr>
+                    <td>Class</td>
+                    <td><code>.highlight { }</code></td>
+                    <td>class="highlight"</td>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><code>#header { }</code></td>
+                    <td>id="header"</td>
+                </tr>
+            </table>
+
+            <h3>Example: Using &lt;style&gt; Tag in HTML</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        /* Target ID attribute */
+        #header {
+            background-color: blue;
+            color: white;
+            padding: 20px;
+        }
+        
+        /* Target class attribute */
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        
+        /* Target element */
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="header"&gt;Welcome to My Site&lt;/div&gt;
+    &lt;p class="highlight"&gt;This text is highlighted&lt;/p&gt;
+    &lt;p&gt;This is a regular paragraph&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <!-- Slide 15: The Head Section -->
+        <div class="slide">
+            <h1>The &lt;head&gt; Section</h1>
+            <h2>Page Metadata</h2>
+            
+            <pre><code>&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="description" content="Page description"&gt;
+    
+    &lt;title&gt;Page Title (appears in tab)&lt;/title&gt;
+    
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+    &lt;link rel="icon" href="favicon.ico"&gt;
+    
+    &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+            
+            <h3>Common Head Elements:</h3>
+            <ul>
+                <li><code>&lt;title&gt;</code> - Browser tab title</li>
+                <li><code>&lt;meta&gt;</code> - Page metadata</li>
+                <li><code>&lt;link&gt;</code> - External resources</li>
+                <li><code>&lt;style&gt;</code> - Internal CSS</li>
+                <li><code>&lt;script&gt;</code> - JavaScript</li>
+            </ul>
+
+            <div class="important">
+                <h3>Why Metadata is Important:</h3>
+                <ul style="margin-left: 0; list-style-position: inside;">
+                    <li><strong>Search Engine Optimization (SEO):</strong> Meta descriptions appear in search results and help search engines understand your page content</li>
+                    <li><strong>Social Media Sharing:</strong> Open Graph meta tags control how your page appears when shared on Facebook, Twitter, etc.</li>
+                    <li><strong>Mobile Responsiveness:</strong> The viewport meta tag ensures proper scaling on mobile devices</li>
+                    <li><strong>Character Encoding:</strong> UTF-8 charset prevents text display issues with special characters and emojis</li>
+                    <li><strong>Browser Compatibility:</strong> Proper metadata helps browsers render your page correctly across different devices and screen sizes</li>
+                    <li><strong>Accessibility:</strong> Metadata helps screen readers and assistive technologies understand page structure and content</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 16: Best Practices -->
+        <div class="slide">
+            <h1>HTML Best Practices</h1>
+            
+            <h2>Code Quality</h2>
+            <ul>
+                <li>Always use lowercase for tags and attributes</li>
+                <li>Quote all attribute values</li>
+                <li>Close all tags (even self-closing in XHTML)</li>
+                <li>Indent nested elements consistently</li>
+                <li>Use semantic HTML elements</li>
+            </ul>
+            
+            <h2>Accessibility</h2>
+            <ul>
+                <li>Always include alt text for images</li>
+                <li>Use proper heading hierarchy (h1→h2→h3)</li>
+                <li>Ensure color contrast meets WCAG standards</li>
+                <li>Make forms accessible with labels</li>
+            </ul>
+            
+            <h2>Performance</h2>
+            <ul>
+                <li>Optimize images for web</li>
+                <li>Minify CSS and JavaScript</li>
+                <li>Use appropriate image formats (WebP, JPEG, PNG)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 17: Summary -->
+        <div class="slide">
+            <h1>Summary</h1>
+            <h2>Key Takeaways</h2>
+            
+            <div class="example-box">
+                <h3>HTML Fundamentals Covered:</h3>
+                <ul>
+                    <li>Document structure (DOCTYPE, html, head, body)</li>
+                    <li>Block vs Inline elements</li>
+                    <li>Semantic HTML5 elements</li>
+                    <li>Creating links with proper paths</li>
+                    <li>Lists (ordered, unordered, definition)</li>
+                    <li>Images and alt text</li>
+                    <li>Basic CSS concepts</li>
+                    <li>Best practices for accessibility</li>
+                </ul>
+            </div>
+            
+            <h3>Next Steps:</h3>
+            <ul>
+                <li>Practice creating semantic HTML pages</li>
+                <li>Experiment with CSS styling</li>
+                <li>Validate your HTML code</li>
+                <li>Test for accessibility</li>
+            </ul>
+        </div>
+
+        <!-- Slide 18: Creating a Simple HTML Page -->
+        <div class="slide">
+            <h1>Creating a Simple HTML Page</h1>
+            <h2>Step-by-Step Guide</h2>
+            
+            <div class="example-box">
+                <h3>Follow These Steps:</h3>
+                <ol>
+                    <li><strong>Open a text editor</strong> - Use Notepad, VS Code, Sublime Text, or any plain text editor</li>
+                    <li><strong>Start with the DOCTYPE</strong> - Type <code>&lt;!DOCTYPE html&gt;</code> at the very top</li>
+                    <li><strong>Add the html element</strong> - Include <code>&lt;html lang="en"&gt;</code> to wrap everything</li>
+                    <li><strong>Create the head section</strong> - Add <code>&lt;head&gt;</code> with charset and title</li>
+                    <li><strong>Create the body section</strong> - Add <code>&lt;body&gt;</code> for visible content</li>
+                    <li><strong>Add your content</strong> - Insert headings, paragraphs, and other elements</li>
+                    <li><strong>Close all tags</strong> - Make sure every opening tag has a closing tag</li>
+                    <li><strong>Save as .html</strong> - Save the file with a .html extension (e.g., index.html)</li>
+                    <li><strong>Open in browser</strong> - Double-click the file or drag it into a web browser</li>
+                </ol>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="nav-btn" onclick="toggleExample('example1')">Show/Hide Complete Example</button>
+            </div>
+            
+            <div id="example1" style="display: none;">
+                <h3>Complete Example:</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First Web Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Website!&lt;/h1&gt;
+    &lt;p&gt;This is my first HTML page.&lt;/p&gt;
+    &lt;p&gt;I'm learning web development!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="important">
+                <strong>Pro Tip:</strong> Save your file in a dedicated folder for your web project. This makes it easier to organize images, CSS files, and other resources later.
+            </div>
+        </div>
+
+        <!-- Slide 19: Adding a Style Tag -->
+        <div class="slide">
+            <h1>Adding CSS with the &lt;style&gt; Tag</h1>
+            <h2>Step-by-Step Guide</h2>
+            
+            <div class="example-box">
+                <h3>Follow These Steps:</h3>
+                <ol>
+                    <li><strong>Locate the &lt;head&gt; section</strong> - Find the opening and closing head tags</li>
+                    <li><strong>Add the &lt;style&gt; tag</strong> - Place it between the &lt;head&gt; tags, after the title</li>
+                    <li><strong>Write your CSS rules</strong> - Use selectors to target HTML elements</li>
+                    <li><strong>Close the &lt;style&gt; tag</strong> - Don't forget the closing &lt;/style&gt; tag</li>
+                    <li><strong>Add classes/IDs to HTML</strong> - Add class or id attributes to elements you want to style</li>
+                    <li><strong>Save and refresh</strong> - Save your file and refresh the browser to see changes</li>
+                </ol>
+            </div>
+            
+            <h3>Before (No Styling):</h3>
+            <pre><code>&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First Web Page&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="nav-btn" onclick="toggleExample('example2')">Show/Hide Complete Example</button>
+            </div>
+            
+            <div id="example2" style="display: none;">
+                <h3>After (With Styling):</h3>
+                <pre><code>&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First Web Page&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            color: #2a2f3c;
+            text-align: center;
+        }
+        
+        .highlight {
+            background-color: yellow;
+            padding: 10px;
+        }
+        
+        #special-paragraph {
+            color: blue;
+            font-size: 18px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Website!&lt;/h1&gt;
+    &lt;p class="highlight"&gt;This paragraph is highlighted.&lt;/p&gt;
+    &lt;p id="special-paragraph"&gt;This paragraph is special.&lt;/p&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 20: Challenge & Homework -->
+        <div class="slide">
+            <h1>Challenge & Homework Assignment</h1>
+            <h2>Explore HTML Elements</h2>
+            
+            <div class="example-box">
+                <h3>🎯 Your Challenge:</h3>
+                <p>Extend your HTML file by exploring and implementing <strong>at least 5 different HTML elements</strong> from the MDN HTML Elements Reference:</p>
+                <p><strong>Resource:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements</a></p>
+                
+                <h4>Requirements:</h4>
+                <ul>
+                    <li>Choose elements we haven't covered in class</li>
+                    <li>Add them to your HTML file with meaningful content</li>
+                    <li>Style at least 3 of them with CSS</li>
+                    <li>Create a GitHub repository with your files</li>
+                </ul>
+            </div>
+            
+            <h3>📝 Homework Submission:</h3>
+            <div class="important">
+                <h4>Submit to your CIS repository:</h4>
+                <ol>
+                    <li><strong>Create directory structure:</strong> <code>week1/assignment1/</code></li>
+                    <li><strong>Add your files:</strong>
+                        <ul style="margin-top: 10px;">
+                            <li><code>index.html</code> - Your extended HTML file</li>
+                            <li><code>README.md</code> - Documentation of your chosen elements</li>
+                        </ul>
+                    </li>
+                    <li><strong>Commit and push</strong> your changes to GitHub</li>
+                </ol>
+                
+                <p><strong>Final structure:</strong> <code>your-cis-repo/week1/assignment1/index.html</code></p>
+                <p><strong>Due:</strong> Next week's class</p>
+                <p><strong>Submit:</strong> GitHub repository link via email/LMS</p>
+            </div>
+            
+            <h3>💡 Suggested Elements to Explore:</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Content Elements:</h4>
+                    <ul>
+                        <li><code>&lt;details&gt;</code> & <code>&lt;summary&gt;</code></li>
+                        <li><code>&lt;figure&gt;</code> & <code>&lt;figcaption&gt;</code></li>
+                        <li><code>&lt;time&gt;</code></li>
+                        <li><code>&lt;progress&gt;</code></li>
+                        <li><code>&lt;meter&gt;</code></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Interactive Elements:</h4>
+                    <ul>
+                        <li><code>&lt;button&gt;</code></li>
+                        <li><code>&lt;input&gt;</code> (various types)</li>
+                        <li><code>&lt;label&gt;</code></li>
+                        <li><code>&lt;textarea&gt;</code></li>
+                        <li><code>&lt;select&gt;</code> & <code>&lt;option&gt;</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
+            </span>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const slides = document.getElementsByClassName('slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            if (n > totalSlides) { currentSlide = totalSlides; }
+            if (n < 1) { currentSlide = 1; }
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+            
+            slides[currentSlide - 1].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+
+        // Function to toggle example visibility
+        function toggleExample(elementId) {
+            const element = document.getElementById(elementId);
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') changeSlide(-1);
+            if (event.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(1);
+    </script>
+</body>
+</html>
