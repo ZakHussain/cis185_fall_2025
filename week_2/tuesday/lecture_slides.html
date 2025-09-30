@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - Week 2: Git Workflow & CSS Fundamentals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f8f8 0%, #2a2f3c 50%, #746767 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: #2a2f3c;
+            font-size: 3em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #746767;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #746767;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #2a2f3c;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .code-block .tag {
+            color: #569cd6;
+        }
+
+        .code-block .attribute {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background: #2a2f3c;
+            color: #e5e6d0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #746767;
+            transform: scale(1.05);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #746767;
+            color: #e5e6d0;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #746767 0%, #2a2f3c 100%);
+            color: #e5e6d0;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .demo-box {
+            background: #f0f0f0;
+            border: 2px dashed #746767;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .layer-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 15px;
+        }
+
+        .layer {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .layer.hardware {
+            border-left-color: #2a2f3c;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
+        }
+
+        .layer.software {
+            border-left-color: #746767;
+        }
+
+        .layer.cloud {
+            border-left-color: #667eea;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .layer-icon {
+            font-size: 2.5em;
+            float: left;
+            margin-right: 20px;
+        }
+
+        .layer-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2a2f3c;
+            margin-bottom: 10px;
+        }
+
+        .layer-desc {
+            font-size: 1em;
+            color: #555;
+            clear: both;
+        }
+
+        .flow-diagram {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            align-items: center;
+        }
+
+        .flow-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .flow-box::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .flow-box:last-child::after {
+            content: '';
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            background: #2a2f3c;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .comparison-table .pro {
+            color: green;
+            font-weight: bold;
+        }
+
+        .comparison-table .con {
+            color: #c9302c;
+            font-weight: bold;
+        }
+
+        .system-architecture {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .arch-section {
+            background: #f8f8f8;
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid #2a2f3c;
+        }
+
+        .arch-section.remote {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e5e6d0, #746767, #2a2f3c);
+            transition: width 0.5s ease;
+            z-index: 1001;
+        }
+
+        .terminal-window {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .terminal-header {
+            background: #323232;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            color: #999;
+            font-size: 0.9em;
+            margin: -10px -10px 10px -10px;
+        }
+
+        .terminal-body {
+            font-family: 'Courier New', monospace;
+            color: #d4d4d4;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        .terminal-body .prompt {
+            color: #4ec9b0;
+        }
+
+        .terminal-body .command {
+            color: #dcdcaa;
+        }
+
+        .terminal-body .output {
+            color: #9cdcfe;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .flow-diagram {
+                grid-template-columns: 1fr;
+            }
+
+            .system-architecture {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .vscode-visual {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #d4d4d4;
+        }
+
+        .vscode-sidebar {
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .file-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .file-indicator.modified {
+            background: #f0ad4e;
+            color: white;
+        }
+
+        .file-indicator.untracked {
+            background: #5cb85c;
+            color: white;
+        }
+
+        .file-indicator.added {
+            background: #5bc0de;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-number">1 / 20</div>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+                <h1 style="font-size: 4em; border: none; margin-bottom: 20px;">CIS 185 - Week 2</h1>
+                <h2 style="font-size: 2.5em; color: #746767;">Git Workflow & CSS Fundamentals</h2>
+                <div style="margin-top: 40px;">
+                    <p style="font-size: 1.5em; color: #2a2f3c;">Understanding the Development Stack</p>
+                    <p style="font-size: 1.2em; color: #746767; margin-top: 20px;">From Your Computer to the Cloud</p>
+                </div>
+                <div class="demo-box pulse" style="margin-top: 60px; background: linear-gradient(135deg, #e5e6d0 0%, #d8d9c3 100%); border-color: #2a2f3c;">
+                    <p style="color: #2a2f3c; font-weight: bold;">Tuesday, Week 2</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Big Picture -->
+        <div class="slide">
+            <div class="slide-number">2 / 20</div>
+            <h1>Understanding the Development Stack</h1>
+            <h2>Where Does Everything Live?</h2>
+            
+            <div class="layer-diagram">
+                <div class="layer hardware">
+                    <div class="layer-icon">💻</div>
+                    <div class="layer-title">Your Computer (Physical Hardware)</div>
+                    <div class="layer-desc">This is your actual device - MacBook, PC, laptop. It has a hard drive, RAM, and stores your files physically.</div>
+                </div>
+
+                <div class="layer software">
+                    <div class="layer-icon">⌨️</div>
+                    <div class="layer-title">Shell / Terminal (Command-Line Interface)</div>
+                    <div class="layer-desc">A text-based interface to your operating system. Bash, Zsh, PowerShell - this is where you type commands directly to your OS.</div>
+                </div>
+
+                <div class="layer software">
+                    <div class="layer-icon">📦</div>
+                    <div class="layer-title">Git (Version Control Software)</div>
+                    <div class="layer-desc">Software installed on your computer. Accessed through shell commands. Tracks changes to your files locally.</div>
+                </div>
+
+                <div class="layer software">
+                    <div class="layer-icon">🎨</div>
+                    <div class="layer-title">VS Code (Visual GUI Editor)</div>
+                    <div class="layer-desc">A graphical interface that shows your files AND has Git integration built-in. It's a wrapper that runs shell commands for you visually.</div>
+                </div>
+
+                <div class="layer cloud">
+                    <div class="layer-icon">☁️</div>
+                    <div class="layer-title">GitHub (Cloud Storage Service)</div>
+                    <div class="layer-desc">A completely separate system on remote servers. Not on your computer. Stores backup copies of your repositories online.</div>
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Key Concept:</strong> VS Code is just a visual way to interact with your files and Git. Behind the scenes, it's running the same shell commands you could type manually.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Physical vs Logical Separation -->
+        <div class="slide">
+            <div class="slide-number">3 / 20</div>
+            <h1>Local vs Remote: The Critical Distinction</h1>
+            
+            <div class="system-architecture">
+                <div class="arch-section">
+                    <h2 style="color: #2a2f3c; text-align: center; margin-bottom: 20px;">LOCAL SYSTEM</h2>
+                    <h3>On Your Computer:</h3>
+                    <ul style="font-size: 1em;">
+                        <li><strong>Your Files:</strong> HTML, CSS, JS on your hard drive</li>
+                        <li><strong>Shell/Terminal:</strong> Bash, Zsh, PowerShell, etc.</li>
+                        <li><strong>Git Software:</strong> Version control running locally</li>
+                        <li><strong>VS Code:</strong> Visual interface to files + Git</li>
+                    </ul>
+                    
+                    <div class="terminal-window" style="margin-top: 20px;">
+                        <div class="terminal-header">Terminal - Bash</div>
+                        <div class="terminal-body">
+                            <div><span class="prompt">user@computer:~$</span> <span class="command">git status</span></div>
+                            <div class="output">On branch main</div>
+                            <div class="output">Changes not staged...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-section remote">
+                    <h2 style="color: #667eea; text-align: center; margin-bottom: 20px;">REMOTE SYSTEM</h2>
+                    <h3 style="color: #2a2f3c;">In The Cloud:</h3>
+                    <ul style="font-size: 1em;">
+                        <li><strong>GitHub Servers:</strong> Microsoft data centers</li>
+                        <li><strong>Remote Repository:</strong> Copy of your project</li>
+                        <li><strong>Accessed via Internet:</strong> Not on your device</li>
+                        <li><strong>Backup & Collaboration:</strong> Safe, shareable storage</li>
+                    </ul>
+                    
+                    <div class="demo-box" style="background: white; margin-top: 20px;">
+                        <p style="font-size: 0.9em;"><strong>Your repo URL:</strong></p>
+                        <code style="color: #667eea;">github.com/username/project</code>
+                        <p style="font-size: 0.8em; margin-top: 10px;">This lives on GitHub's servers, NOT your computer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-box" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); border-color: #f0ad4e;">
+                <p><strong>CRITICAL:</strong> Your computer and GitHub are SEPARATE systems connected by the internet. Git pushes code FROM your computer TO GitHub servers.</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: What is a Shell? -->
+        <div class="slide">
+            <div class="slide-number">4 / 20</div>
+            <h1>Understanding the Shell</h1>
+            <h2>The Command-Line Interface to Your OS</h2>
+            
+            <p><strong>Shell:</strong> A program that interprets and executes commands. It's the text-based way to interact with your operating system.</p>
+
+            <h3>Common Shells:</h3>
+            <ul>
+                <li><strong>Bash</strong> (Bourne Again Shell) - Most common on Linux/Mac</li>
+                <li><strong>Zsh</strong> (Z Shell) - Default on modern macOS</li>
+                <li><strong>PowerShell</strong> - Windows shell (more powerful than cmd)</li>
+                <li><strong>cmd</strong> - Old Windows command prompt</li>
+            </ul>
+
+            <h3>Shell Programming (Shell Scripting):</h3>
+            <p>Writing sequences of commands in a text file to automate tasks.</p>
+
+            <div class="terminal-window">
+                <div class="terminal-header">example-script.sh</div>
+                <div class="terminal-body">
+                    <div class="comment"># This is a shell script</div>
+                    <div><span class="command">git add .</span></div>
+                    <div><span class="command">git commit -m "Auto commit"</span></div>
+                    <div><span class="command">git push</span></div>
+                    <div><span class="command">echo "Backup complete!"</span></div>
+                </div>
+            </div>
+
+            <h3>Why This Matters:</h3>
+            <p>Git is accessed through shell commands. VS Code has a built-in terminal where you can run these commands, OR you can use VS Code's visual Git interface which runs the same commands behind the scenes.</p>
+        </div>
+
+        <!-- Slide 5: VS Code as a Visual Wrapper -->
+        <div class="slide">
+            <div class="slide-number">5 / 20</div>
+            <h1>VS Code: Visual Interface to Shell Commands</h1>
+            
+            <h2>Two Ways to Do the Same Thing:</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0;">
+                <div>
+                    <h3 style="text-align: center;">Via Shell (Manual)</h3>
+                    <div class="terminal-window">
+                        <div class="terminal-header">Terminal</div>
+                        <div class="terminal-body">
+                            <div><span class="prompt">$</span> <span class="command">git add index.html</span></div>
+                            <div><span class="prompt">$</span> <span class="command">git commit -m "Update"</span></div>
+                            <div><span class="prompt">$</span> <span class="command">git push</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="text-align: center;">Via VS Code (Visual)</h3>
+                    <div class="vscode-visual">
+                        <div class="vscode-sidebar">
+                            <p style="font-size: 0.9em; margin-bottom: 10px;"><strong>Source Control Panel</strong></p>
+                            <div>
+                                <span class="file-indicator modified">M</span> index.html
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <input type="text" placeholder="Commit message..." style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #555; background: #3c3c3c; color: white;">
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button style="background: #007acc; color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer;">Commit</button>
+                                <button style="background: #007acc; color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Push</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Behind the Scenes:</strong> When you click "Commit" in VS Code, it runs <code>git commit</code> in the shell. The visual interface is just a convenience!</p>
+            </div>
+
+            <h3>You Can Use Either Method:</h3>
+            <ul>
+                <li>VS Code visual interface: Easier for beginners, point-and-click</li>
+                <li>Terminal commands: Faster once you learn them, more control</li>
+                <li>Many professionals use both depending on the task</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: The Git Workflow - 4 Stages -->
+        <div class="slide">
+            <div class="slide-number">6 / 20</div>
+            <h1>The Complete Git Workflow</h1>
+            <h2>Four Distinct Stages</h2>
+            
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);">
+                    <h3 style="font-size: 1.2em; margin-bottom: 10px;">1. Working Directory</h3>
+                    <p style="font-size: 0.9em;">Your files on your hard drive. Changes not yet tracked.</p>
+                </div>
+
+                <div class="flow-box" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);">
+                    <h3 style="font-size: 1.2em; margin-bottom: 10px;">2. Staging Area</h3>
+                    <p style="font-size: 0.9em;"><code>git add</code><br>Choose what to commit</p>
+                </div>
+
+                <div class="flow-box" style="background: linear-gradient(135deg, #cce5ff 0%, #b8daff 100%);">
+                    <h3 style="font-size: 1.2em; margin-bottom: 10px;">3. Local Repository</h3>
+                    <p style="font-size: 0.9em;"><code>git commit</code><br>Saved snapshot on your PC</p>
+                </div>
+
+                <div class="flow-box" style="background: linear-gradient(135deg, #e2d9f3 0%, #d4c5e8 100%);">
+                    <h3 style="font-size: 1.2em; margin-bottom: 10px;">4. Remote Repository</h3>
+                    <p style="font-size: 0.9em;"><code>git push</code><br>Backup on GitHub servers</p>
+                </div>
+            </div>
+
+            <h3>The Complete Flow:</h3>
+            <div class="terminal-window">
+                <div class="terminal-header">Terminal</div>
+                <div class="terminal-body">
+                    <div class="comment"># 1. Check what changed</div>
+                    <div><span class="prompt">$</span> <span class="command">git status</span></div>
+                    <div class="output">modified: index.html</div>
+                    <br>
+                    <div class="comment"># 2. Stage the changes</div>
+                    <div><span class="prompt">$</span> <span class="command">git add index.html</span></div>
+                    <br>
+                    <div class="comment"># 3. Commit to local repository</div>
+                    <div><span class="prompt">$</span> <span class="command">git commit -m "Added navigation menu"</span></div>
+                    <br>
+                    <div class="comment"># 4. Push to GitHub (remote)</div>
+                    <div><span class="prompt">$</span> <span class="command">git push</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: VS Code Git Indicators -->
+        <div class="slide">
+            <div class="slide-number">7 / 20</div>
+            <h1>VS Code Visual Git Indicators</h1>
+            <h2>Understanding the Letter Codes</h2>
+            
+            <div class="vscode-visual">
+                <h3 style="margin-bottom: 20px;">Source Control Panel:</h3>
+                
+                <div class="vscode-sidebar">
+                    <p style="font-size: 1em; margin-bottom: 15px;"><strong>Changes:</strong></p>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <span class="file-indicator modified">M</span>
+                        <span style="font-family: 'Courier New';">index.html</span>
+                        <span style="color: #999; margin-left: 20px;">Modified</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <span class="file-indicator untracked">U</span>
+                        <span style="font-family: 'Courier New';">about.html</span>
+                        <span style="color: #999; margin-left: 20px;">Untracked (new file)</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <span class="file-indicator added">A</span>
+                        <span style="font-family: 'Courier New';">contact.html</span>
+                        <span style="color: #999; margin-left: 20px;">Added to staging</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <span class="file-indicator" style="background: #d9534f;">D</span>
+                        <span style="font-family: 'Courier New';">old-file.html</span>
+                        <span style="color: #999; margin-left: 20px;">Deleted</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">What Each Indicator Means:</h3>
+            <ul>
+                <li><strong>M (Modified):</strong> File exists in repo but you changed it</li>
+                <li><strong>U (Untracked):</strong> New file Git doesn't know about yet</li>
+                <li><strong>A (Added):</strong> File staged and ready to commit</li>
+                <li><strong>D (Deleted):</strong> File removed from project</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Pro Tip:</strong> The Source Control icon in VS Code's sidebar shows a number badge - that's how many files have changes!</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Creating Your First Repository -->
+        <div class="slide">
+            <div class="slide-number">8 / 20</div>
+            <h1>Setting Up: Two Approaches</h1>
+            
+            <h2>Approach 1: Start on GitHub (Recommended for Beginners)</h2>
+            <ol>
+                <li>Go to github.com and create new repository</li>
+                <li>Copy the repository URL</li>
+                <li>In VS Code: <code>Ctrl+Shift+P</code> → "Git: Clone"</li>
+                <li>Paste URL and choose folder location</li>
+                <li>Start coding!</li>
+            </ol>
+
+            <div class="terminal-window">
+                <div class="terminal-header">Terminal Method</div>
+                <div class="terminal-body">
+                    <div><span class="prompt">$</span> <span class="command">git clone https://github.com/username/project.git</span></div>
+                    <div class="output">Cloning into 'project'...</div>
+                    <div><span class="prompt">$</span> <span class="command">cd project</span></div>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 30px;">Approach 2: Start Locally</h2>
+            <ol>
+                <li>Create project folder with files</li>
+                <li>In VS Code: <code>Ctrl+Shift+P</code> → "Git: Initialize Repository"</li>
+                <li>Create matching repo on GitHub (empty, no README)</li>
+                <li>Connect local to remote with provided commands</li>
+            </ol>
+
+            <div class="terminal-window">
+                <div class="terminal-header">Terminal Method</div>
+                <div class="terminal-body">
+                    <div><span class="prompt">$</span> <span class="command">git init</span></div>
+                    <div><span class="prompt">$</span> <span class="command">git remote add origin https://github.com/username/project.git</span></div>
+                    <div><span class="prompt">$</span> <span class="command">git push -u origin main</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: The .gitignore File -->
+        <div class="slide">
+            <div class="slide-number">9 / 20</div>
+            <h1>The .gitignore File</h1>
+            <h2>What NOT to Track</h2>
+            
+            <p>Some files shouldn't be in your repository:</p>
+            <ul>
+                <li>Operating system files (.DS_Store on Mac, Thumbs.db on Windows)</li>
+                <li>Editor configuration (.vscode, .idea)</li>
+                <li>Dependencies (node_modules folder)</li>
+                <li>Sensitive data (passwords, API keys)</li>
+            </ul>
+
+            <h3>Create a .gitignore file:</h3>
+            <div class="code-block">
+                <span class="comment"># OS Files</span><br>
+                .DS_Store<br>
+                Thumbs.db<br>
+                <br>
+                <span class="comment"># Editor</span><br>
+                .vscode/<br>
+                .idea/<br>
+                <br>
+                <span class="comment"># Dependencies</span><br>
+                node_modules/<br>
+                <br>
+                <span class="comment"># Environment variables</span><br>
+                .env
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Important:</strong> Create .gitignore BEFORE your first commit to avoid tracking unwanted files!</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Common Git Mistakes -->
+        <div class="slide">
+            <div class="slide-number">10 / 20</div>
+            <h1>Common Git Mistakes (And How to Avoid Them)</h1>
+            
+            <h3>Mistake 1: Forgetting to Stage</h3>
+            <div class="terminal-window">
+                <div class="terminal-body">
+                    <div><span class="prompt">$</span> <span class="command">git commit -m "Update"</span></div>
+                    <div class="output" style="color: #f48771;">nothing to commit</div>
+                    <div style="margin-top: 10px;"><strong style="color: #5cb85c;">Fix:</strong> <span class="command">git add .</span> first!</div>
+                </div>
+            </div>
+
+            <h3>Mistake 2: Committing Without Pushing</h3>
+            <p>Your code is saved locally but NOT backed up to GitHub!</p>
+            <div class="demo-box">
+                <p>Always run <code>git push</code> after committing to send changes to GitHub</p>
+            </div>
+
+            <h3>Mistake 3: Wrong Commit Messages</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                <div style="background: #f8d7da; padding: 15px; border-radius: 10px;">
+                    <strong>Bad:</strong><br>
+                    "stuff"<br>
+                    "fixed bug"<br>
+                    "updates"
+                </div>
+                <div style="background: #d4edda; padding: 15px; border-radius: 10px;">
+                    <strong>Good:</strong><br>
+                    "Added responsive navigation menu"<br>
+                    "Fixed form validation error"<br>
+                    "Updated hero section styling"
+                </div>
+            </div>
+
+            <h3>Mistake 4: Editing Files on GitHub Web Interface</h3>
+            <p>This creates conflicts with your local files. Always work locally, then push.</p>
+        </div>
+
+        <!-- Slide 11: CSS Fundamentals - Why Three Methods? -->
+        <div class="slide">
+            <div class="slide-number">11 / 20</div>
+            <h1>CSS: Three Ways to Style</h1>
+            <h2>Understanding Your Options</h2>
+            
+            <p>Remember from Week 1: CSS was created to separate content from presentation. But there are three ways to apply styles:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0;">
+                <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3>1. Inline</h3>
+                    <p style="font-size: 0.9em;">Style attribute on element</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3>2. Embedded</h3>
+                    <p style="font-size: 0.9em;">&lt;style&gt; tag in &lt;head&gt;</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #cce5ff 0%, #b8daff 100%); padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3>3. External</h3>
+                    <p style="font-size: 0.9em;">Separate .css file linked</p>
+                </div>
+            </div>
+
+            <div class="demo-box" style="background: linear-gradient(135deg, #e5e6d0 0%, #d8d9c3 100%);">
+                <p><strong>The Question:</strong> Which method should you use?</p>
+                <p style="font-size: 0.9em; margin-top: 10px;">Spoiler: Almost always external! But let's understand why...</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Method 1 - Inline Styles -->
+        <div class="slide">
+            <div class="slide-number">12 / 20</div>
+            <h1>Method 1: Inline Styles</h1>
+            
+            <h2>Applying Styles Directly to Elements:</h2>
+            <div class="code-block">
+                <span class="tag">&lt;h1</span> <span class="attribute">style=</span><span class="value">"color: red; font-size: 32px;"</span><span class="tag">&gt;</span>Hello World<span class="tag">&lt;/h1&gt;</span><br>
+                <span class="tag">&lt;p</span> <span class="attribute">style=</span><span class="value">"color: blue; font-size: 16px;"</span><span class="tag">&gt;</span>Paragraph<span class="tag">&lt;/p&gt;</span><br>
+                <span class="tag">&lt;p</span> <span class="attribute">style=</span><span class="value">"color: blue; font-size: 16px;"</span><span class="tag">&gt;</span>Another paragraph<span class="tag">&lt;/p&gt;</span>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="pro">Quick for testing single element</td>
+                        <td class="con">Repetitive - must style every element</td>
+                    </tr>
+                    <tr>
+                        <td class="pro">Highest specificity (overrides other styles)</td>
+                        <td class="con">Hard to maintain</td>
+                    </tr>
+                    <tr>
+                        <td class="pro">No external files needed</td>
+                        <td class="con">Mixing content with presentation (defeats CSS purpose!)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="con">Can't reuse styles</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-box" style="background: #f8d7da; border-color: #f5c6cb;">
+                <p><strong>Use Case:</strong> Quick testing only. Avoid in production code!</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Method 2 - Embedded Styles -->
+        <div class="slide">
+            <div class="slide-number">13 / 20</div>
+            <h1>Method 2: Embedded Styles</h1>
+            
+            <h2>Using a &lt;style&gt; Tag in the &lt;head&gt;:</h2>
+            <div class="code-block">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html&gt;<br>
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;<span class="tag">&lt;style&gt;</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;h1 {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: red;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font-size: 32px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;p {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: blue;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<span class="tag">&lt;/style&gt;</span><br>
+                &lt;/head&gt;<br>
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;h1&gt;Hello World&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&lt;p&gt;All paragraphs get these styles!&lt;/p&gt;<br>
+                &lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="pro">Styles all matching elements at once</td>
+                        <td class="con">Only affects this one HTML file</td>
+                    </tr>
+                    <tr>
+                        <td class="pro">Good for single-page projects</td>
+                        <td class="con">Can't share styles across multiple pages</td>
+                    </tr>
+                    <tr>
+                        <td class="pro">No extra files to manage</td>
+                        <td class="con">Makes HTML file longer and harder to read</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-box" style="background: #fff3cd; border-color: #ffeaa7;">
+                <p><strong>Use Case:</strong> Small single-page projects or quick prototypes</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Method 3 - External Stylesheet -->
+        <div class="slide">
+            <div class="slide-number">14 / 20</div>
+            <h1>Method 3: External Stylesheet (Best Practice)</h1>
+            
+            <h2>Separate CSS File Linked to HTML:</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <p><strong>index.html:</strong></p>
+                    <div class="code-block">
+                        &lt;!DOCTYPE html&gt;<br>
+                        &lt;html&gt;<br>
+                        &lt;head&gt;<br>
+                        &nbsp;&nbsp;<span class="tag">&lt;link</span> <span class="attribute">rel=</span><span class="value">"stylesheet"</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">href=</span><span class="value">"styles.css"</span><span class="tag">&gt;</span><br>
+                        &lt;/head&gt;<br>
+                        &lt;body&gt;<br>
+                        &nbsp;&nbsp;&lt;h1&gt;Hello&lt;/h1&gt;<br>
+                        &lt;/body&gt;<br>
+                        &lt;/html&gt;
+                    </div>
+                </div>
+                
+                <div>
+                    <p><strong>styles.css:</strong></p>
+                    <div class="code-block">
+                        h1 {<br>
+                        &nbsp;&nbsp;color: red;<br>
+                        &nbsp;&nbsp;font-size: 32px;<br>
+                        }<br>
+                        <br>
+                        p {<br>
+                        &nbsp;&nbsp;color: blue;<br>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <table class="comparison-table" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="pro">Reusable across ALL pages</td>
+                        <td class="con">Extra file to manage</td>
+                    </tr>
+                    <tr>
+                        <td class="pro">Clean separation of concerns</td>
+                        <td class="con">Requires correct file path</td>
+                    </tr>
+                    <tr>
+                        <td class="pro">Browser caches CSS file (faster loading)</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="pro">Easy to maintain</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="pro">Industry standard</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-box" style="background: #d4edda; border-color: #c3e6cb;">
+                <p><strong>Use This!</strong> External stylesheets are the professional, maintainable way to style websites.</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Linking CSS Properly -->
+        <div class="slide">
+            <div class="slide-number">15 / 20</div>
+            <h1>Linking External CSS: File Paths Matter!</h1>
+            
+            <h2>The &lt;link&gt; Element:</h2>
+            <div class="code-block">
+                <span class="tag">&lt;link</span> <span class="attribute">rel=</span><span class="value">"stylesheet"</span> <span class="attribute">href=</span><span class="value">"styles.css"</span><span class="tag">&gt;</span>
+            </div>
+
+            <h3>Critical Attributes:</h3>
+            <ul>
+                <li><strong>rel="stylesheet"</strong> - Tells browser this is CSS</li>
+                <li><strong>href="..."</strong> - Path to your CSS file</li>
+            </ul>
+
+            <h3>File Path Examples:</h3>
+            <div class="code-block">
+                <span class="comment">&lt;!-- Same folder as HTML --&gt;</span><br>
+                &lt;link rel="stylesheet" href="styles.css"&gt;<br>
+                <br>
+                <span class="comment">&lt;!-- CSS in subfolder --&gt;</span><br>
+                &lt;link rel="stylesheet" href="css/styles.css"&gt;<br>
+                <br>
+                <span class="comment">&lt;!-- CSS in parent folder --&gt;</span><br>
+                &lt;link rel="stylesheet" href="../styles.css"&gt;
+            </div>
+
+            <h3>Common Mistakes:</h3>
+            <div style="background: #f8d7da; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <p><strong>Wrong:</strong> <code>&lt;link href="styles.css"&gt;</code> - Missing rel attribute!</p>
+                <p><strong>Wrong:</strong> <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> - Typo in filename!</p>
+                <p><strong>Wrong:</strong> <code>&lt;link rel="stylesheet" href="Styles.css"&gt;</code> - Wrong capitalization!</p>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Pro Tip:</strong> If your styles don't load, open DevTools (F12) → Console tab to see 404 errors!</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: CSS Selectors Deep Dive -->
+        <div class="slide">
+            <div class="slide-number">16 / 20</div>
+            <h1>CSS Selectors: Targeting Elements</h1>
+            
+            <h2>Four Main Types:</h2>
+
+            <h3>1. Element Selector:</h3>
+            <div class="code-block">
+                <span class="comment">/* Targets ALL p elements */</span><br>
+                p {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                }
+            </div>
+
+            <h3>2. Class Selector:</h3>
+            <div class="code-block">
+                <span class="comment">/* Targets elements with class="highlight" */</span><br>
+                .highlight {<br>
+                &nbsp;&nbsp;background-color: yellow;<br>
+                }
+            </div>
+            <div class="code-block">
+                <span class="tag">&lt;p</span> <span class="attribute">class=</span><span class="value">"highlight"</span><span class="tag">&gt;</span>This paragraph gets highlighted<span class="tag">&lt;/p&gt;</span>
+            </div>
+
+            <h3>3. ID Selector:</h3>
+            <div class="code-block">
+                <span class="comment">/* Targets element with id="header" (only ONE per page!) */</span><br>
+                #header {<br>
+                &nbsp;&nbsp;font-size: 48px;<br>
+                }
+            </div>
+            <div class="code-block">
+                <span class="tag">&lt;h1</span> <span class="attribute">id=</span><span class="value">"header"</span><span class="tag">&gt;</span>Main Header<span class="tag">&lt;/h1&gt;</span>
+            </div>
+
+            <h3>4. Descendant Selector:</h3>
+            <div class="code-block">
+                <span class="comment">/* Targets p elements INSIDE nav elements */</span><br>
+                nav p {<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 17: CSS Properties - Text & Color -->
+        <div class="slide">
+            <div class="slide-number">17 / 20</div>
+            <h1>Essential CSS Properties</h1>
+            
+            <h2>Color Properties:</h2>
+            <div class="code-block">
+                h1 {<br>
+                &nbsp;&nbsp;<span class="attribute">color:</span> <span class="value">red</span>; <span class="comment">/* Text color */</span><br>
+                &nbsp;&nbsp;<span class="attribute">background-color:</span> <span class="value">#f0f0f0</span>; <span class="comment">/* Background */</span><br>
+                }
+            </div>
+
+            <h2>Typography Properties:</h2>
+            <div class="code-block">
+                p {<br>
+                &nbsp;&nbsp;<span class="attribute">font-family:</span> <span class="value">Arial, sans-serif</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">font-size:</span> <span class="value">16px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">font-weight:</span> <span class="value">bold</span>; <span class="comment">/* or 700 */</span><br>
+                &nbsp;&nbsp;<span class="attribute">text-align:</span> <span class="value">center</span>; <span class="comment">/* left, right, justify */</span><br>
+                &nbsp;&nbsp;<span class="attribute">text-decoration:</span> <span class="value">underline</span>; <span class="comment">/* or none */</span><br>
+                }
+            </div>
+
+            <h2>Spacing Properties (Preview):</h2>
+            <div class="code-block">
+                div {<br>
+                &nbsp;&nbsp;<span class="attribute">margin:</span> <span class="value">20px</span>; <span class="comment">/* Space outside element */</span><br>
+                &nbsp;&nbsp;<span class="attribute">padding:</span> <span class="value">10px</span>; <span class="comment">/* Space inside element */</span><br>
+                }
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Next Week:</strong> We'll dive deep into the Box Model (margin, padding, border)</p>
+            </div>
+        </div>
+
+        <!-- Slide 18: Hands-On Practice -->
+        <div class="slide">
+            <div class="slide-number">18 / 20</div>
+            <h1>Practice Time!</h1>
+            
+            <h2>Exercise 1: Complete Git Workflow</h2>
+            <ol>
+                <li>Create a new repository on GitHub called "week2-practice"</li>
+                <li>Clone it to your computer using VS Code</li>
+                <li>Create index.html with basic HTML structure</li>
+                <li>Use VS Code Source Control to:
+                    <ul>
+                        <li>Stage the file (git add)</li>
+                        <li>Commit with message "Initial commit"</li>
+                        <li>Push to GitHub</li>
+                    </ul>
+                </li>
+                <li>Verify on GitHub that your file appears</li>
+            </ol>
+
+            <h2>Exercise 2: Three Styling Methods</h2>
+            <ol>
+                <li>Create three copies of a simple HTML page</li>
+                <li><strong>page1.html:</strong> Use inline styles only</li>
+                <li><strong>page2.html:</strong> Use embedded &lt;style&gt; tag</li>
+                <li><strong>page3.html:</strong> Create external styles.css and link it</li>
+                <li>Make all three pages look identical</li>
+                <li>Compare: which was easiest to maintain?</li>
+            </ol>
+
+            <div class="demo-box pulse">
+                <p><strong>Challenge:</strong> Intentionally break the CSS link path, then fix it using DevTools Console!</p>
+            </div>
+        </div>
+
+        <!-- Slide 19: Common Issues & Debugging -->
+        <div class="slide">
+            <div class="slide-number">19 / 20</div>
+            <h1>Troubleshooting CSS & Git</h1>
+            
+            <h2>CSS Not Loading? Check These:</h2>
+            <ol>
+                <li><strong>File path:</strong> Is href correct? Case-sensitive!</li>
+                <li><strong>File saved:</strong> Did you save styles.css?</li>
+                <li><strong>Link location:</strong> Is &lt;link&gt; in &lt;head&gt;?</li>
+                <li><strong>Typos:</strong> Is rel="stylesheet" spelled correctly?</li>
+                <li><strong>Browser cache:</strong> Hard refresh (Ctrl+Shift+R)</li>
+            </ol>
+
+            <div class="terminal-window">
+                <div class="terminal-header">Browser DevTools Console</div>
+                <div class="terminal-body">
+                    <div style="color: #f48771;">Failed to load resource: net::ERR_FILE_NOT_FOUND</div>
+                    <div style="color: #f48771;">styles.css:1</div>
+                    <div style="margin-top: 10px; color: #9cdcfe;">This means the file path is wrong!</div>
+                </div>
+            </div>
+
+            <h2>Git Changes Not Showing on GitHub?</h2>
+            <ol>
+                <li><strong>Did you stage?</strong> Run <code>git add .</code></li>
+                <li><strong>Did you commit?</strong> Run <code>git commit -m "message"</code></li>
+                <li><strong>Did you push?</strong> Run <code>git push</code></li>
+                <li><strong>Check branch:</strong> Are you on the right branch?</li>
+            </ol>
+
+            <div class="demo-box">
+                <p><strong>Golden Rule:</strong> When in doubt, run <code>git status</code> to see what's happening!</p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Preparation for Thursday -->
+        <div class="slide">
+            <div class="slide-number">20 / 20</div>
+            <h1>Preparation for Thursday's Class</h1>
+            
+            <h2>Required Reading:</h2>
+            <ul style="font-size: 1em;">
+                <li><strong>W3Schools: CSS Syntax</strong><br>
+                w3schools.com/css/css_syntax.asp</li>
+                <li><strong>W3Schools: CSS Selectors</strong><br>
+                w3schools.com/css/css_selectors.asp</li>
+            </ul>
+
+            <h2>Complete Before Thursday:</h2>
+            <p style="font-size: 1.1em; margin-bottom: 15px;"><strong>MDN CSS Basics Walkthrough:</strong></p>
+            <ol>
+                <li>Create repository structure: <code>week2/practice/css-practice-html-site-styled</code></li>
+                <li>Follow the <strong>MDN: CSS Basics</strong> reading and walkthrough<br>
+                    <small style="color: #746767;">developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics</small><br>
+                    <small style="color: #746767;">Download the required image: github.com/mdn/beginner-html-site-styled/blob/gh-pages/images/firefox-icon.png</small>
+                </li>
+                <li>Complete the walkthrough, then add your own:
+                    <ul>
+                        <li>Element selector (style a different HTML element)</li>
+                        <li>Class selector (create and style a custom class)</li>
+                        <li>ID selector (create and style an element with an ID)</li>
+                    </ul>
+                </li>
+                <li>Commit and push all files to GitHub</li>
+                <li>Include a simple README.md
+                    <ul style="font-size: 0.9em;">
+                        <li><em>Note: This README can be much simpler than graded assignments</em></li>
+                        <li>Just note: "MDN CSS Basics walkthrough with additional selectors"</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2>Thursday Preview: CSS Box Model</h2>
+            <p>We'll learn how margin, padding, and border work together to control layout!</p>
+
+            <div class="demo-box pulse" style="background: linear-gradient(135deg, #2a2f3c 0%, #746767 100%); color: #e5e6d0;">
+                <h2 style="color: #e5e6d0;">Keep Building!</h2>
+                <p style="color: #e5e6d0;">Every commit is progress!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 20</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n >= totalSlides) currentSlide = 0;
+            if (n < 0) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('slideInfo').textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) changeSlide(1);
+            if (touchEndX > touchStartX + 50) changeSlide(-1);
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>
