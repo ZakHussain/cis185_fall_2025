@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Grid Layout Example</title>
+  <style>
+    /* Make the page fill the screen */
+    html, body { height: 100%; margin: 0; font-family: Arial, sans-serif; }
+
+    /* The grid container */
+    .grid-container {
+      display: grid;
+
+      /* Name the areas */
+      grid-template-areas:
+        "header header header"
+        "nav    main   sidebar"
+        "footer footer footer";
+
+      /* Left column = 200px, middle = flexible, right = 200px */
+      grid-template-columns: 200px 1fr 200px;
+
+      /* Row heights: header auto, content fills, footer auto */
+      grid-template-rows: auto 1fr auto;
+
+      min-height: 100vh; /* full height layout */
+      gap: 8px;          /* space between boxes */
+      padding: 8px;
+      background: #f2f2f2;
+    }
+
+    /* Place each element into its named area */
+    header { grid-area: header; background:#ddd; padding:12px; }
+    nav    { grid-area: nav;    background:#eee; padding:12px; }
+    main   { grid-area: main;   background:#fff; padding:12px; overflow:auto; }
+    aside  { grid-area: sidebar;background:#eee; padding:12px; }
+    footer { grid-area: footer; background:#ddd; padding:12px; }
+
+    /* Simple responsive rule: stack on small screens */
+    @media (max-width: 700px) {
+      .grid-container {
+        grid-template-areas:
+          "header"
+          "nav"
+          "main"
+          "sidebar"
+          "footer";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <header>
+      <h1>Header</h1>
+      <p>Logo • Site title</p>
+    </header>
+
+    <nav>
+      <h2>Nav</h2>
+      <ul>
+        <li>Home</li>
+        <li>Articles</li>
+        <li>About</li>
+      </ul>
+    </nav>
+
+    <main>
+      <h2>Main</h2>
+      <p>Your main content goes here.</p>
+      <p>Add more paragraphs to see scrolling.</p>
+    </main>
+
+    <aside>
+      <h2>Sidebar</h2>
+      <p>Extras, ads, or links.</p>
+    </aside>
+
+    <footer>
+      <p>Footer • © 2025</p>
+    </footer>
+  </div>
+</body>
+</html>
