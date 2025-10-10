@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - Week 3 Thursday: Responsive Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #dbf4f5 0%, #2a2f3c 50%, #127590 100%);
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .code-block .tag {
+            color: #569cd6;
+        }
+
+        .code-block .attribute {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        .code-block .selector {
+            color: #d7ba7d;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #764ba2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .demo-box {
+            background: #f0f0f0;
+            border: 2px dashed #764ba2;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .device-demo {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .device-frame {
+            border: 3px solid #333;
+            border-radius: 15px;
+            padding: 10px;
+            margin: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .desktop-frame {
+            width: 400px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        .tablet-frame {
+            width: 250px;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        .phone-frame {
+            width: 150px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        .responsive-image-demo {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+        }
+
+        .viewport-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .viewport-example {
+            border: 2px solid #764ba2;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .media-query-demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .breakpoint-example {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .breakpoint-box {
+            flex: 1;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .link-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .assignment-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .assignment-box h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .assignment-box ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .assignment-box li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            color: white;
+        }
+
+        .assignment-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+            z-index: 1001;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .text-size-demo {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .vw-text {
+            font-size: 5vw;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .px-text {
+            font-size: 40px;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .framework-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .framework-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #667eea;
+        }
+
+        .quiz-preview {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .viewport-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .framework-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+        
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 10</div>
+            <h1>Responsive Web Design</h1>
+            <h2>Building Websites for Every Screen</h2>
+            
+            <div class="device-demo">
+                <div class="device-frame desktop-frame">
+                    <p>Desktop</p>
+                </div>
+                <div class="device-frame tablet-frame">
+                    <p>Tablet</p>
+                </div>
+                <div class="device-frame phone-frame">
+                    <p>Phone</p>
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Today's Goal:</strong> Learn how to make websites that automatically adjust to look perfect on any device!</p>
+            </div>
+
+            <p style="text-align: center; font-size: 1.5em; margin-top: 30px;">
+                <strong>Week 3 - Thursday</strong><br>
+                CIS 185: Web Development
+            </p>
+        </div>
+
+        <!-- Slide 2: What is Responsive Design? -->
+        <div class="slide">
+            <div class="slide-number">2 / 10</div>
+            <h1>What is Responsive Design?</h1>
+            
+            <h2>One Website, Many Devices</h2>
+            <p>Responsive Web Design uses HTML and CSS to automatically:</p>
+            <ul>
+                <li>📱 <strong>Resize</strong> content to fit the screen</li>
+                <li>🔄 <strong>Rearrange</strong> layouts for different devices</li>
+                <li>👁️ <strong>Hide or show</strong> elements based on screen size</li>
+                <li>📐 <strong>Scale</strong> images and text appropriately</li>
+            </ul>
+
+            <div class="demo-box">
+                <h3>The Problem It Solves:</h3>
+                <p>Without responsive design, mobile users would need to zoom and scroll horizontally to read content designed for desktops!</p>
+            </div>
+
+            <h3>Key Benefits:</h3>
+            <ol>
+                <li><strong>Better User Experience:</strong> Content is easy to read on any device</li>
+                <li><strong>Cost Effective:</strong> One website instead of separate mobile/desktop versions</li>
+                <li><strong>SEO Friendly:</strong> Google prefers responsive websites</li>
+                <li><strong>Future Proof:</strong> Works on devices that don't exist yet!</li>
+            </ol>
+        </div>
+
+        <!-- Slide 3: The Viewport Meta Tag -->
+        <div class="slide">
+            <div class="slide-number">3 / 10</div>
+            <h1>Setting The Viewport</h1>
+            <h2>The Most Important Meta Tag!</h2>
+            
+            <p>The viewport is the user's visible area of a web page. Without proper viewport settings, mobile browsers render pages at desktop widths!</p>
+
+            <div class="code-block">
+<span class="tag">&lt;meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> 
+      <span class="attribute">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+            </div>
+
+            <h3>What Each Part Means:</h3>
+            <ul>
+                <li><span class="highlight">width=device-width</span> - Sets the viewport width to match the device's width</li>
+                <li><span class="highlight">initial-scale=1.0</span> - Sets the initial zoom level (1.0 = no zoom)</li>
+            </ul>
+
+            <div class="viewport-comparison">
+                <div class="viewport-example">
+                    <h3>❌ Without Viewport</h3>
+                    <p>Page renders at desktop width (980px)<br>User must pinch to zoom</p>
+                </div>
+                <div class="viewport-example">
+                    <h3>✅ With Viewport</h3>
+                    <p>Page fits device width perfectly<br>Content is readable immediately</p>
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Remember:</strong> Add this to EVERY HTML page in the &lt;head&gt; section!</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Responsive Images - width vs max-width -->
+        <div class="slide">
+            <div class="slide-number">4 / 10</div>
+            <h1>Responsive Images</h1>
+            <h2>Making Images Flexible</h2>
+
+            <h3>Method 1: Using width: 100%</h3>
+            <div class="code-block">
+<span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="value">"photo.jpg"</span> <span class="attribute">style</span>=<span class="value">"width:100%;"</span><span class="tag">&gt;</span>
+            </div>
+            <p>✅ Image scales with container<br>
+               ⚠️ Can become larger than original size (may look pixelated)</p>
+
+            <h3>Method 2: Using max-width: 100% (Recommended!)</h3>
+            <div class="code-block">
+<span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="value">"photo.jpg"</span> <span class="attribute">style</span>=<span class="value">"max-width:100%; height:auto;"</span><span class="tag">&gt;</span>
+            </div>
+            <p>✅ Image scales down on small screens<br>
+               ✅ Never exceeds original size<br>
+               ✅ Maintains aspect ratio with height:auto</p>
+
+            <div class="comparison-table">
+                <tr>
+                    <th>Property</th>
+                    <th>width: 100%</th>
+                    <th>max-width: 100%</th>
+                </tr>
+                <tr>
+                    <td>Scales Down?</td>
+                    <td>Yes ✅</td>
+                    <td>Yes ✅</td>
+                </tr>
+                <tr>
+                    <td>Scales Up?</td>
+                    <td>Yes (can pixelate) ⚠️</td>
+                    <td>No (stops at original size) ✅</td>
+                </tr>
+                <tr>
+                    <td>Best For</td>
+                    <td>Background images</td>
+                    <td>Content images</td>
+                </tr>
+            </div>
+        </div>
+
+        <!-- Slide 5: Picture Element -->
+        <div class="slide">
+            <div class="slide-number">5 / 10</div>
+            <h1>The &lt;picture&gt; Element</h1>
+            <h2>Different Images for Different Screens</h2>
+
+            <p>The <span class="highlight">&lt;picture&gt;</span> element lets you show completely different images based on screen size!</p>
+
+            <div class="code-block">
+<span class="tag">&lt;picture&gt;</span>
+  <span class="comment">&lt;!-- Small screens (phones) --&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attribute">srcset</span>=<span class="value">"small-image.jpg"</span> 
+          <span class="attribute">media</span>=<span class="value">"(max-width: 600px)"</span><span class="tag">&gt;</span>
+  
+  <span class="comment">&lt;!-- Medium screens (tablets) --&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attribute">srcset</span>=<span class="value">"medium-image.jpg"</span> 
+          <span class="attribute">media</span>=<span class="value">"(max-width: 1200px)"</span><span class="tag">&gt;</span>
+  
+  <span class="comment">&lt;!-- Default/fallback (desktops) --&gt;</span>
+  <span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="value">"large-image.jpg"</span> <span class="attribute">alt</span>=<span class="value">"Description"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/picture&gt;</span>
+            </div>
+
+            <h3>Why Use Different Images?</h3>
+            <ul>
+                <li>📱 <strong>Performance:</strong> Smaller files for mobile devices</li>
+                <li>🎨 <strong>Art Direction:</strong> Cropped/focused versions for small screens</li>
+                <li>💾 <strong>Bandwidth:</strong> Save user's data on mobile connections</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Live Demo:</strong></p>
+                <a href="https://www.w3schools.com/html/tryit.asp?filename=tryhtml_responsive_picture" 
+                   target="_blank" class="link-button">Try Picture Element Example</a>
+            </div>
+
+            <p><strong>Note:</strong> Always include a regular &lt;img&gt; as fallback for older browsers!</p>
+        </div>
+
+        <!-- Slide 6: Responsive Text with Viewport Units -->
+        <div class="slide">
+            <div class="slide-number">6 / 10</div>
+            <h1>Responsive Text Size</h1>
+            <h2>Using Viewport Units</h2>
+
+            <p>Viewport units make text size relative to the browser window size!</p>
+
+            <div class="code-block">
+<span class="tag">&lt;h1</span> <span class="attribute">style</span>=<span class="value">"font-size: 5vw;"</span><span class="tag">&gt;</span>I Scale With The Window!<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;p</span> <span class="attribute">style</span>=<span class="value">"font-size: 2vw;"</span><span class="tag">&gt;</span>So do I!<span class="tag">&lt;/p&gt;</span>
+            </div>
+
+            <h3>Viewport Units Explained:</h3>
+            <ul>
+                <li><span class="highlight">vw</span> = Viewport Width (1vw = 1% of viewport width)</li>
+                <li><span class="highlight">vh</span> = Viewport Height (1vh = 1% of viewport height)</li>
+                <li><span class="highlight">vmin</span> = Smaller of vw or vh</li>
+                <li><span class="highlight">vmax</span> = Larger of vw or vh</li>
+            </ul>
+
+            <div class="text-size-demo">
+                <p class="vw-text">This text uses 5vw</p>
+                <p class="px-text">This text uses 40px</p>
+                <p style="margin-top: 20px;">Resize your browser to see the difference!</p>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Pro Tip:</strong> Combine with min/max sizes for better control:</p>
+                <div class="code-block">
+<span class="selector">h1</span> {
+    <span class="property">font-size</span>: <span class="value">clamp(1.5rem, 4vw, 3rem)</span>;
+    <span class="comment">/* Min: 1.5rem, Preferred: 4vw, Max: 3rem */</span>
+}
+                </div>
+            </div>
+
+            <a href="https://www.w3schools.com/html/tryit.asp?filename=tryhtml_responsive_text" 
+               target="_blank" class="link-button">Try Text Scaling Example</a>
+        </div>
+
+        <!-- Slide 7: Media Queries Introduction -->
+        <div class="slide">
+            <div class="slide-number">7 / 10</div>
+            <h1>Media Queries</h1>
+            <h2>The Power of Responsive CSS</h2>
+
+            <p>Media queries apply different CSS styles based on device characteristics!</p>
+
+            <div class="code-block">
+<span class="comment">/* Default styles (mobile-first approach) */</span>
+<span class="selector">.container</span> {
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="property">padding</span>: <span class="value">10px</span>;
+}
+
+<span class="comment">/* Tablet styles (768px and up) */</span>
+<span class="selector">@media screen and (min-width: 768px)</span> {
+    <span class="selector">.container</span> {
+        <span class="property">width</span>: <span class="value">750px</span>;
+        <span class="property">padding</span>: <span class="value">20px</span>;
+    }
+}
+
+<span class="comment">/* Desktop styles (1024px and up) */</span>
+<span class="selector">@media screen and (min-width: 1024px)</span> {
+    <span class="selector">.container</span> {
+        <span class="property">width</span>: <span class="value">960px</span>;
+        <span class="property">padding</span>: <span class="value">30px</span>;
+    }
+}
+            </div>
+
+            <h3>Common Breakpoints:</h3>
+            <ul>
+                <li>📱 <strong>Mobile:</strong> 0 - 767px</li>
+                <li>📱 <strong>Tablet:</strong> 768px - 1023px</li>
+                <li>💻 <strong>Desktop:</strong> 1024px and up</li>
+                <li>🖥️ <strong>Large Desktop:</strong> 1440px and up</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Mobile-First vs Desktop-First:</strong></p>
+                <p>Mobile-First uses min-width (recommended!)<br>
+                Desktop-First uses max-width</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Media Query Example -->
+        <div class="slide">
+            <div class="slide-number">8 / 10</div>
+            <h1>Media Query in Action</h1>
+            <h2>Creating a Responsive Layout</h2>
+
+            <p>Let's see how media queries transform a layout from mobile to desktop!</p>
+
+            <div class="code-block">
+<span class="comment">/* Mobile: Stack vertically */</span>
+<span class="selector">.column</span> {
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="property">margin-bottom</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Tablet: Two columns */</span>
+<span class="selector">@media (min-width: 768px)</span> {
+    <span class="selector">.column</span> {
+        <span class="property">width</span>: <span class="value">50%</span>;
+        <span class="property">float</span>: <span class="value">left</span>;
+    }
+}
+
+<span class="comment">/* Desktop: Three columns */</span>
+<span class="selector">@media (min-width: 1024px)</span> {
+    <span class="selector">.column</span> {
+        <span class="property">width</span>: <span class="value">33.33%</span>;
+    }
+}
+            </div>
+
+            <div class="media-query-demo">
+                <h3>Layout Changes:</h3>
+                <div class="breakpoint-example">
+                    <div class="breakpoint-box">Column 1</div>
+                    <div class="breakpoint-box">Column 2</div>
+                    <div class="breakpoint-box">Column 3</div>
+                </div>
+                <p style="text-align: center; margin-top: 15px;">
+                    📱 Mobile: Stacked | 📱 Tablet: 2 Columns | 💻 Desktop: 3 Columns
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://www.w3schools.com/html/tryit.asp?filename=tryhtml_responsive_media_query" 
+                   target="_blank" class="link-button">Basic Media Query Demo</a>
+                <a href="https://www.w3schools.com/html/tryit.asp?filename=tryhtml_responsive_media_query3" 
+                   target="_blank" class="link-button">Advanced Layout Demo</a>
+            </div>
+        </div>
+
+        <!-- Slide 9: Responsive Frameworks -->
+        <div class="slide">
+            <div class="slide-number">9 / 10</div>
+            <h1>Responsive Frameworks</h1>
+            <h2>Don't Reinvent the Wheel!</h2>
+
+            <p>CSS frameworks provide pre-built responsive components and grid systems.</p>
+
+            <div class="framework-comparison">
+                <div class="framework-card">
+                    <h3>🎨 Bootstrap</h3>
+                    <ul style="text-align: left;">
+                        <li>Most popular framework</li>
+                        <li>12-column grid system</li>
+                        <li>Tons of components</li>
+                        <li>Large file size</li>
+                    </ul>
+                    <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span>
+                    </div>
+                </div>
+                <div class="framework-card">
+                    <h3>🚀 W3.CSS</h3>
+                    <ul style="text-align: left;">
+                        <li>Lightweight & fast</li>
+                        <li>No JavaScript needed</li>
+                        <li>Simple class names</li>
+                        <li>Smaller community</li>
+                    </ul>
+                    <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"w3-third"</span><span class="tag">&gt;</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Grid System Example (Bootstrap):</h3>
+            <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"col-12 col-md-6 col-lg-4"</span><span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- Full width mobile, half tablet, third desktop --&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Should You Use a Framework?</strong></p>
+                <p>✅ Yes for: Quick prototypes, consistent design, complex layouts<br>
+                   ⚠️ Consider custom CSS for: Learning, performance, unique designs</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Summary & Quiz Preview -->
+        <div class="slide">
+            <div class="slide-number">10 / 10</div>
+            <h1>Summary & Next Week's Quiz</h1>
+            
+            <h2>Key Takeaways:</h2>
+            <ol>
+                <li>Always include the <span class="highlight">viewport meta tag</span></li>
+                <li>Use <span class="highlight">max-width: 100%</span> for responsive images</li>
+                <li>The <span class="highlight">&lt;picture&gt;</span> element serves different images to different devices</li>
+                <li><span class="highlight">Viewport units (vw, vh)</span> create scalable text</li>
+                <li><span class="highlight">Media queries</span> apply different styles at different screen sizes</li>
+                <li><span class="highlight">CSS frameworks</span> speed up responsive development</li>
+            </ol>
+
+            <div class="quiz-preview">
+                <h3>📝 Quiz Topics for Next Tuesday:</h3>
+                <ul>
+                    <li>Viewport meta tag syntax and attributes</li>
+                    <li>Difference between width:100% and max-width:100%</li>
+                    <li>Picture element structure and source order</li>
+                    <li>Viewport units (vw, vh, vmin, vmax)</li>
+                    <li>Media query syntax and breakpoints</li>
+                    <li>Mobile-first vs Desktop-first approaches</li>
+                </ul>
+                <p><strong>Remember:</strong> You can use MDN, W3Schools, or lecture slides during the quiz!</p>
+            </div>
+
+            <div class="assignment-box">
+                <h3>📚 Practice Resources:</h3>
+                <ul>
+                    <li>Review all four W3Schools examples we demonstrated</li>
+                    <li>Try resizing your browser on different websites</li>
+                    <li>Inspect responsive sites using DevTools device mode</li>
+                    <li>Create a simple responsive page using today's techniques</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 10</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const slideInfo = document.getElementById('slideInfo');
+        const progressBar = document.getElementById('progressBar');
+
+        function showSlide(index) {
+            // Ensure index is within bounds
+            currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+            
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update navigation
+            slideInfo.textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            }
+        });
+
+        // Touch/swipe navigation for mobile
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const difference = touchStartX - touchEndX;
+            
+            if (Math.abs(difference) > 50) {
+                if (difference > 0) {
+                    changeSlide(1); // Swipe left, go to next
+                } else {
+                    changeSlide(-1); // Swipe right, go to previous
+                }
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

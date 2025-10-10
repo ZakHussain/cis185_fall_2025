@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - Week 3: Bootstrap 5</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f8f8 0%, #2a2f3c 50%, #746767 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: #2a2f3c;
+            font-size: 3em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #746767;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #746767;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #2a2f3c;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            white-space: pre;
+        }
+
+        .code-block .tag {
+            color: #569cd6;
+        }
+
+        .code-block .class {
+            color: #ce9178;
+        }
+
+        .code-block .attribute {
+            color: #9cdcfe;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background: #2a2f3c;
+            color: #f8f8f8;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #746767;
+            transform: scale(1.05);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #746767;
+            color: #f8f8f8;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #746767 0%, #2a2f3c 100%);
+            color: #f8f8f8;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .demo-box {
+            background: #f0f0f0;
+            border: 2px dashed #746767;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f8f8f8, #746767, #2a2f3c);
+            transition: width 0.5s ease;
+            z-index: 1001;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            background: #2a2f3c;
+            color: #f8f8f8;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #2a2f3c 0%, #746767 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .link-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            color: white;
+        }
+
+        .assignment-box {
+            background: linear-gradient(135deg, #2a2f3c 0%, #746767 100%);
+            color: #f8f8f8;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .assignment-box h3 {
+            color: #f8f8f8;
+            margin-bottom: 20px;
+        }
+
+        .assignment-box ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .assignment-box li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            color: #f8f8f8;
+        }
+
+        .assignment-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .bootstrap-demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #dee2e6;
+        }
+
+        .grid-visual {
+            background: #e9ecef;
+            border: 1px solid #6c757d;
+            padding: 15px;
+            text-align: center;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .breakpoint-table {
+            font-size: 0.9em;
+        }
+
+        .breakpoint-table th {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .component-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .component-card {
+            background: white;
+            border: 2px solid #746767;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .quiz-preview {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .grading-criteria {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .component-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+        
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 12</div>
+            <h1>Bootstrap 5</h1>
+            <h2>The World's Most Popular CSS Framework</h2>
+            
+            <div class="text-center my-4">
+                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612">
+                    <path fill="#563d7c" d="M612 510c0 56.1-45.9 102-102 102H102C45.9 612 0 566.1 0 510V102C0 45.9 45.9 0 102 0h408c56.1 0 102 45.9 102 102v408z"/>
+                    <path fill="#fff" d="M166.3 133h173.5c32 0 57.7 7.3 77 22s29 36.8 29 66.5c0 18-4.4 33.4-13.2 46.2-8.8 12.8-21.4 22.8-37.8 29.8v1c22 4.7 38.7 15.1 50 31.2 11.3 16.2 17 36.4 17 60.8 0 14-2.5 27.1-7.5 39.2-5 12.2-12.8 22.7-23.5 31.5s-24.3 15.8-41 21-36.5 7.8-59.5 7.8h-164V133zm62.5 149.5h102c15 0 27.5-4.2 37.5-12.8s15-20.8 15-36.8c0-18-4.5-30.7-13.5-38s-22-11-39-11h-102v98.6zm0 156.5h110.5c19 0 33.8-4.9 44.2-14.8 10.5-9.8 15.8-23.8 15.8-41.8 0-17.7-5.2-31.2-15.8-40.8s-25.2-14.2-44.2-14.2H228.8V439z"/>
+                </svg>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Today's Focus:</strong> Learn Bootstrap 5 essentials using only HTML & CSS</p>
+                <p>No JavaScript required for today's components!</p>
+            </div>
+
+            <p style="text-align: center; font-size: 1.5em; margin-top: 30px;">
+                <strong>Week 3 - Bootstrap Framework</strong><br>
+                CIS 185: Web Development
+            </p>
+        </div>
+
+        <!-- Slide 2: What is Bootstrap? -->
+        <div class="slide">
+            <div class="slide-number">2 / 12</div>
+            <h1>What is Bootstrap?</h1>
+            
+            <h2>A Powerful CSS Framework</h2>
+            <p>Bootstrap provides pre-built CSS classes for common web components and layouts.</p>
+
+            <div class="bootstrap-demo">
+                <h3>Getting Started - Add One Line!</h3>
+                <div class="code-block">
+<span class="tag">&lt;link</span> <span class="attribute">href</span>=<span class="class">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"</span> 
+      <span class="attribute">rel</span>=<span class="class">"stylesheet"</span><span class="tag">&gt;</span>
+                </div>
+            </div>
+
+            <h3>Why Use Bootstrap?</h3>
+            <ul>
+                <li>🚀 <strong>Speed:</strong> Build responsive sites quickly</li>
+                <li>📱 <strong>Mobile-First:</strong> Designed for mobile devices first</li>
+                <li>🎨 <strong>Consistent:</strong> Professional look across all browsers</li>
+                <li>🔧 <strong>Customizable:</strong> Override with your own CSS</li>
+                <li>📚 <strong>Well-Documented:</strong> Extensive documentation and examples</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Key Concept:</strong> Bootstrap uses classes to style elements<br>
+                Just add class names to your HTML elements!</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Bootstrap Containers -->
+        <div class="slide">
+            <div class="slide-number">3 / 12</div>
+            <h1>Bootstrap Containers</h1>
+            <h2>The Foundation of Every Layout</h2>
+
+            <p>Containers are the most basic layout element in Bootstrap. They wrap and center your content.</p>
+
+            <h3>Three Types of Containers:</h3>
+
+            <div class="code-block">
+<span class="comment">&lt;!-- 1. Fixed-width container (responsive breakpoints) --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"container"</span><span class="tag">&gt;</span>
+    Content here
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- 2. Full-width container (always 100% width) --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"container-fluid"</span><span class="tag">&gt;</span>
+    Content here
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- 3. Responsive containers --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"container-md"</span><span class="tag">&gt;</span>
+    100% width until medium breakpoint, then fixed
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <table class="comparison-table breakpoint-table">
+                <tr>
+                    <th>Breakpoint</th>
+                    <th>Extra Small<br>&lt;576px</th>
+                    <th>Small<br>≥576px</th>
+                    <th>Medium<br>≥768px</th>
+                    <th>Large<br>≥992px</th>
+                    <th>X-Large<br>≥1200px</th>
+                    <th>XX-Large<br>≥1400px</th>
+                </tr>
+                <tr>
+                    <td><strong>.container</strong></td>
+                    <td>100%</td>
+                    <td>540px</td>
+                    <td>720px</td>
+                    <td>960px</td>
+                    <td>1140px</td>
+                    <td>1320px</td>
+                </tr>
+            </table>
+
+            <div class="text-center mt-4">
+                <a href="https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_gs_container&stacked=h" 
+                   target="_blank" class="link-button">Try Container Example</a>
+            </div>
+        </div>
+
+        <!-- Slide 4: The Grid System -->
+        <div class="slide">
+            <div class="slide-number">4 / 12</div>
+            <h1>Bootstrap Grid System</h1>
+            <h2>12-Column Flexible Layout</h2>
+
+            <p>Bootstrap's grid uses a 12-column system built with flexbox.</p>
+
+            <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"container"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"row"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"col-4"</span><span class="tag">&gt;</span>
+            Column 1 (4/12)
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"col-4"</span><span class="tag">&gt;</span>
+            Column 2 (4/12)
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"col-4"</span><span class="tag">&gt;</span>
+            Column 3 (4/12)
+        <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <div class="bootstrap-demo">
+                <div class="row">
+                    <div class="col-12 grid-visual mb-2">col-12 (Full Width)</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 grid-visual">col-6</div>
+                    <div class="col-6 grid-visual">col-6</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-4 grid-visual">col-4</div>
+                    <div class="col-4 grid-visual">col-4</div>
+                    <div class="col-4 grid-visual">col-4</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-8 grid-visual">col-8</div>
+                    <div class="col-4 grid-visual">col-4</div>
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Remember:</strong> Columns in a row should add up to 12 or less!</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Responsive Grid -->
+        <div class="slide">
+            <div class="slide-number">5 / 12</div>
+            <h1>Responsive Grid Classes</h1>
+            <h2>Different Layouts for Different Screens</h2>
+
+            <p>Use breakpoint-specific classes to create responsive layouts:</p>
+
+            <div class="code-block">
+<span class="comment">&lt;!-- Stack on mobile, side-by-side on tablets and up --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"row"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"col-12 col-md-6 col-lg-4"</span><span class="tag">&gt;</span>
+        <span class="comment">&lt;!-- Full width mobile, half tablet, third desktop --&gt;</span>
+        Content here
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"col-12 col-md-6 col-lg-4"</span><span class="tag">&gt;</span>
+        Content here
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"col-12 col-md-12 col-lg-4"</span><span class="tag">&gt;</span>
+        Content here
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <h3>Grid Breakpoint Classes:</h3>
+            <ul>
+                <li><span class="highlight">.col-</span> - Extra small (all devices)</li>
+                <li><span class="highlight">.col-sm-</span> - Small devices (≥576px)</li>
+                <li><span class="highlight">.col-md-</span> - Medium devices (≥768px)</li>
+                <li><span class="highlight">.col-lg-</span> - Large devices (≥992px)</li>
+                <li><span class="highlight">.col-xl-</span> - Extra large (≥1200px)</li>
+                <li><span class="highlight">.col-xxl-</span> - XX-Large (≥1400px)</li>
+            </ul>
+
+            <div class="text-center mt-4">
+                <a href="https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_grid_ex1&stacked=h" 
+                   target="_blank" class="link-button">Try Responsive Grid</a>
+            </div>
+        </div>
+
+        <!-- Slide 6: Bootstrap Cards -->
+        <div class="slide">
+            <div class="slide-number">6 / 12</div>
+            <h1>Bootstrap Cards</h1>
+            <h2>Flexible Content Containers</h2>
+
+            <p>Cards are versatile content containers with multiple variants and options.</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"card"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="class">"..."</span> 
+         <span class="attribute">class</span>=<span class="class">"card-img-top"</span> 
+         <span class="attribute">alt</span>=<span class="class">"..."</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"card-body"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h5</span> <span class="attribute">class</span>=<span class="class">"card-title"</span><span class="tag">&gt;</span>
+            Card Title
+        <span class="tag">&lt;/h5&gt;</span>
+        <span class="tag">&lt;p</span> <span class="attribute">class</span>=<span class="class">"card-text"</span><span class="tag">&gt;</span>
+            Some quick example text.
+        <span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attribute">href</span>=<span class="class">"#"</span> 
+           <span class="attribute">class</span>=<span class="class">"btn btn-primary"</span><span class="tag">&gt;</span>
+            Go somewhere
+        <span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Example Card</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">This is what a Bootstrap card looks like. You can add images, text, links, and more!</p>
+                            <a href="#" class="btn btn-primary">Button</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Card Components:</h3>
+            <ul>
+                <li><span class="highlight">.card</span> - Main container</li>
+                <li><span class="highlight">.card-body</span> - Padded content area</li>
+                <li><span class="highlight">.card-title</span> - Card heading</li>
+                <li><span class="highlight">.card-text</span> - Card paragraph</li>
+                <li><span class="highlight">.card-img-top</span> - Image at top of card</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Navigation Bar -->
+        <div class="slide">
+            <div class="slide-number">7 / 12</div>
+            <h1>Bootstrap Navbar</h1>
+            <h2>Responsive Navigation Made Easy</h2>
+
+            <div class="code-block">
+<span class="tag">&lt;nav</span> <span class="attribute">class</span>=<span class="class">"navbar navbar-expand-lg navbar-light bg-light"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"container-fluid"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attribute">class</span>=<span class="class">"navbar-brand"</span> <span class="attribute">href</span>=<span class="class">"#"</span><span class="tag">&gt;</span>
+            My Website
+        <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"navbar-nav"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attribute">class</span>=<span class="class">"nav-link active"</span> <span class="attribute">href</span>=<span class="class">"#"</span><span class="tag">&gt;</span>
+                Home
+            <span class="tag">&lt;/a&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attribute">class</span>=<span class="class">"nav-link"</span> <span class="attribute">href</span>=<span class="class">"#"</span><span class="tag">&gt;</span>
+                About
+            <span class="tag">&lt;/a&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attribute">class</span>=<span class="class">"nav-link"</span> <span class="attribute">href</span>=<span class="class">"#"</span><span class="tag">&gt;</span>
+                Services
+            <span class="tag">&lt;/a&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attribute">class</span>=<span class="class">"nav-link"</span> <span class="attribute">href</span>=<span class="class">"#"</span><span class="tag">&gt;</span>
+                Contact
+            <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/nav&gt;</span>
+            </div>
+
+            <div class="bootstrap-demo">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Your Brand</a>
+                        <div class="navbar-nav">
+                            <a class="nav-link active" href="#">Home</a>
+                            <a class="nav-link" href="#">Features</a>
+                            <a class="nav-link" href="#">Pricing</a>
+                            <a class="nav-link" href="#">About</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <h3>Navbar Color Schemes:</h3>
+            <ul>
+                <li><span class="highlight">navbar-light bg-light</span> - Light theme</li>
+                <li><span class="highlight">navbar-dark bg-dark</span> - Dark theme</li>
+                <li><span class="highlight">navbar-dark bg-primary</span> - Primary color</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Progress Bars & Carousel -->
+        <div class="slide">
+            <div class="slide-number">8 / 12</div>
+            <h1>Progress Bars & Carousel</h1>
+            
+            <h3>Progress Bars</h3>
+            <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"progress"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"progress-bar"</span> 
+         <span class="attribute">style</span>=<span class="class">"width: 70%"</span><span class="tag">&gt;</span>
+        70%
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <div class="bootstrap-demo">
+                <div class="progress mb-3">
+                    <div class="progress-bar" style="width: 25%">25%</div>
+                </div>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-success" style="width: 50%">50%</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-danger" style="width: 75%">75%</div>
+                </div>
+            </div>
+
+            <h3>Carousel (Image Slider)</h3>
+            <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">id</span>=<span class="class">"myCarousel"</span> <span class="attribute">class</span>=<span class="class">"carousel slide"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"carousel-inner"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"carousel-item active"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="class">"img1.jpg"</span> 
+                 <span class="attribute">class</span>=<span class="class">"d-block w-100"</span> 
+                 <span class="attribute">alt</span>=<span class="class">"..."</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"carousel-item"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="class">"img2.jpg"</span> 
+                 <span class="attribute">class</span>=<span class="class">"d-block w-100"</span> 
+                 <span class="attribute">alt</span>=<span class="class">"..."</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <p><strong>Note:</strong> Carousel requires Bootstrap JavaScript for full functionality, but the structure can be set up with HTML/CSS only.</p>
+        </div>
+
+        <!-- Slide 9: Common Bootstrap Components -->
+        <div class="slide">
+            <div class="slide-number">9 / 12</div>
+            <h1>Common Website Components</h1>
+            <h2>Building Blocks for Modern Sites</h2>
+
+            <div class="component-showcase">
+                <div class="component-card">
+                    <h4>Buttons</h4>
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-success mt-2">Success</button>
+                    <div class="code-block mt-2">
+<span class="attribute">class</span>=<span class="class">"btn btn-primary"</span>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h4>Alerts</h4>
+                    <div class="alert alert-warning" role="alert">
+                        Warning message!
+                    </div>
+                    <div class="code-block mt-2">
+<span class="attribute">class</span>=<span class="class">"alert alert-warning"</span>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h4>Badges</h4>
+                    <span class="badge bg-primary">New</span>
+                    <span class="badge bg-danger">Hot</span>
+                    <span class="badge bg-success">Sale</span>
+                    <div class="code-block mt-2">
+<span class="attribute">class</span>=<span class="class">"badge bg-primary"</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Typography Classes:</h3>
+            <ul>
+                <li><span class="highlight">.text-center</span> - Center align text</li>
+                <li><span class="highlight">.text-uppercase</span> - UPPERCASE text</li>
+                <li><span class="highlight">.fw-bold</span> - Bold text</li>
+                <li><span class="highlight">.text-muted</span> - Muted/gray text</li>
+            </ul>
+
+            <h3>Spacing Utilities:</h3>
+            <ul>
+                <li><span class="highlight">.m-3</span> - Margin all sides (0-5)</li>
+                <li><span class="highlight">.p-3</span> - Padding all sides (0-5)</li>
+                <li><span class="highlight">.mt-3</span> - Margin top</li>
+                <li><span class="highlight">.px-3</span> - Padding left & right</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Responsive Bootstrap -->
+        <div class="slide">
+            <div class="slide-number">10 / 12</div>
+            <h1>Responsive Bootstrap Features</h1>
+            <h2>Mobile-First by Default</h2>
+
+            <h3>Responsive Utilities:</h3>
+            
+            <div class="code-block">
+<span class="comment">&lt;!-- Hide on mobile, show on desktop --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"d-none d-md-block"</span><span class="tag">&gt;</span>
+    Desktop only content
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Show on mobile, hide on desktop --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"d-block d-md-none"</span><span class="tag">&gt;</span>
+    Mobile only content
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Responsive spacing --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"p-2 p-md-4 p-lg-5"</span><span class="tag">&gt;</span>
+    Padding changes with screen size
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <h3>Display Classes:</h3>
+            <ul>
+                <li><span class="highlight">.d-none</span> - Hide element</li>
+                <li><span class="highlight">.d-block</span> - Display block</li>
+                <li><span class="highlight">.d-inline</span> - Display inline</li>
+                <li><span class="highlight">.d-flex</span> - Display flex</li>
+            </ul>
+
+            <h3>Responsive Tables:</h3>
+            <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="class">"table-responsive"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;table</span> <span class="attribute">class</span>=<span class="class">"table"</span><span class="tag">&gt;</span>
+        <span class="comment">&lt;!-- Table content --&gt;</span>
+    <span class="tag">&lt;/table&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Pro Tip:</strong> Always test your Bootstrap sites on different devices!</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Summary & Best Practices -->
+        <div class="slide">
+            <div class="slide-number">11 / 12</div>
+            <h1>Bootstrap Best Practices</h1>
+            
+            <h2>Do's and Don'ts</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>✅ DO:</h3>
+                    <ul>
+                        <li>Use containers to wrap content</li>
+                        <li>Follow the 12-column grid system</li>
+                        <li>Use responsive classes (col-sm-, col-md-, etc.)</li>
+                        <li>Override Bootstrap with custom CSS when needed</li>
+                        <li>Keep Bootstrap updated</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>❌ DON'T:</h3>
+                    <ul>
+                        <li>Modify Bootstrap's source files</li>
+                        <li>Use more than 12 columns in a row</li>
+                        <li>Forget the viewport meta tag</li>
+                        <li>Mix Bootstrap versions</li>
+                        <li>Overuse utility classes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quiz-preview">
+                <h3>📝 Quiz Topics for Next Week:</h3>
+                <ul>
+                    <li>Container types and their differences</li>
+                    <li>Grid system breakpoints and column classes</li>
+                    <li>Common Bootstrap components (cards, navbar, buttons)</li>
+                    <li>Responsive utility classes</li>
+                    <li>Bootstrap color and spacing utilities</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Assignment 3 -->
+        <div class="slide">
+            <div class="slide-number">12 / 12</div>
+            <h1>Assignment 3: Responsive Portfolio</h1>
+            <h2>Manual vs Bootstrap Implementation</h2>
+            <h3 style="color: #746767;">Due: Next Thursday</h3>
+
+            <div class="assignment-box">
+                <h3>📋 Your Mission: Create TWO Versions of Your Portfolio</h3>
+                <ul>
+                    <li><strong>Version 1: Manual Responsive Design</strong>
+                        <br>Take your Assignment 1 portfolio and manually add responsive features using:
+                        <ul style="margin-top: 10px;">
+                            <li>Media queries (@media)</li>
+                            <li>Flexible images (max-width)</li>
+                            <li>Viewport units (vw, vh)</li>
+                            <li>CSS Grid or Flexbox</li>
+                        </ul>
+                    </li>
+                    <li><strong>Version 2: Bootstrap Responsive Design</strong>
+                        <br>Create a second version using Bootstrap 5 to handle responsiveness:
+                        <ul style="margin-top: 10px;">
+                            <li>Bootstrap grid system</li>
+                            <li>Bootstrap components</li>
+                            <li>Bootstrap utilities</li>
+                        </ul>
+                    </li>
+                    <li><strong>ReadMe.md: Compare & Contrast</strong>
+                        <br>Write a detailed comparison of both approaches</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h3>📱 Required Breakpoints (Minimum 3 Sizes):</h3>
+                <p><strong>Mobile:</strong> 320px - 767px<br>
+                   <strong>Tablet:</strong> 768px - 1023px<br>
+                   <strong>Desktop:</strong> 1024px and above</p>
+            </div>
+
+            <div class="grading-criteria">
+                <h3>📊 Grading Criteria (50 points):</h3>
+                <ul style="list-style: none;">
+                    <li>✓ <strong>Manual Responsive Version (15 pts)</strong>
+                        <ul>
+                            <li>Media queries for 3+ breakpoints (6 pts)</li>
+                            <li>Responsive images and text (5 pts)</li>
+                            <li>Layout adapts properly (4 pts)</li>
+                        </ul>
+                    </li>
+                    <li>✓ <strong>Bootstrap Version (15 pts)</strong>
+                        <ul>
+                            <li>Proper Bootstrap implementation (6 pts)</li>
+                            <li>Grid system usage (5 pts)</li>
+                            <li>Bootstrap components (4 pts)</li>
+                        </ul>
+                    </li>
+                    <li>✓ <strong>ReadMe.md Comparison (10 pts)</strong>
+                        <ul>
+                            <li>Code complexity comparison (3 pts)</li>
+                            <li>Development time analysis (2 pts)</li>
+                            <li>Pros/cons of each approach (3 pts)</li>
+                            <li>Personal preference & reasoning (2 pts)</li>
+                        </ul>
+                    </li>
+                    <li>✓ <strong>Code Quality & Testing (5 pts)</strong>
+                        <ul>
+                            <li>Clean, organized code (2 pts)</li>
+                            <li>Works on all 3 device sizes (3 pts)</li>
+                        </ul>
+                    </li>
+                    <li>✓ <strong>Creativity & Exploration (5 pts)</strong>
+                        <ul>
+                            <li>Creative design solutions (3 pts)</li>
+                            <li>Going beyond requirements (2 pts)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="demo-box" style="background: #fff3cd; border-color: #ffc107;">
+                <p><strong>💡 Note for Advanced Students:</strong><br>
+                If you went above and beyond in Assignment 1, you may simplify your portfolio to focus on demonstrating responsive techniques clearly.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 12</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const slideInfo = document.getElementById('slideInfo');
+        const progressBar = document.getElementById('progressBar');
+
+        function showSlide(index) {
+            // Ensure index is within bounds
+            currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+            
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update navigation
+            slideInfo.textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            }
+        });
+
+        // Touch/swipe navigation for mobile
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const difference = touchStartX - touchEndX;
+            
+            if (Math.abs(difference) > 50) {
+                if (difference > 0) {
+                    changeSlide(1); // Swipe left, go to next
+                } else {
+                    changeSlide(-1); // Swipe right, go to previous
+                }
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
