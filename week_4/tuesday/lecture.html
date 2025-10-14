@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - JavaScript Introduction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 25%, #FF8C00 50%, #FF6347 75%, #FFD700 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Falling leaves */
+        body::before {
+            content: "🍂";
+            position: fixed;
+            font-size: 30px;
+            opacity: 0.3;
+            animation: fall 8s infinite linear;
+            top: -50px;
+            left: 10%;
+        }
+
+        body::after {
+            content: "🍁";
+            position: fixed;
+            font-size: 35px;
+            opacity: 0.3;
+            animation: fall 10s infinite linear;
+            animation-delay: 3s;
+            top: -50px;
+            left: 80%;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); left: 10%; }
+            25% { left: 15%; }
+            50% { left: 8%; }
+            75% { left: 12%; }
+            100% { transform: translateY(100vh) rotate(360deg); left: 10%; }
+        }
+
+        .presentation-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            position: relative;
+            margin-bottom: 80px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #FFFAF0, #FFF8DC);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(139, 69, 19, 0.3);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+            border: 3px solid #D2691E;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h1 {
+            color: #8B4513;
+            font-size: 3em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #FF8C00;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #D2691E;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #A0522D;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #4A4A4A;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #2D2D2D;
+            color: #F8F8F2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            overflow-x: auto;
+            white-space: pre;
+            border: 2px solid #D2691E;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .code-block .comment { color: #6A9955; }
+        .code-block .keyword { color: #C586C0; }
+        .code-block .string { color: #CE9178; }
+        .code-block .number { color: #B5CEA8; }
+        .code-block .function { color: #DCDCAA; }
+        .code-block .variable { color: #9CDCFE; }
+        .code-block .operator { color: #D4D4D4; }
+        .code-block .boolean { color: #569CD6; }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #FFF8DC;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #D2691E;
+            z-index: 2000;
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #8B4513, #FF8C00);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(135deg, #FF8C00, #8B4513);
+            transform: scale(1.05);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #D2691E, #FF8C00);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8B4513, #FF8C00);
+            transition: width 0.5s ease;
+            z-index: 1001;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #FF8C00 0%, #FFD700 100%);
+            color: #4A4A4A;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, #FFE4B5, #FFDEAD);
+            border: 2px dashed #D2691E;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .output-box {
+            background: #1e1e1e;
+            color: #0F0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #8B4513;
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 30px; }
+            h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+        
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 20</div>
+            <h1>🍁 JavaScript Introduction 🍁</h1>
+            <h2>Week 4 - Tuesday, October 14</h2>
+            
+            <div class="demo-box">
+                <p><strong>Today's Autumn Topics:</strong></p>
+                <p>Variables • Data Types • Operators • Functions • Conditionals • Loops</p>
+            </div>
+            
+            <div class="quiz-preview">
+                <h3>📝 Quiz 4 Today</h3>
+                <p>First 10 minutes of class - Based on last week's material</p>
+            </div>
+            
+            <div class="assignment-box">
+                <h3>Learning Objectives:</h3>
+                <ul>
+                    <li>Understand JavaScript syntax and structure</li>
+                    <li>Master variables and data types</li>
+                    <li>Write functions and control flow</li>
+                    <li>Use the browser console for debugging</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is JavaScript? -->
+        <div class="slide">
+            <div class="slide-number">2 / 20</div>
+            <h1>What is JavaScript?</h1>
+            
+            <ul>
+                <li><strong>Programming language</strong> for web development</li>
+                <li>Makes web pages <span class="highlight">interactive and dynamic</span></li>
+                <li>Runs in the browser (client-side)</li>
+                <li>Can also run on servers (Node.js)</li>
+            </ul>
+            
+            <h2>JavaScript Can:</h2>
+            <ul>
+                <li>🍂 Change HTML content</li>
+                <li>🍁 Modify CSS styles</li>
+                <li>🎃 React to user events</li>
+                <li>🌰 Validate data</li>
+                <li>🍄 Create animations</li>
+            </ul>
+            
+            <div class="demo-box">
+                <p><strong>Fun Fact:</strong> JavaScript was created in just 10 days in 1995!</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Your First JavaScript -->
+        <div class="slide">
+            <div class="slide-number">3 / 20</div>
+            <h1>Your First JavaScript Code</h1>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>The Code:</h3>
+                    <div class="code-block">
+<span class="comment">// My first JavaScript program</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="string">"Hello, Fall! 🍁"</span>);
+
+<span class="comment">// Display a popup message</span>
+<span class="function">alert</span>(<span class="string">"Welcome to JavaScript!"</span>);
+
+<span class="comment">// Write to the webpage</span>
+<span class="variable">document</span>.<span class="function">write</span>(<span class="string">"It's autumn time!"</span>);</div>
+                </div>
+                <div>
+                    <h3>Output Methods:</h3>
+                    <div class="output-box">
+                        > Hello, Fall! 🍁
+                    </div>
+                    <p><strong>console.log()</strong> - Outputs to console</p>
+                    <p><strong>alert()</strong> - Shows popup box</p>
+                    <p><strong>document.write()</strong> - Writes to HTML</p>
+                </div>
+            </div>
+            
+            <div class="interactive-demo">
+                <h3>Try it:</h3>
+                <button class="demo-button" onclick="console.log('Hello, Fall! 🍁'); alert('Check the console too!')">
+                    Run Code
+                </button>
+                <p style="font-size: 0.9em;">Press F12 to open console and see the output!</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Variables -->
+        <div class="slide">
+            <div class="slide-number">4 / 20</div>
+            <h1>Variables - Storing Data</h1>
+            
+            <p>Variables are <span class="highlight">containers</span> for storing data values.</p>
+            
+            <h2>Three Ways to Declare Variables:</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Declaration:</h3>
+                    <div class="code-block">
+<span class="comment">// let - can be changed</span>
+<span class="keyword">let</span> <span class="variable">leaves</span> = <span class="number">100</span>;
+<span class="variable">leaves</span> = <span class="number">150</span>; <span class="comment">// OK!</span>
+
+<span class="comment">// const - cannot be changed</span>
+<span class="keyword">const</span> <span class="variable">SEASON</span> = <span class="string">"Fall"</span>;
+<span class="comment">// SEASON = "Winter"; // ERROR!</span>
+
+<span class="comment">// var - old way (avoid)</span>
+<span class="keyword">var</span> <span class="variable">temperature</span> = <span class="number">65</span>;</div>
+                </div>
+                <div>
+                    <h3>Best Practices:</h3>
+                    <div class="demo-box">
+                        <p><strong>Use let</strong> when value will change</p>
+                        <p><strong>Use const</strong> when value won't change</p>
+                        <p><strong>Avoid var</strong> in modern code</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Variable Naming Rules:</h3>
+            <ul>
+                <li>Must start with letter, $, or _</li>
+                <li>Can contain letters, numbers, $, _</li>
+                <li>Case sensitive (apple ≠ Apple)</li>
+                <li>Can't use reserved words (let, if, for)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Data Types -->
+        <div class="slide">
+            <div class="slide-number">5 / 20</div>
+            <h1>Data Types</h1>
+            
+            <h2>JavaScript has 7 Primitive Data Types:</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <div class="code-block">
+<span class="comment">// 1. Number</span>
+<span class="keyword">let</span> <span class="variable">apples</span> = <span class="number">25</span>;
+<span class="keyword">let</span> <span class="variable">price</span> = <span class="number">3.99</span>;
+
+<span class="comment">// 2. String</span>
+<span class="keyword">let</span> <span class="variable">message</span> = <span class="string">"Happy Fall!"</span>;
+<span class="keyword">let</span> <span class="variable">letter</span> = <span class="string">'A'</span>;
+
+<span class="comment">// 3. Boolean</span>
+<span class="keyword">let</span> <span class="variable">isAutumn</span> = <span class="boolean">true</span>;
+<span class="keyword">let</span> <span class="variable">isCold</span> = <span class="boolean">false</span>;
+
+<span class="comment">// 4. Undefined</span>
+<span class="keyword">let</span> <span class="variable">weather</span>;
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">weather</span>); <span class="comment">// undefined</span></div>
+                </div>
+                <div>
+                    <div class="code-block">
+<span class="comment">// 5. Null</span>
+<span class="keyword">let</span> <span class="variable">pumpkins</span> = <span class="keyword">null</span>;
+
+<span class="comment">// 6. Symbol (unique)</span>
+<span class="keyword">let</span> <span class="variable">sym</span> = <span class="function">Symbol</span>(<span class="string">"id"</span>);
+
+<span class="comment">// 7. BigInt (large numbers)</span>
+<span class="keyword">let</span> <span class="variable">bigNumber</span> = <span class="number">123456789012345n</span>;
+
+<span class="comment">// Check type with typeof</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="keyword">typeof</span> <span class="variable">apples</span>); <span class="comment">// "number"</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="keyword">typeof</span> <span class="variable">message</span>); <span class="comment">// "string"</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="keyword">typeof</span> <span class="variable">isAutumn</span>); <span class="comment">// "boolean"</span></div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Dynamic Typing:</strong> JavaScript automatically determines the data type!</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Working with Strings -->
+        <div class="slide">
+            <div class="slide-number">6 / 20</div>
+            <h1>Working with Strings</h1>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>String Operations:</h3>
+                    <div class="code-block">
+<span class="comment">// Concatenation</span>
+<span class="keyword">let</span> <span class="variable">season</span> = <span class="string">"Fall"</span>;
+<span class="keyword">let</span> <span class="variable">year</span> = <span class="number">2024</span>;
+<span class="keyword">let</span> <span class="variable">message</span> = <span class="variable">season</span> + <span class="string">" "</span> + <span class="variable">year</span>;
+
+<span class="comment">// Template literals (backticks)</span>
+<span class="keyword">let</span> <span class="variable">greeting</span> = <span class="string">`Welcome to ${season} ${year}!`</span>;
+
+<span class="comment">// String properties</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">season</span>.<span class="variable">length</span>); <span class="comment">// 4</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">season</span>.<span class="function">toUpperCase</span>()); <span class="comment">// "FALL"</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">season</span>[<span class="number">0</span>]); <span class="comment">// "F"</span></div>
+                </div>
+                <div>
+                    <h3>Output:</h3>
+                    <div class="output-box">
+                        > Fall 2024<br>
+                        > Welcome to Fall 2024!<br>
+                        > 4<br>
+                        > FALL<br>
+                        > F
+                    </div>
+                </div>
+            </div>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Method</th>
+                    <th>Example</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>.toUpperCase()</td>
+                    <td>"fall".toUpperCase()</td>
+                    <td>"FALL"</td>
+                </tr>
+                <tr>
+                    <td>.toLowerCase()</td>
+                    <td>"FALL".toLowerCase()</td>
+                    <td>"fall"</td>
+                </tr>
+                <tr>
+                    <td>.indexOf()</td>
+                    <td>"autumn".indexOf("t")</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>.slice()</td>
+                    <td>"leaves".slice(0,3)</td>
+                    <td>"lea"</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 7: Operators -->
+        <div class="slide">
+            <div class="slide-number">7 / 20</div>
+            <h1>Operators</h1>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                <div>
+                    <h3>Arithmetic:</h3>
+                    <div class="code-block" style="font-size: 0.95em;">
+<span class="number">10</span> <span class="operator">+</span> <span class="number">5</span>  <span class="comment">// 15 (add)</span>
+<span class="number">10</span> <span class="operator">-</span> <span class="number">5</span>  <span class="comment">// 5 (subtract)</span>
+<span class="number">10</span> <span class="operator">*</span> <span class="number">5</span>  <span class="comment">// 50 (multiply)</span>
+<span class="number">10</span> <span class="operator">/</span> <span class="number">5</span>  <span class="comment">// 2 (divide)</span>
+<span class="number">10</span> <span class="operator">%</span> <span class="number">3</span>  <span class="comment">// 1 (remainder)</span>
+<span class="number">2</span> <span class="operator">**</span> <span class="number">3</span>  <span class="comment">// 8 (power)</span>
+<span class="variable">x</span><span class="operator">++</span>     <span class="comment">// increment</span>
+<span class="variable">x</span><span class="operator">--</span>     <span class="comment">// decrement</span></div>
+                </div>
+                <div>
+                    <h3>Comparison:</h3>
+                    <div class="code-block" style="font-size: 0.95em;">
+<span class="number">5</span> <span class="operator">==</span> <span class="string">"5"</span>   <span class="comment">// true (equal)</span>
+<span class="number">5</span> <span class="operator">===</span> <span class="string">"5"</span>  <span class="comment">// false (strict)</span>
+<span class="number">5</span> <span class="operator">!=</span> <span class="number">3</span>     <span class="comment">// true (not equal)</span>
+<span class="number">5</span> <span class="operator">!==</span> <span class="string">"5"</span>  <span class="comment">// true (strict)</span>
+<span class="number">5</span> <span class="operator">></span> <span class="number">3</span>      <span class="comment">// true</span>
+<span class="number">5</span> <span class="operator"><</span> <span class="number">3</span>      <span class="comment">// false</span>
+<span class="number">5</span> <span class="operator">>=</span> <span class="number">5</span>     <span class="comment">// true</span>
+<span class="number">5</span> <span class="operator"><=</span> <span class="number">5</span>     <span class="comment">// true</span></div>
+                </div>
+                <div>
+                    <h3>Logical:</h3>
+                    <div class="code-block" style="font-size: 0.95em;">
+<span class="comment">// AND (both true)</span>
+<span class="boolean">true</span> <span class="operator">&&</span> <span class="boolean">true</span>   <span class="comment">// true</span>
+<span class="boolean">true</span> <span class="operator">&&</span> <span class="boolean">false</span>  <span class="comment">// false</span>
+
+<span class="comment">// OR (one true)</span>
+<span class="boolean">true</span> <span class="operator">||</span> <span class="boolean">false</span>  <span class="comment">// true</span>
+<span class="boolean">false</span> <span class="operator">||</span> <span class="boolean">false</span> <span class="comment">// false</span>
+
+<span class="comment">// NOT (opposite)</span>
+<span class="operator">!</span><span class="boolean">true</span>  <span class="comment">// false</span>
+<span class="operator">!</span><span class="boolean">false</span> <span class="comment">// true</span></div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Remember:</strong> === checks type AND value, == only checks value!</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Order of Operations -->
+        <div class="slide">
+            <div class="slide-number">8 / 20</div>
+            <h1>Order of Operations (PEMDAS)</h1>
+            
+            <h2>JavaScript follows mathematical order:</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Priority</th>
+                    <th>Operation</th>
+                    <th>Symbol</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>P</strong>arentheses</td>
+                    <td>( )</td>
+                    <td>(2 + 3) * 4 = 20</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>E</strong>xponents</td>
+                    <td>**</td>
+                    <td>2 ** 3 * 2 = 16</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>M</strong>ultiplication<br><strong>D</strong>ivision</td>
+                    <td>* /</td>
+                    <td>10 + 3 * 2 = 16</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>A</strong>ddition<br><strong>S</strong>ubtraction</td>
+                    <td>+ -</td>
+                    <td>10 - 3 + 2 = 9</td>
+                </tr>
+            </table>
+            
+            <h3>Examples:</h3>
+            <div class="code-block">
+<span class="keyword">let</span> <span class="variable">result1</span> = <span class="number">10</span> <span class="operator">+</span> <span class="number">5</span> <span class="operator">*</span> <span class="number">2</span>;        <span class="comment">// 20 (not 30!)</span>
+<span class="keyword">let</span> <span class="variable">result2</span> = (<span class="number">10</span> <span class="operator">+</span> <span class="number">5</span>) <span class="operator">*</span> <span class="number">2</span>;      <span class="comment">// 30</span>
+<span class="keyword">let</span> <span class="variable">result3</span> = <span class="number">100</span> <span class="operator">/</span> <span class="number">10</span> <span class="operator">*</span> <span class="number">5</span>;       <span class="comment">// 50 (left to right)</span>
+<span class="keyword">let</span> <span class="variable">result4</span> = <span class="number">2</span> <span class="operator">**</span> <span class="number">3</span> <span class="operator">**</span> <span class="number">2</span>;        <span class="comment">// 512 (right to left for **)</span>
+<span class="keyword">let</span> <span class="variable">result5</span> = <span class="number">10</span> <span class="operator">%</span> <span class="number">3</span> <span class="operator">+</span> <span class="number">2</span>;        <span class="comment">// 3 (remainder then add)</span></div>
+            
+            <div class="demo-box">
+                <p><strong>Tip:</strong> When in doubt, use parentheses to make your intention clear!</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Functions Introduction -->
+        <div class="slide">
+            <div class="slide-number">9 / 20</div>
+            <h1>Functions - Reusable Code</h1>
+            
+            <p>Functions are <span class="highlight">reusable blocks of code</span> that perform specific tasks.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Function Declaration:</h3>
+                    <div class="code-block">
+<span class="comment">// Declare a function</span>
+<span class="keyword">function</span> <span class="function">greetFall</span>() {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Welcome to autumn! 🍁"</span>);
+}
+
+<span class="comment">// Call the function</span>
+<span class="function">greetFall</span>();
+
+<span class="comment">// Function with parameters</span>
+<span class="keyword">function</span> <span class="function">countLeaves</span>(<span class="variable">trees</span>, <span class="variable">leavesPerTree</span>) {
+    <span class="keyword">let</span> <span class="variable">total</span> = <span class="variable">trees</span> <span class="operator">*</span> <span class="variable">leavesPerTree</span>;
+    <span class="keyword">return</span> <span class="variable">total</span>;
+}
+
+<span class="keyword">let</span> <span class="variable">result</span> = <span class="function">countLeaves</span>(<span class="number">5</span>, <span class="number">1000</span>);
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">result</span>); <span class="comment">// 5000</span></div>
+                </div>
+                <div>
+                    <h3>Arrow Functions:</h3>
+                    <div class="code-block">
+<span class="comment">// Arrow function syntax</span>
+<span class="keyword">const</span> <span class="variable">add</span> = (<span class="variable">a</span>, <span class="variable">b</span>) <span class="operator">=></span> {
+    <span class="keyword">return</span> <span class="variable">a</span> <span class="operator">+</span> <span class="variable">b</span>;
+};
+
+<span class="comment">// Shorter for single expressions</span>
+<span class="keyword">const</span> <span class="variable">multiply</span> = (<span class="variable">a</span>, <span class="variable">b</span>) <span class="operator">=></span> <span class="variable">a</span> <span class="operator">*</span> <span class="variable">b</span>;
+
+<span class="comment">// Using the functions</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="function">add</span>(<span class="number">3</span>, <span class="number">4</span>));      <span class="comment">// 7</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="function">multiply</span>(<span class="number">3</span>, <span class="number">4</span>)); <span class="comment">// 12</span></div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Functions help:</strong> Organize code • Avoid repetition • Make code reusable</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Function Examples -->
+        <div class="slide">
+            <div class="slide-number">10 / 20</div>
+            <h1>Function Examples</h1>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Code:</h3>
+                    <div class="code-block">
+<span class="comment">// Temperature converter</span>
+<span class="keyword">function</span> <span class="function">celsiusToFahrenheit</span>(<span class="variable">celsius</span>) {
+    <span class="keyword">return</span> (<span class="variable">celsius</span> <span class="operator">*</span> <span class="number">9</span><span class="operator">/</span><span class="number">5</span>) <span class="operator">+</span> <span class="number">32</span>;
+}
+
+<span class="comment">// Calculate average</span>
+<span class="keyword">function</span> <span class="function">average</span>(<span class="variable">num1</span>, <span class="variable">num2</span>, <span class="variable">num3</span>) {
+    <span class="keyword">let</span> <span class="variable">sum</span> = <span class="variable">num1</span> <span class="operator">+</span> <span class="variable">num2</span> <span class="operator">+</span> <span class="variable">num3</span>;
+    <span class="keyword">return</span> <span class="variable">sum</span> <span class="operator">/</span> <span class="number">3</span>;
+}
+
+<span class="comment">// Check season</span>
+<span class="keyword">function</span> <span class="function">getSeason</span>(<span class="variable">month</span>) {
+    <span class="keyword">if</span> (<span class="variable">month</span> <span class="operator">>=</span> <span class="number">9</span> <span class="operator">&&</span> <span class="variable">month</span> <span class="operator"><=</span> <span class="number">11</span>) {
+        <span class="keyword">return</span> <span class="string">"Fall 🍂"</span>;
+    }
+    <span class="keyword">return</span> <span class="string">"Not Fall"</span>;
+}</div>
+                </div>
+                <div>
+                    <h3>Usage & Output:</h3>
+                    <div class="code-block">
+<span class="keyword">let</span> <span class="variable">temp</span> = <span class="function">celsiusToFahrenheit</span>(<span class="number">20</span>);
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">temp</span>); 
+<span class="comment">// 68</span>
+
+<span class="keyword">let</span> <span class="variable">avg</span> = <span class="function">average</span>(<span class="number">70</span>, <span class="number">85</span>, <span class="number">90</span>);
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">avg</span>); 
+<span class="comment">// 81.67</span>
+
+<span class="keyword">let</span> <span class="variable">season</span> = <span class="function">getSeason</span>(<span class="number">10</span>);
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">season</span>); 
+<span class="comment">// "Fall 🍂"</span></div>
+                </div>
+            </div>
+            
+            <div class="interactive-demo">
+                <h3>Try it:</h3>
+                <button class="demo-button" onclick="alert('20°C = ' + ((20 * 9/5) + 32) + '°F')">
+                    Convert 20°C to °F
+                </button>
+                <button class="demo-button" onclick="alert('October is ' + (10 >= 9 && 10 <= 11 ? 'Fall 🍂' : 'Not Fall'))">
+                    Check October Season
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Conditionals (if/else) -->
+        <div class="slide">
+            <div class="slide-number">11 / 20</div>
+            <h1>Conditionals - Making Decisions</h1>
+            
+            <h2>if / else if / else Statements</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Syntax:</h3>
+                    <div class="code-block">
+<span class="keyword">let</span> <span class="variable">temperature</span> = <span class="number">65</span>;
+
+<span class="keyword">if</span> (<span class="variable">temperature</span> <span class="operator">></span> <span class="number">80</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">"It's hot! ☀️"</span>);
+} <span class="keyword">else if</span> (<span class="variable">temperature</span> <span class="operator">></span> <span class="number">60</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Perfect fall weather! 🍁"</span>);
+} <span class="keyword">else if</span> (<span class="variable">temperature</span> <span class="operator">></span> <span class="number">40</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Getting chilly! 🧥"</span>);
+} <span class="keyword">else</span> {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">"It's cold! ❄️"</span>);
+}
+
+<span class="comment">// Output: "Perfect fall weather! 🍁"</span></div>
+                </div>
+                <div>
+                    <h3>Ternary Operator:</h3>
+                    <div class="code-block">
+<span class="comment">// Shorthand if/else</span>
+<span class="comment">// condition ? true : false</span>
+
+<span class="keyword">let</span> <span class="variable">age</span> = <span class="number">18</span>;
+<span class="keyword">let</span> <span class="variable">canVote</span> = <span class="variable">age</span> <span class="operator">>=</span> <span class="number">18</span> 
+    <span class="operator">?</span> <span class="string">"Yes"</span> 
+    <span class="operator">:</span> <span class="string">"No"</span>;
+
+<span class="keyword">let</span> <span class="variable">season</span> = <span class="string">"Fall"</span>;
+<span class="keyword">let</span> <span class="variable">emoji</span> = <span class="variable">season</span> <span class="operator">===</span> <span class="string">"Fall"</span> 
+    <span class="operator">?</span> <span class="string">"🍂"</span> 
+    <span class="operator">:</span> <span class="string">"🌸"</span>;
+
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">canVote</span>); <span class="comment">// "Yes"</span>
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">emoji</span>);   <span class="comment">// "🍂"</span></div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Remember:</strong> Use === for comparison, = for assignment!</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Switch Statement -->
+        <div class="slide">
+            <div class="slide-number">12 / 20</div>
+            <h1>Switch Statement</h1>
+            
+            <p>Use <span class="highlight">switch</span> when comparing one value against many options.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Switch Syntax:</h3>
+                    <div class="code-block">
+<span class="keyword">let</span> <span class="variable">month</span> = <span class="string">"October"</span>;
+<span class="keyword">let</span> <span class="variable">activity</span>;
+
+<span class="keyword">switch</span>(<span class="variable">month</span>) {
+    <span class="keyword">case</span> <span class="string">"September"</span>:
+        <span class="variable">activity</span> = <span class="string">"Apple picking 🍎"</span>;
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">"October"</span>:
+        <span class="variable">activity</span> = <span class="string">"Pumpkin carving 🎃"</span>;
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">"November"</span>:
+        <span class="variable">activity</span> = <span class="string">"Thanksgiving prep 🦃"</span>;
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        <span class="variable">activity</span> = <span class="string">"Enjoy the season! 🍂"</span>;
+}
+
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">activity</span>);
+<span class="comment">// "Pumpkin carving 🎃"</span></div>
+                </div>
+                <div>
+                    <h3>Multiple Cases:</h3>
+                    <div class="code-block">
+<span class="keyword">let</span> <span class="variable">day</span> = <span class="string">"Saturday"</span>;
+<span class="keyword">let</span> <span class="variable">schedule</span>;
+
+<span class="keyword">switch</span>(<span class="variable">day</span>) {
+    <span class="keyword">case</span> <span class="string">"Monday"</span>:
+    <span class="keyword">case</span> <span class="string">"Tuesday"</span>:
+    <span class="keyword">case</span> <span class="string">"Wednesday"</span>:
+    <span class="keyword">case</span> <span class="string">"Thursday"</span>:
+    <span class="keyword">case</span> <span class="string">"Friday"</span>:
+        <span class="variable">schedule</span> = <span class="string">"Work day 💼"</span>;
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">"Saturday"</span>:
+    <span class="keyword">case</span> <span class="string">"Sunday"</span>:
+        <span class="variable">schedule</span> = <span class="string">"Weekend! 🎉"</span>;
+        <span class="keyword">break</span>;
+}
+
+<span class="function">console</span>.<span class="function">log</span>(<span class="variable">schedule</span>); 
+<span class="comment">// "Weekend! 🎉"</span></div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Don't forget break!</strong> Without it, code continues to next case!</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: For Loops -->
+        <div class="slide">
+            <div class="slide-number">13 / 20</div>
+            <h1>For Loops - Repeating Code</h1>
+            
+            <p>Loops let you <span class="highlight">repeat code</span> multiple times.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Basic For Loop:</h3>
+                    <div class="code-block">
+<span class="comment">// for (start; condition; increment)</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">1</span>; <span class="variable">i</span> <span class="operator"><=</span> <span class="number">5</span>; <span class="variable">i</span><span class="operator">++</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Leaf ${i} 🍂`</span>);
+}
+
+<span class="comment">// Output:</span>
+<span class="comment">// Leaf 1 🍂</span>
+<span class="comment">// Leaf 2 🍂</span>
+<span class="comment">// Leaf 3 🍂</span>
+<span class="comment">// Leaf 4 🍂</span>
+<span class="comment">// Leaf 5 🍂</span>
+
+<span class="comment">// Count down</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">5</span>; <span class="variable">i</span> <span class="operator">></span> <span class="number">0</span>; <span class="variable">i</span><span class="operator">--</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="variable">i</span>);
+}</div>
+                </div>
+                <div>
+                    <h3>Loop Through Array:</h3>
+                    <div class="code-block">
+<span class="keyword">let</span> <span class="variable">fallColors</span> = [
+    <span class="string">"Red"</span>, 
+    <span class="string">"Orange"</span>, 
+    <span class="string">"Yellow"</span>, 
+    <span class="string">"Brown"</span>
+];
+
+<span class="comment">// Loop through array</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">0</span>; <span class="variable">i</span> <span class="operator"><</span> <span class="variable">fallColors</span>.<span class="variable">length</span>; <span class="variable">i</span><span class="operator">++</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="variable">fallColors</span>[<span class="variable">i</span>]);
+}
+
+<span class="comment">// For...of loop (easier!)</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">color</span> <span class="keyword">of</span> <span class="variable">fallColors</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Fall color: ${color}`</span>);
+}</div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Loop Parts:</strong> Initialize • Check condition • Execute body • Update</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: While and Do-While Loops -->
+        <div class="slide">
+            <div class="slide-number">14 / 20</div>
+            <h1>While and Do-While Loops</h1>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>While Loop:</h3>
+                    <div class="code-block">
+<span class="comment">// Continues while condition is true</span>
+<span class="keyword">let</span> <span class="variable">leaves</span> = <span class="number">5</span>;
+
+<span class="keyword">while</span> (<span class="variable">leaves</span> <span class="operator">></span> <span class="number">0</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`${leaves} leaves falling...`</span>);
+    <span class="variable">leaves</span><span class="operator">--</span>;
+}
+<span class="function">console</span>.<span class="function">log</span>(<span class="string">"All leaves have fallen!"</span>);
+
+<span class="comment">// Random number example</span>
+<span class="keyword">let</span> <span class="variable">temperature</span> = <span class="number">75</span>;
+<span class="keyword">while</span> (<span class="variable">temperature</span> <span class="operator">></span> <span class="number">60</span>) {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Temp: ${temperature}°F`</span>);
+    <span class="variable">temperature</span> <span class="operator">-=</span> <span class="number">3</span>;
+}</div>
+                </div>
+                <div>
+                    <h3>Do-While Loop:</h3>
+                    <div class="code-block">
+<span class="comment">// Runs at least once</span>
+<span class="keyword">let</span> <span class="variable">count</span> = <span class="number">0</span>;
+
+<span class="keyword">do</span> {
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Count: ${count}`</span>);
+    <span class="variable">count</span><span class="operator">++</span>;
+} <span class="keyword">while</span> (<span class="variable">count</span> <span class="operator"><</span> <span class="number">3</span>);
+
+<span class="comment">// Menu example</span>
+<span class="keyword">let</span> <span class="variable">choice</span>;
+<span class="keyword">do</span> {
+    <span class="variable">choice</span> = <span class="function">prompt</span>(<span class="string">"Pick season (Fall):"</span>);
+} <span class="keyword">while</span> (<span class="variable">choice</span> <span class="operator">!==</span> <span class="string">"Fall"</span>);
+
+<span class="function">console</span>.<span class="function">log</span>(<span class="string">"Good choice! 🍂"</span>);</div>
+                </div>
+            </div>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Loop Type</th>
+                    <th>When to Use</th>
+                    <th>Key Feature</th>
+                </tr>
+                <tr>
+                    <td>for</td>
+                    <td>Known number of iterations</td>
+                    <td>All parts in one line</td>
+                </tr>
+                <tr>
+                    <td>while</td>
+                    <td>Unknown iterations</td>
+                    <td>May never run</td>
+                </tr>
+                <tr>
+                    <td>do-while</td>
+                    <td>Run at least once</td>
+                    <td>Condition checked after</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 15: Break and Continue -->
+        <div class="slide">
+            <div class="slide-number">15 / 20</div>
+            <h1>Break and Continue</h1>
+            
+            <p>Control loop execution with <span class="highlight">break</span> and <span class="highlight">continue</span>.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Break - Exit Loop:</h3>
+                    <div class="code-block">
+<span class="comment">// Find first even number</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">1</span>; <span class="variable">i</span> <span class="operator"><=</span> <span class="number">10</span>; <span class="variable">i</span><span class="operator">++</span>) {
+    <span class="keyword">if</span> (<span class="variable">i</span> <span class="operator">%</span> <span class="number">2</span> <span class="operator">===</span> <span class="number">0</span>) {
+        <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Found even: ${i}`</span>);
+        <span class="keyword">break</span>; <span class="comment">// Exit loop</span>
+    }
+}
+<span class="comment">// Output: Found even: 2</span>
+
+<span class="comment">// Search in array</span>
+<span class="keyword">let</span> <span class="variable">fruits</span> = [<span class="string">"apple"</span>, <span class="string">"pear"</span>, <span class="string">"grape"</span>];
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">fruit</span> <span class="keyword">of</span> <span class="variable">fruits</span>) {
+    <span class="keyword">if</span> (<span class="variable">fruit</span> <span class="operator">===</span> <span class="string">"pear"</span>) {
+        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Found pear!"</span>);
+        <span class="keyword">break</span>;
+    }
+}</div>
+                </div>
+                <div>
+                    <h3>Continue - Skip Iteration:</h3>
+                    <div class="code-block">
+<span class="comment">// Skip odd numbers</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">1</span>; <span class="variable">i</span> <span class="operator"><=</span> <span class="number">5</span>; <span class="variable">i</span><span class="operator">++</span>) {
+    <span class="keyword">if</span> (<span class="variable">i</span> <span class="operator">%</span> <span class="number">2</span> <span class="operator">===</span> <span class="number">1</span>) {
+        <span class="keyword">continue</span>; <span class="comment">// Skip odd</span>
+    }
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Even: ${i}`</span>);
+}
+<span class="comment">// Output:</span>
+<span class="comment">// Even: 2</span>
+<span class="comment">// Even: 4</span>
+
+<span class="comment">// Skip specific value</span>
+<span class="keyword">let</span> <span class="variable">temps</span> = [<span class="number">65</span>, <span class="number">70</span>, <span class="number">-999</span>, <span class="number">75</span>];
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">temp</span> <span class="keyword">of</span> <span class="variable">temps</span>) {
+    <span class="keyword">if</span> (<span class="variable">temp</span> <span class="operator">===</span> <span class="number">-999</span>) <span class="keyword">continue</span>;
+    <span class="function">console</span>.<span class="function">log</span>(<span class="string">`Temp: ${temp}°F`</span>);
+}</div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>break</strong> = Exit entire loop | <strong>continue</strong> = Skip to next iteration</p>
+            </div>
+        </div>
+<!-- Slide 16 -->
+<div class="slide">
+  <div class="slide-number">16 / 20</div>
+  <h1>Comments and Console</h1>
+  <h2>Comments - Document Your Code</h2>
+  <div class="code-block">
+// Single line comment - explains one line
+
+/* 
+   Multi-line comment
+   Can span multiple lines
+   Good for longer explanations
+*/
+
+/**
+ * Documentation comment
+ * @param {number} temp - Temperature in Celsius
+ * @returns {number} Temperature in Fahrenheit
+ */
+function convertTemp(temp) {
+    return (temp * 9/5) + 32; // Formula for conversion
+}
+  </div>
+
+  <h2>Console Methods</h2>
+  <div class="code-block">
+console.log("Regular message");           // Normal output
+console.error("Error message!");          // Red error
+console.warn("Warning!");                 // Yellow warning
+console.table(["apple", "pear"]);         // Table format
+console.clear();                          // Clear console
+
+// Grouping messages
+console.group("Fall Items");
+console.log("🍂 Leaves");
+console.log("🎃 Pumpkins");
+console.groupEnd();
+  </div>
+  <div class="demo-box"><strong>Tip:</strong> Use comments to explain <em>WHY</em>, not just what code does!</div>
+</div>
+
+<!-- Slide 17 -->
+<div class="slide">
+  <div class="slide-number">17 / 20</div>
+  <h1>Practical Example - Fall Harvest Calculator</h1>
+  <div class="code-block">
+// Fall Harvest Calculator 🍎🎃
+function calculateHarvest() {
+    // Get user input
+    let apples = 150;
+    let pumpkins = 25;
+    let cornStalks = 200;
+    
+    // Prices per item
+    const APPLE_PRICE = 0.50;
+    const PUMPKIN_PRICE = 5.00;
+    const CORN_PRICE = 0.25;
+    
+    // Calculate totals
+    let appleRevenue = apples * APPLE_PRICE;
+    let pumpkinRevenue = pumpkins * PUMPKIN_PRICE;
+    let cornRevenue = cornStalks * CORN_PRICE;
+    
+    let total = appleRevenue + pumpkinRevenue + cornRevenue;
+    
+    // Display results
+    console.log("🍂 Fall Harvest Report 🍂");
+    console.log(`Apples: $${appleRevenue}`);
+    console.log(`Pumpkins: $${pumpkinRevenue}`);
+    console.log(`Corn: $${cornRevenue}`);
+    console.log(`Total Revenue: $${total}`);
+    
+    return total;
+}
+
+calculateHarvest();
+  </div>
+  <div class="output-box">
+🍂 Fall Harvest Report 🍂<br>
+Apples: $75<br>
+Pumpkins: $125<br>
+Corn: $50<br>
+Total Revenue: $250
+  </div>
+  <div class="demo-box">
+    <button class="nav-button" onclick="calculateHarvest();alert('Check console for harvest report!')">
+      Run Harvest Calculator
+    </button>
+  </div>
+</div>
+
+<!-- Slide 18 -->
+<div class="slide">
+  <div class="slide-number">18 / 20</div>
+  <h1>Example: Temperature Analyzer</h1>
+  <div class="code-block">
+// Analyze fall temperatures
+function analyzeTemperatures() {
+    let temps = [72, 68, 65, 61, 58, 55, 52];
+    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    
+    // Find average
+    let sum = 0;
+    for (let temp of temps) { sum += temp; }
+    let average = sum / temps.length;
+    
+    // Find coldest day
+    let coldest = temps[0], coldestDay = 0;
+    for (let i = 1; i < temps.length; i++) {
+        if (temps[i] < coldest) { coldest = temps[i]; coldestDay = i; }
+    }
+    
+    // Report
+    console.log("🌡️ Week Temperature Report");
+    console.log(`Average: ${average.toFixed(1)}°F`);
+    console.log(`Coldest: ${coldest}°F on ${days[coldestDay]}`);
+    
+    // Check for sweater weather
+    for (let i = 0; i < temps.length; i++) {
+        if (temps[i] < 60) console.log(`${days[i]}: Sweater weather! 🧥`);
+    }
+}
+
+analyzeTemperatures();
+  </div>
+  <div class="demo-box">
+    <strong>Skills Used:</strong> Arrays • Loops • Conditionals • Functions<br>
+    <button class="nav-button" onclick="analyzeTemperatures();alert('Open console to view results!')">
+      Run Temperature Analyzer
+    </button>
+  </div>
+</div>
+
+<!-- Slide 19 -->
+<div class="slide">
+  <div class="slide-number">19 / 20</div>
+  <h1>Common Errors to Avoid</h1>
+  <table class="comparison-table" border="1" style="width:100%;border-collapse:collapse;">
+    <tr><th>❌ Wrong</th><th>✅ Right</th><th>Explanation</th></tr>
+    <tr><td>if (x = 5)</td><td>if (x === 5)</td><td>Use === for comparison</td></tr>
+    <tr><td>const x = 5;<br>x = 10;</td><td>let x = 5;<br>x = 10;</td><td>Can't change const</td></tr>
+    <tr><td>for (i < 10)</td><td>for (let i=0; i<10; i++)</td><td>Need all 3 parts</td></tr>
+    <tr><td>If (true)</td><td>if (true)</td><td>JavaScript is case-sensitive</td></tr>
+    <tr><td>"Hello' + name"</td><td>"Hello" + name</td><td>Match quote types</td></tr>
+  </table>
+  <h2>Debugging Tips:</h2>
+  <ul>
+    <li>🐛 Use console.log() to check values</li>
+    <li>🔍 Check browser console for errors (F12)</li>
+    <li>📝 Read error messages carefully</li>
+    <li>✅ Test code frequently</li>
+    <li>💭 Think through logic step by step</li>
+  </ul>
+  <div class="demo-box"><strong>Remember:</strong> Everyone makes mistakes! Debugging is part of programming!</div>
+</div>
+
+<!-- Slide 20 -->
+<div class="slide">
+  <div class="slide-number">20 / 20</div>
+  <h1>Summary</h1>
+  <h2>What We Learned Today:</h2>
+  <ul>
+    <li>✅ Variables (<code>let</code>, <code>const</code>) and data types</li>
+    <li>✅ Operators and order of operations</li>
+    <li>✅ Functions - reusable code blocks</li>
+    <li>✅ Conditionals (<code>if/else</code>, <code>switch</code>)</li>
+    <li>✅ Loops (<code>for</code>, <code>while</code>, <code>do-while</code>)</li>
+    <li>✅ Comments and console usage</li>
+  </ul>
+  <h2>Practice This Week 🍂</h2>
+  <ul>
+    <li>Write a temperature converter function</li>
+    <li>Create a loop that counts to 100</li>
+    <li>Make a simple calculator with functions</li>
+    <li>Practice using if/else statements</li>
+    <li>Debug code using console.log()</li>
+  </ul>
+  <div class="demo-box"><strong>Keep practicing!</strong> Every line of code you write grows your skill. 🍁</div>
+</div>
+</div>
+    <!-- Navigation Buttons -->
+    <div class="navigation">
+        <button id="prevBtn" class="nav-button">⬅ Prev</button>
+        <button id="nextBtn" class="nav-button">Next ➡</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+                // Update the slide number text
+                const numEl = slide.querySelector('.slide-number');
+                if (numEl) numEl.textContent = `${i + 1} / ${slides.length}`;
+            });
+
+            const progress = ((index + 1) / slides.length) * 100;
+            progressBar.style.width = progress + '%';
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) currentSlide--;
+            showSlide(currentSlide);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) currentSlide++;
+            showSlide(currentSlide);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            } else if (event.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            }
+        });
+
+        showSlide(currentSlide);
+function calculateHarvest() {
+  let apples = 150;
+  let pumpkins = 25;
+  let cornStalks = 200;
+
+  const APPLE_PRICE = 0.5;
+  const PUMPKIN_PRICE = 5.0;
+  const CORN_PRICE = 0.25;
+
+  let appleRevenue = apples * APPLE_PRICE;
+  let pumpkinRevenue = pumpkins * PUMPKIN_PRICE;
+  let cornRevenue = cornStalks * CORN_PRICE;
+
+  let total = appleRevenue + pumpkinRevenue + cornRevenue;
+
+  console.clear();
+  console.log("🍂 Fall Harvest Report 🍂");
+  console.log(`Apples: $${appleRevenue}`);
+  console.log(`Pumpkins: $${pumpkinRevenue}`);
+  console.log(`Corn: $${cornRevenue}`);
+  console.log(`Total Revenue: $${total}`);
+
+  alert(`Total Fall Harvest Revenue: $${total}`);
+  return total;
+}
+
+// Hook up button
+document.getElementById('harvestBtn').addEventListener('click', calculateHarvest);
+
+function analyzeTemperatures() {
+  let temps = [72, 68, 65, 61, 58, 55, 52];
+  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  let sum = 0;
+  for (let temp of temps) sum += temp;
+  let average = sum / temps.length;
+
+  let coldest = temps[0];
+  let coldestDay = 0;
+  for (let i = 1; i < temps.length; i++) {
+    if (temps[i] < coldest) {
+      coldest = temps[i];
+      coldestDay = i;
+    }
+  }
+
+  console.clear();
+  console.log("🌡️ Week Temperature Report");
+  console.log(`Average: ${average.toFixed(1)}°F`);
+  console.log(`Coldest: ${coldest}°F on ${days[coldestDay]}`);
+
+  let sweaterDays = [];
+  for (let i = 0; i < temps.length; i++) {
+    if (temps[i] < 60) {
+      sweaterDays.push(days[i]);
+      console.log(`${days[i]}: Sweater weather! 🧥`);
+    }
+  }
+
+  alert(
+    `Average: ${average.toFixed(1)}°F\nColdest: ${coldest}°F on ${days[coldestDay]}\nSweater Days: ${sweaterDays.join(", ")}`
+  );
+}
+
+// Hook up button
+document.getElementById('analyzeBtn').addEventListener('click', analyzeTemperatures);
+    </script>
+</body>
+</html>
