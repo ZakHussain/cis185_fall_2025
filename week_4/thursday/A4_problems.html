@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIS 185 - JavaScript Homework Week 4</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #8b4513 0%,
+          #d2691e 50%,
+          #ff8c00 100%
+        );
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: #fff8dc;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        border: 3px solid #d2691e;
+      }
+
+      h1 {
+        color: #8b4513;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #ff8c00;
+        padding-bottom: 15px;
+      }
+
+      h2 {
+        color: #d2691e;
+        font-size: 1.8em;
+        margin-top: 30px;
+        margin-bottom: 15px;
+      }
+
+      .problem {
+        background: white;
+        border: 2px solid #d2691e;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .problem-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .problem-title {
+        color: #8b4513;
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      .points {
+        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-weight: bold;
+      }
+
+      .code-template {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        overflow-x: auto;
+        white-space: pre;
+        line-height: 1.5;
+      }
+
+      .hint {
+        background: #ffe4b5;
+        border-left: 4px solid #ff8c00;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 5px;
+      }
+
+      .test-cases {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+
+      .test-case {
+        background: #1e1e1e;
+        color: #0f0;
+        padding: 8px 12px;
+        margin: 8px 0;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        font-size: 0.95em;
+      }
+
+      .bonus {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        color: #8b4513;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 0.9em;
+      }
+
+      .submission-info {
+        background: #d1ecf1;
+        border: 2px solid #0c5460;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+
+      ul {
+        margin-left: 30px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin: 8px 0;
+        line-height: 1.6;
+      }
+
+      .examples {
+        background: #1e1e1e;
+        color: #0f0;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+        font-family: "Courier New", monospace;
+      }
+
+      .comment {
+        color: #6a9955;
+      }
+      .keyword {
+        color: #c586c0;
+      }
+      .string {
+        color: #ce9178;
+      }
+      .number {
+        color: #b5cea8;
+      }
+      .function {
+        color: #dcdcaa;
+      }
+
+      .file-name {
+        background: #8b4513;
+        color: white;
+        padding: 3px 10px;
+        border-radius: 5px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🍂 JavaScript Algorithms Homework - Week 4 🍂</h1>
+      <p style="font-size: 1.1em; color: #666; margin-bottom: 20px">
+        <strong>Due:</strong> Thursday, October 23 at 5:30 PM<br />
+        <strong>Total Points:</strong> 50 points (+ 10 extra credit)<br />
+        <strong>Objective:</strong> Practice JavaScript fundamentals through
+        algorithmic problem-solving
+      </p>
+      <!-- Setup Instructions -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">
+            Setup: Running Your JavaScript Code 🧑‍💻
+          </div>
+        </div>
+
+        <p>
+          You can run and test all homework files either on your computer using
+          <strong>Node.js + VS Code</strong> or online using
+          <a href="https://replit.com/~" target="_blank"
+            ><strong>Replit</strong></a
+          >.
+        </p>
+
+        <h3>Option 1 — Run Locally in VS Code (using Node.js)</h3>
+        <ol style="margin-left: 1.5em; line-height: 1.7">
+          <li>
+            Install Node from
+            <a href="https://nodejs.org" target="_blank">https://nodejs.org</a>
+            (LTS version recommended).
+          </li>
+          <li>Open <strong>VS Code</strong>.</li>
+          <li>
+            Open your homework folder (e.g. <code>week4/assignment4</code>).
+          </li>
+          <li>Create a new file such as <code>problem1.js</code>.</li>
+          <li>Write your JavaScript code and save the file.</li>
+          <li>
+            Open VS Code’s Terminal (<kbd>Ctrl + shift + `</kbd> on Windows or
+            <kbd>Cmd + shift + `</kbd> on Mac).
+          </li>
+          <li>
+            Run your file using:<br />
+            <pre
+              style="
+                background: #1e1e1e;
+                color: #0f0;
+                padding: 10px;
+                border-radius: 6px;
+              "
+            >
+node problem1.js</pre
+            >
+          </li>
+          <li>Check the output in the terminal window.</li>
+        </ol>
+
+        <h3>Option 2 — Run Online (using Replit)</h3>
+        <ol style="margin-left: 1.5em; line-height: 1.7">
+          <li>
+            Go to
+            <a href="https://replit.com/~" target="_blank"
+              >https://replit.com/~</a
+            >.
+          </li>
+          <li>
+            Create a new Repl and choose the <strong>Node.js</strong> template.
+          </li>
+          <li>
+            Copy and paste your JavaScript code into the main file (<code
+              >index.js</code
+            >
+            or create a new file like <code>problem1.js</code>).
+          </li>
+          <li>
+            Click the green <strong>“Run”</strong> button at the top to see your
+            output in the console below.
+          </li>
+        </ol>
+
+        <div class="hint">
+          <strong>💡 Tip:</strong>
+          Always save your file before running it. Use
+          <code>console.log()</code> to print results for each test case.
+        </div>
+      </div>
+
+      <!-- Problem 1 -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">
+            Problem 1: Temperature Converter Suite
+          </div>
+          <div class="points">10 points</div>
+        </div>
+        <span class="file-name">problem1.js</span>
+        <p>
+          Create a comprehensive temperature conversion system with multiple
+          functions.
+        </p>
+
+        <div class="code-template">
+          <span class="comment">// Complete these functions</span>
+
+          <span class="keyword">function</span>
+          <span class="function">celsiusToFahrenheit</span>(celsius) {
+          <span class="comment">// Convert Celsius to Fahrenheit</span>
+          <span class="comment">// Formula: (C × 9/5) + 32</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">fahrenheitToCelsius</span>(fahrenheit) {
+          <span class="comment">// Convert Fahrenheit to Celsius</span>
+          <span class="comment">// Formula: (F - 32) × 5/9</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">getTemperatureDescription</span>(fahrenheit) {
+          <span class="comment"
+            >// Return description based on temperature:</span
+          >
+          <span class="comment">// Below 32: "Freezing"</span>
+          <span class="comment">// 32-50: "Cold"</span>
+          <span class="comment">// 51-70: "Cool"</span>
+          <span class="comment">// 71-85: "Warm"</span>
+          <span class="comment">// Above 85: "Hot"</span>
+          }
+        </div>
+
+        <div class="test-cases">
+          <strong>Test Cases:</strong>
+          <div class="test-case">celsiusToFahrenheit(0) → 32</div>
+          <div class="test-case">celsiusToFahrenheit(100) → 212</div>
+          <div class="test-case">celsiusToFahrenheit(-40) → -40</div>
+          <div class="test-case">fahrenheitToCelsius(32) → 0</div>
+          <div class="test-case">fahrenheitToCelsius(68) → 20</div>
+          <div class="test-case">fahrenheitToCelsius(212) → 100</div>
+          <div class="test-case">
+            getTemperatureDescription(25) → "Freezing"
+          </div>
+          <div class="test-case">getTemperatureDescription(75) → "Warm"</div>
+          <div class="test-case">getTemperatureDescription(95) → "Hot"</div>
+        </div>
+      </div>
+
+      <!-- Problem 2 -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">Problem 2: Fall Leaf Counter</div>
+          <div class="points">10 points</div>
+        </div>
+        <span class="file-name">problem2.js</span>
+        <p>
+          Track falling leaves with loops and conditionals. Count total leaves
+          and categorize by color.
+        </p>
+
+        <div class="code-template">
+          <span class="keyword">function</span>
+          <span class="function">countLeaves</span>(days) {
+          <span class="comment"
+            >// Each day, leaves fall following this pattern:</span
+          >
+          <span class="comment">// Day 1: 10 leaves</span>
+          <span class="comment">// Day 2: 20 leaves (doubles)</span>
+          <span class="comment">// Day 3: 30 leaves (+10 from day 2)</span>
+          <span class="comment">// Day 4: 40 leaves (+10 from day 3)</span>
+          <span class="comment"
+            >// Pattern: First day doubles, then +10 each day</span
+          >
+
+          <span class="keyword">let</span> total = 0;
+          <span class="comment">// Use a for loop to calculate total</span>
+
+          <span class="keyword">return</span> total; }
+
+          <span class="keyword">function</span>
+          <span class="function">categorizeLeafColors</span>(leaves) {
+          <span class="comment">// leaves is an array of color strings</span>
+          <span class="comment">// Count each color and return an object</span>
+
+          <span class="keyword">let</span> colorCount = {};
+          <span class="comment">// Loop through array and count colors</span>
+
+          <span class="keyword">return</span> colorCount; }
+        </div>
+
+        <div class="test-cases">
+          <strong>Test Cases:</strong>
+          <div class="test-case">countLeaves(1) → 10</div>
+          <div class="test-case">countLeaves(2) → 30 (10 + 20)</div>
+          <div class="test-case">countLeaves(4) → 100 (10 + 20 + 30 + 40)</div>
+          <div class="test-case">
+            countLeaves(5) → 150 (10 + 20 + 30 + 40 + 50)
+          </div>
+          <div class="test-case">
+            categorizeLeafColors(["red", "yellow", "red", "brown"]) → {red: 2,
+            yellow: 1, brown: 1}
+          </div>
+          <div class="test-case">
+            categorizeLeafColors(["orange", "orange", "orange"]) → {orange: 3}
+          </div>
+          <div class="test-case">categorizeLeafColors([]) → {}</div>
+        </div>
+
+        <div class="hint">
+          <strong>💡 Hint:</strong> For the first function, notice the pattern
+          changes after day 1. For the second, you'll need to check if a color
+          already exists in your object before counting.
+        </div>
+      </div>
+
+      <!-- Problem 3 -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">Problem 3: Grade Calculator</div>
+          <div class="points">10 points</div>
+        </div>
+        <span class="file-name">problem3.js</span>
+        <p>Build a comprehensive grade calculation system.</p>
+
+        <div class="code-template">
+          <span class="keyword">function</span>
+          <span class="function">calculateAverage</span>(scores) {
+          <span class="comment"
+            >// Calculate and return the average of an array of scores</span
+          >
+          <span class="comment">// Handle empty array case (return 0)</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">dropLowestScore</span>(scores) {
+          <span class="comment"
+            >// Return a new array with the lowest score removed</span
+          >
+          <span class="comment"
+            >// If multiple lowest scores exist, remove only one</span
+          >
+          <span class="comment">// Don't modify the original array!</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">getLetterGrade</span>(score) {
+          <span class="comment">// Return letter grade based on score</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">curveGrades</span>(scores, curveAmount) {
+          <span class="comment">// Add curveAmount to each score</span>
+          <span class="comment"
+            >// Cap all scores at 100 (no score above 100)</span
+          >
+          <span class="comment"
+            >// Return new array, don't modify original</span
+          >
+          }
+        </div>
+
+        <div class="test-cases">
+          <strong>Test Cases:</strong>
+          <div class="test-case">calculateAverage([80, 90, 70]) → 80</div>
+          <div class="test-case">calculateAverage([100, 50, 75]) → 75</div>
+          <div class="test-case">calculateAverage([]) → 0</div>
+          <div class="test-case">
+            dropLowestScore([80, 90, 70, 85]) → [80, 90, 85]
+          </div>
+          <div class="test-case">
+            dropLowestScore([50, 50, 75, 100]) → [50, 75, 100]
+          </div>
+          <div class="test-case">getLetterGrade(95) → "A"</div>
+          <div class="test-case">getLetterGrade(82) → "B"</div>
+          <div class="test-case">getLetterGrade(58) → "F"</div>
+          <div class="test-case">
+            curveGrades([85, 95, 70], 10) → [95, 100, 80]
+          </div>
+          <div class="test-case">
+            curveGrades([90, 96, 80], 5) → [95, 100, 85]
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 4 -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">Problem 4: Pattern Generator</div>
+          <div class="points">10 points</div>
+        </div>
+        <span class="file-name">problem4.js</span>
+        <p>
+          Write functions that use <strong>loops</strong> to generate text
+          patterns. Each function should <strong>return</strong> the full
+          pattern as a single string, with each line separated by a
+          <code>\n</code> character.
+        </p>
+
+        <div class="code-template">
+          <span class="keyword">function</span>
+          <span class="function">createPyramid</span>(height) {
+          <span class="comment"
+            >// Build a centered pyramid of asterisks (*)</span
+          >
+          <span class="comment">// Example: height = 3 →</span>
+          <span class="comment">// *</span>
+          <span class="comment">// ***</span>
+          <span class="comment">// *****</span>
+          <span class="comment"
+            >// Return as a string with \n between lines</span
+          >
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">createNumberStaircase</span>(steps) {
+          <span class="comment"
+            >// Build a staircase of increasing numbers</span
+          >
+          <span class="comment">// Example: steps = 5 →</span>
+          <span class="comment">// 1</span>
+          <span class="comment">// 12</span>
+          <span class="comment">// 123</span>
+          <span class="comment">// 1234</span>
+          <span class="comment">// 12345</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">createCheckerboard</span>(size) {
+          <span class="comment"
+            >// Create a checkerboard pattern of X and O</span
+          >
+          <span class="comment">// Example: size = 4 →</span>
+          <span class="comment">// XOXO</span>
+          <span class="comment">// OXOX</span>
+          <span class="comment">// XOXO</span>
+          <span class="comment">// OXOX</span>
+          }
+        </div>
+
+        <div class="test-cases">
+          <strong>Expected Outputs:</strong>
+
+          <p><code>createPyramid(3)</code> →</p>
+          <pre>
+  *
+ ***
+*****
+    </pre
+          >
+
+          <p><code>createPyramid(4)</code> →</p>
+          <pre>
+   *
+  ***
+ *****
+*******
+    </pre
+          >
+
+          <p><code>createNumberStaircase(5)</code> →</p>
+          <pre>
+1
+12
+123
+1234
+12345
+    </pre
+          >
+
+          <p><code>createCheckerboard(4)</code> →</p>
+          <pre>
+XOXO
+OXOX
+XOXO
+OXOX
+    </pre
+          >
+        </div>
+
+        <div class="hint">
+          <strong>💡 Hint:</strong>
+          For the pyramid: - Spaces = <code>height - row - 1</code> - Stars =
+          <code>2 * row + 1</code> Combine each line with <code>\n</code> at the
+          end.
+        </div>
+      </div>
+
+      <!-- Problem 5 -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">Problem 5: Array Manipulator</div>
+          <div class="points">10 points</div>
+        </div>
+        <span class="file-name">problem5.js</span>
+        <p>Create utility functions for array manipulation.</p>
+
+        <div class="code-template">
+          <span class="keyword">function</span>
+          <span class="function">reverseArray</span>(arr) {
+          <span class="comment"
+            >// Return a new array with elements in reverse order</span
+          >
+          <span class="comment"
+            >// Don't use the built-in reverse() method!</span
+          >
+          <span class="comment">// Don't modify the original array</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">removeDuplicates</span>(arr) {
+          <span class="comment"
+            >// Return a new array with duplicates removed</span
+          >
+          <span class="comment"
+            >// Maintain original order of first occurrence</span
+          >
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">rotateArray</span>(arr, positions) {
+          <span class="comment"
+            >// Rotate array to the right by 'positions'</span
+          >
+          <span class="comment"
+            >// Handle positions larger than array length</span
+          >
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">findSecondLargest</span>(numbers) {
+          <span class="comment"
+            >// Find and return the second largest number</span
+          >
+          <span class="comment"
+            >// Return null if array has less than 2 unique values</span
+          >
+          }
+        </div>
+
+        <div class="test-cases">
+          <strong>Test Cases:</strong>
+          <div class="test-case">reverseArray([1, 2, 3, 4]) → [4, 3, 2, 1]</div>
+          <div class="test-case">
+            reverseArray(["a", "b", "c"]) → ["c", "b", "a"]
+          </div>
+          <div class="test-case">reverseArray([]) → []</div>
+          <div class="test-case">
+            removeDuplicates([1, 2, 2, 3, 1, 4]) → [1, 2, 3, 4]
+          </div>
+          <div class="test-case">
+            removeDuplicates(["a", "b", "a", "c"]) → ["a", "b", "c"]
+          </div>
+          <div class="test-case">
+            rotateArray([1, 2, 3, 4], 1) → [4, 1, 2, 3]
+          </div>
+          <div class="test-case">
+            rotateArray([1, 2, 3, 4], 2) → [3, 4, 1, 2]
+          </div>
+          <div class="test-case">
+            rotateArray([1, 2, 3], 4) → [3, 1, 2] (4 % 3 = 1 rotation)
+          </div>
+          <div class="test-case">findSecondLargest([10, 20, 30, 40]) → 30</div>
+          <div class="test-case">findSecondLargest([5, 5, 5]) → null</div>
+          <div class="test-case">
+            findSecondLargest([100, 50, 100, 75]) → 75
+          </div>
+        </div>
+      </div>
+
+      <!-- Challenge Problem -->
+      <div class="problem">
+        <div class="problem-header">
+          <div class="problem-title">🌟 Challenge: Number System Converter</div>
+          <div class="points">+10 extra credit</div>
+        </div>
+        <span class="file-name">challenge.js</span>
+        <p>
+          Create functions to convert between number systems (binary, decimal,
+          hexadecimal).
+        </p>
+
+        <div class="code-template">
+          <span class="keyword">function</span>
+          <span class="function">decimalToBinary</span>(decimal) {
+          <span class="comment"
+            >// Convert decimal number to binary string</span
+          >
+          <span class="comment">// Don't use toString(2)!</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">binaryToDecimal</span>(binary) {
+          <span class="comment"
+            >// Convert binary string to decimal number</span
+          >
+          <span class="comment">// Don't use parseInt(binary, 2)!</span>
+          }
+
+          <span class="keyword">function</span>
+          <span class="function">decimalToHexadecimal</span>(decimal) {
+          <span class="comment">// Convert decimal to hexadecimal string</span>
+          <span class="comment">// Use 0-9 and A-F for digits</span>
+          <span class="comment">// Don't use toString(16)!</span>
+          }
+        </div>
+
+        <div class="test-cases">
+          <strong>Test Cases:</strong>
+          <div class="test-case">decimalToBinary(10) → "1010"</div>
+          <div class="test-case">decimalToBinary(25) → "11001"</div>
+          <div class="test-case">decimalToBinary(0) → "0"</div>
+          <div class="test-case">binaryToDecimal("1010") → 10</div>
+          <div class="test-case">binaryToDecimal("11111") → 31</div>
+          <div class="test-case">binaryToDecimal("0") → 0</div>
+          <div class="test-case">decimalToHexadecimal(255) → "FF"</div>
+          <div class="test-case">decimalToHexadecimal(26) → "1A"</div>
+          <div class="test-case">decimalToHexadecimal(16) → "10"</div>
+        </div>
+      </div>
+
+      <!-- Submission Instructions -->
+      <div class="submission-info">
+        <h2>📝 Submission Instructions</h2>
+        <p><strong>Directory Structure:</strong></p>
+
+        <div class="examples">
+          <pre>
+week4/
+└── assignment4/
+    ├── problem1.js
+    ├── problem2.js
+    ├── problem3.js
+    ├── problem4.js
+    ├── problem5.js
+    └── challenge.js  (optional)
+</pre
+          >
+        </div>
+
+        <p style="margin-top: 15px">
+          <strong>Each file should contain:</strong>
+        </p>
+        <ul>
+          <li>All required functions for that problem</li>
+          <li>Comments explaining your logic</li>
+          <li>Test code at the bottom using <code>console.log()</code></li>
+        </ul>
+
+        <h3>Example File Structure (<code>problem1.js</code>):</h3>
+        <div class="examples">
+          <pre>
+// Problem 1: Temperature Converter Suite
+// Your Name
+// Date
+
+function celsiusToFahrenheit(celsius) {
+  // Convert Celsius to Fahrenheit
+  // Formula: (C × 9/5) + 32
+  return (celsius * 9/5) + 32;
+}
+
+function fahrenheitToCelsius(fahrenheit) {
+  // Convert Fahrenheit to Celsius
+  // Formula: (F - 32) × 5/9
+  return (fahrenheit - 32) * 5/9;
+}
+
+function getTemperatureDescription(fahrenheit) {
+  // Return description based on temperature
+  if (fahrenheit < 32) return "Freezing";
+  if (fahrenheit <= 50) return "Cold";
+  if (fahrenheit <= 70) return "Cool";
+  if (fahrenheit <= 85) return "Warm";
+  return "Hot";
+}
+
+// Test cases
+console.log("Testing celsiusToFahrenheit:");
+console.log(celsiusToFahrenheit(0));    // 32
+console.log(celsiusToFahrenheit(100));  // 212
+
+console.log("\nTesting fahrenheitToCelsius:");
+console.log(fahrenheitToCelsius(32));   // 0
+console.log(fahrenheitToCelsius(68));   // 20
+
+console.log("\nTesting getTemperatureDescription:");
+console.log(getTemperatureDescription(25)); // "Freezing"
+console.log(getTemperatureDescription(75)); // "Warm"
+</pre
+          >
+        </div>
+
+        <h3>Grading Rubric (50 points total):</h3>
+        <ul>
+          <li><strong>Problem 1:</strong> 10 points</li>
+          <li><strong>Problem 2:</strong> 10 points</li>
+          <li><strong>Problem 3:</strong> 10 points</li>
+          <li><strong>Problem 4:</strong> 10 points</li>
+          <li><strong>Problem 5:</strong> 10 points</li>
+          <li><strong>Challenge:</strong> +10 extra credit points</li>
+        </ul>
+
+        <h3>Grading Criteria per Problem:</h3>
+        <ul>
+          <li>
+            <strong>Correctness (60%):</strong> Functions produce correct output
+            for all test cases
+          </li>
+          <li>
+            <strong>Code Quality (25%):</strong> Clean, readable, well-commented
+            code
+          </li>
+          <li>
+            <strong>Edge Cases (15%):</strong> Handles special cases (empty
+            arrays, negative numbers, etc.)
+          </li>
+        </ul>
+
+        <h3>Tips for Success:</h3>
+        <ul>
+          <li>🧪 Test each function with ALL provided test cases</li>
+          <li>💭 Break complex problems into smaller steps</li>
+          <li>📝 Use descriptive variable names</li>
+          <li>🔍 Check edge cases (empty arrays, zero, negative numbers)</li>
+          <li>💬 Add comments to explain your approach</li>
+          <li>🎯 Run your code with <code>node problem1.js</code> to test</li>
+        </ul>
+
+        <h3>Late Policy:</h3>
+        <p>
+          Late submissions will receive a 10% deduction per day. Submit via
+          Canvas by Thursday, October 23 by 5:30 PM.
+        </p>
+      </div>
+
+      <div
+        style="
+          text-align: center;
+          margin-top: 30px;
+          padding: 20px;
+          background: linear-gradient(135deg, #ffd700, #ff8c00);
+          border-radius: 10px;
+        "
+      >
+        <h2 style="color: white; margin: 0">Good Luck 🍁</h2>
+      </div>
+    </div>
+  </body>
+</html>
