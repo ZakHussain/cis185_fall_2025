@@ -217,7 +217,7 @@
           <li>Create a new file such as <code>problem1.js</code>.</li>
           <li>Write your JavaScript code and save the file.</li>
           <li>
-            Open VS Code’s Terminal (<kbd>Ctrl + shift + `</kbd> on Windows or
+            Open VS Code's Terminal (<kbd>Ctrl + shift + `</kbd> on Windows or
             <kbd>Cmd + shift + `</kbd> on Mac).
           </li>
           <li>
@@ -254,7 +254,7 @@ node problem1.js</pre
             or create a new file like <code>problem1.js</code>).
           </li>
           <li>
-            Click the green <strong>“Run”</strong> button at the top to see your
+            Click the green <strong>"Run"</strong> button at the top to see your
             output in the console below.
           </li>
         </ol>
@@ -280,33 +280,26 @@ node problem1.js</pre
           functions.
         </p>
 
-        <div class="code-template">
-          <span class="comment">// Complete these functions</span>
+        <div class="code-template"><span class="comment">// Complete these functions</span>
 
-          <span class="keyword">function</span>
-          <span class="function">celsiusToFahrenheit</span>(celsius) {
-          <span class="comment">// Convert Celsius to Fahrenheit</span>
-          <span class="comment">// Formula: (C × 9/5) + 32</span>
-          }
+<span class="keyword">function</span> <span class="function">celsiusToFahrenheit</span>(celsius) {
+    <span class="comment">// Convert Celsius to Fahrenheit</span>
+    <span class="comment">// Formula: (C × 9/5) + 32</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">fahrenheitToCelsius</span>(fahrenheit) {
-          <span class="comment">// Convert Fahrenheit to Celsius</span>
-          <span class="comment">// Formula: (F - 32) × 5/9</span>
-          }
+<span class="keyword">function</span> <span class="function">fahrenheitToCelsius</span>(fahrenheit) {
+    <span class="comment">// Convert Fahrenheit to Celsius</span>
+    <span class="comment">// Formula: (F - 32) × 5/9</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">getTemperatureDescription</span>(fahrenheit) {
-          <span class="comment"
-            >// Return description based on temperature:</span
-          >
-          <span class="comment">// Below 32: "Freezing"</span>
-          <span class="comment">// 32-50: "Cold"</span>
-          <span class="comment">// 51-70: "Cool"</span>
-          <span class="comment">// 71-85: "Warm"</span>
-          <span class="comment">// Above 85: "Hot"</span>
-          }
-        </div>
+<span class="keyword">function</span> <span class="function">getTemperatureDescription</span>(fahrenheit) {
+    <span class="comment">// Return description based on temperature:</span>
+    <span class="comment">// Below 32: "Freezing"</span>
+    <span class="comment">// 32-50: "Cold"</span>
+    <span class="comment">// 51-70: "Cool"</span>
+    <span class="comment">// 71-85: "Warm"</span>
+    <span class="comment">// Above 85: "Hot"</span>
+}</div>
 
         <div class="test-cases">
           <strong>Test Cases:</strong>
@@ -336,35 +329,29 @@ node problem1.js</pre
           and categorize by color.
         </p>
 
-        <div class="code-template">
-          <span class="keyword">function</span>
-          <span class="function">countLeaves</span>(days) {
-          <span class="comment"
-            >// Each day, leaves fall following this pattern:</span
-          >
-          <span class="comment">// Day 1: 10 leaves</span>
-          <span class="comment">// Day 2: 20 leaves (doubles)</span>
-          <span class="comment">// Day 3: 30 leaves (+10 from day 2)</span>
-          <span class="comment">// Day 4: 40 leaves (+10 from day 3)</span>
-          <span class="comment"
-            >// Pattern: First day doubles, then +10 each day</span
-          >
+        <div class="code-template"><span class="keyword">function</span> <span class="function">countLeaves</span>(days) {
+    <span class="comment">// Each day, leaves fall following this pattern:</span>
+    <span class="comment">// Day 1: 10 leaves</span>
+    <span class="comment">// Day 2: 20 leaves (doubles)</span>
+    <span class="comment">// Day 3: 30 leaves (+10 from day 2)</span>
+    <span class="comment">// Day 4: 40 leaves (+10 from day 3)</span>
+    <span class="comment">// Pattern: First day doubles, then +10 each day</span>
+    
+    <span class="keyword">let</span> total = 0;
+    <span class="comment">// Use a for loop to calculate total</span>
+    
+    <span class="keyword">return</span> total;
+}
 
-          <span class="keyword">let</span> total = 0;
-          <span class="comment">// Use a for loop to calculate total</span>
-
-          <span class="keyword">return</span> total; }
-
-          <span class="keyword">function</span>
-          <span class="function">categorizeLeafColors</span>(leaves) {
-          <span class="comment">// leaves is an array of color strings</span>
-          <span class="comment">// Count each color and return an object</span>
-
-          <span class="keyword">let</span> colorCount = {};
-          <span class="comment">// Loop through array and count colors</span>
-
-          <span class="keyword">return</span> colorCount; }
-        </div>
+<span class="keyword">function</span> <span class="function">categorizeLeafColors</span>(leaves) {
+    <span class="comment">// leaves is an array of color strings</span>
+    <span class="comment">// Count each color and return an object</span>
+    
+    <span class="keyword">let</span> colorCount = {};
+    <span class="comment">// Loop through array and count colors</span>
+    
+    <span class="keyword">return</span> colorCount;
+}</div>
 
         <div class="test-cases">
           <strong>Test Cases:</strong>
@@ -400,42 +387,26 @@ node problem1.js</pre
         <span class="file-name">problem3.js</span>
         <p>Build a comprehensive grade calculation system.</p>
 
-        <div class="code-template">
-          <span class="keyword">function</span>
-          <span class="function">calculateAverage</span>(scores) {
-          <span class="comment"
-            >// Calculate and return the average of an array of scores</span
-          >
-          <span class="comment">// Handle empty array case (return 0)</span>
-          }
+        <div class="code-template"><span class="keyword">function</span> <span class="function">calculateAverage</span>(scores) {
+    <span class="comment">// Calculate and return the average of an array of scores</span>
+    <span class="comment">// Handle empty array case (return 0)</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">dropLowestScore</span>(scores) {
-          <span class="comment"
-            >// Return a new array with the lowest score removed</span
-          >
-          <span class="comment"
-            >// If multiple lowest scores exist, remove only one</span
-          >
-          <span class="comment">// Don't modify the original array!</span>
-          }
+<span class="keyword">function</span> <span class="function">dropLowestScore</span>(scores) {
+    <span class="comment">// Return a new array with the lowest score removed</span>
+    <span class="comment">// If multiple lowest scores exist, remove only one</span>
+    <span class="comment">// Don't modify the original array!</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">getLetterGrade</span>(score) {
-          <span class="comment">// Return letter grade based on score</span>
-          }
+<span class="keyword">function</span> <span class="function">getLetterGrade</span>(score) {
+    <span class="comment">// Return letter grade based on score</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">curveGrades</span>(scores, curveAmount) {
-          <span class="comment">// Add curveAmount to each score</span>
-          <span class="comment"
-            >// Cap all scores at 100 (no score above 100)</span
-          >
-          <span class="comment"
-            >// Return new array, don't modify original</span
-          >
-          }
-        </div>
+<span class="keyword">function</span> <span class="function">curveGrades</span>(scores, curveAmount) {
+    <span class="comment">// Add curveAmount to each score</span>
+    <span class="comment">// Cap all scores at 100 (no score above 100)</span>
+    <span class="comment">// Return new array, don't modify original</span>
+}</div>
 
         <div class="test-cases">
           <strong>Test Cases:</strong>
@@ -474,46 +445,33 @@ node problem1.js</pre
           <code>\n</code> character.
         </p>
 
-        <div class="code-template">
-          <span class="keyword">function</span>
-          <span class="function">createPyramid</span>(height) {
-          <span class="comment"
-            >// Build a centered pyramid of asterisks (*)</span
-          >
-          <span class="comment">// Example: height = 3 →</span>
-          <span class="comment">// *</span>
-          <span class="comment">// ***</span>
-          <span class="comment">// *****</span>
-          <span class="comment"
-            >// Return as a string with \n between lines</span
-          >
-          }
+        <div class="code-template"><span class="keyword">function</span> <span class="function">createPyramid</span>(height) {
+    <span class="comment">// Build a centered pyramid of asterisks (*)</span>
+    <span class="comment">// Example: height = 3 →</span>
+    <span class="comment">//   *</span>
+    <span class="comment">//  ***</span>
+    <span class="comment">// *****</span>
+    <span class="comment">// Return as a string with \n between lines</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">createNumberStaircase</span>(steps) {
-          <span class="comment"
-            >// Build a staircase of increasing numbers</span
-          >
-          <span class="comment">// Example: steps = 5 →</span>
-          <span class="comment">// 1</span>
-          <span class="comment">// 12</span>
-          <span class="comment">// 123</span>
-          <span class="comment">// 1234</span>
-          <span class="comment">// 12345</span>
-          }
+<span class="keyword">function</span> <span class="function">createNumberStaircase</span>(steps) {
+    <span class="comment">// Build a staircase of increasing numbers</span>
+    <span class="comment">// Example: steps = 5 →</span>
+    <span class="comment">// 1</span>
+    <span class="comment">// 12</span>
+    <span class="comment">// 123</span>
+    <span class="comment">// 1234</span>
+    <span class="comment">// 12345</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">createCheckerboard</span>(size) {
-          <span class="comment"
-            >// Create a checkerboard pattern of X and O</span
-          >
-          <span class="comment">// Example: size = 4 →</span>
-          <span class="comment">// XOXO</span>
-          <span class="comment">// OXOX</span>
-          <span class="comment">// XOXO</span>
-          <span class="comment">// OXOX</span>
-          }
-        </div>
+<span class="keyword">function</span> <span class="function">createCheckerboard</span>(size) {
+    <span class="comment">// Create a checkerboard pattern of X and O</span>
+    <span class="comment">// Example: size = 4 →</span>
+    <span class="comment">// XOXO</span>
+    <span class="comment">// OXOX</span>
+    <span class="comment">// XOXO</span>
+    <span class="comment">// OXOX</span>
+}</div>
 
         <div class="test-cases">
           <strong>Expected Outputs:</strong>
@@ -572,48 +530,26 @@ OXOX
         <span class="file-name">problem5.js</span>
         <p>Create utility functions for array manipulation.</p>
 
-        <div class="code-template">
-          <span class="keyword">function</span>
-          <span class="function">reverseArray</span>(arr) {
-          <span class="comment"
-            >// Return a new array with elements in reverse order</span
-          >
-          <span class="comment"
-            >// Don't use the built-in reverse() method!</span
-          >
-          <span class="comment">// Don't modify the original array</span>
-          }
+        <div class="code-template"><span class="keyword">function</span> <span class="function">reverseArray</span>(arr) {
+    <span class="comment">// Return a new array with elements in reverse order</span>
+    <span class="comment">// Don't use the built-in reverse() method!</span>
+    <span class="comment">// Don't modify the original array</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">removeDuplicates</span>(arr) {
-          <span class="comment"
-            >// Return a new array with duplicates removed</span
-          >
-          <span class="comment"
-            >// Maintain original order of first occurrence</span
-          >
-          }
+<span class="keyword">function</span> <span class="function">removeDuplicates</span>(arr) {
+    <span class="comment">// Return a new array with duplicates removed</span>
+    <span class="comment">// Maintain original order of first occurrence</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">rotateArray</span>(arr, positions) {
-          <span class="comment"
-            >// Rotate array to the right by 'positions'</span
-          >
-          <span class="comment"
-            >// Handle positions larger than array length</span
-          >
-          }
+<span class="keyword">function</span> <span class="function">rotateArray</span>(arr, positions) {
+    <span class="comment">// Rotate array to the right by 'positions'</span>
+    <span class="comment">// Handle positions larger than array length</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">findSecondLargest</span>(numbers) {
-          <span class="comment"
-            >// Find and return the second largest number</span
-          >
-          <span class="comment"
-            >// Return null if array has less than 2 unique values</span
-          >
-          }
-        </div>
+<span class="keyword">function</span> <span class="function">findSecondLargest</span>(numbers) {
+    <span class="comment">// Find and return the second largest number</span>
+    <span class="comment">// Return null if array has less than 2 unique values</span>
+}</div>
 
         <div class="test-cases">
           <strong>Test Cases:</strong>
@@ -657,30 +593,21 @@ OXOX
           hexadecimal).
         </p>
 
-        <div class="code-template">
-          <span class="keyword">function</span>
-          <span class="function">decimalToBinary</span>(decimal) {
-          <span class="comment"
-            >// Convert decimal number to binary string</span
-          >
-          <span class="comment">// Don't use toString(2)!</span>
-          }
+        <div class="code-template"><span class="keyword">function</span> <span class="function">decimalToBinary</span>(decimal) {
+    <span class="comment">// Convert decimal number to binary string</span>
+    <span class="comment">// Don't use toString(2)!</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">binaryToDecimal</span>(binary) {
-          <span class="comment"
-            >// Convert binary string to decimal number</span
-          >
-          <span class="comment">// Don't use parseInt(binary, 2)!</span>
-          }
+<span class="keyword">function</span> <span class="function">binaryToDecimal</span>(binary) {
+    <span class="comment">// Convert binary string to decimal number</span>
+    <span class="comment">// Don't use parseInt(binary, 2)!</span>
+}
 
-          <span class="keyword">function</span>
-          <span class="function">decimalToHexadecimal</span>(decimal) {
-          <span class="comment">// Convert decimal to hexadecimal string</span>
-          <span class="comment">// Use 0-9 and A-F for digits</span>
-          <span class="comment">// Don't use toString(16)!</span>
-          }
-        </div>
+<span class="keyword">function</span> <span class="function">decimalToHexadecimal</span>(decimal) {
+    <span class="comment">// Convert decimal to hexadecimal string</span>
+    <span class="comment">// Use 0-9 and A-F for digits</span>
+    <span class="comment">// Don't use toString(16)!</span>
+}</div>
 
         <div class="test-cases">
           <strong>Test Cases:</strong>
