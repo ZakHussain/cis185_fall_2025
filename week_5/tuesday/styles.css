@@ -1,0 +1,433 @@
+/* styles.css - DOM Manipulation Lecture Styles - Fall/Autumn Theme */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Fall gradient: warm oranges to deep autumn browns */
+    background: linear-gradient(135deg, #d4642c 0%, #8b4513 50%, #cd853f 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Presentation Container */
+.presentation-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 75vh;
+    max-height: 600px;
+    position: relative;
+    margin-bottom: 100px;
+}
+
+/* Slides */
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #faf8f3 0%, #f5f2e8 100%);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.3);
+    padding: 40px;
+    display: none;
+    overflow-y: auto;
+    animation: slideIn 0.5s ease-out;
+}
+
+.slide.active {
+    display: block;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Typography */
+h1 {
+    color: #8b4513;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #d2691e;
+    padding-bottom: 10px;
+}
+
+h2 {
+    color: #a0522d;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+h3 {
+    color: #8b4513;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+h4 {
+    color: #704214;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+p, li {
+    font-size: 1.1em;
+    line-height: 1.5;
+    color: #4a3426;
+    margin-bottom: 12px;
+}
+
+ul, ol {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Code Block Styling - keeping dark theme for contrast */
+.code-block {
+    background: #2d1810;
+    color: #e8d7c3;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    overflow-x: auto;
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+    white-space: pre;
+}
+
+/* Syntax Highlighting - autumn colors */
+.code-block .tag {
+    color: #ff8c42;
+}
+
+.code-block .attribute {
+    color: #ffd700;
+}
+
+.code-block .value {
+    color: #daa520;
+}
+
+.code-block .class {
+    color: #ff6347;
+}
+
+.code-block .selector {
+    color: #ff8c42;
+}
+
+.code-block .property {
+    color: #ffd700;
+}
+
+.code-block .comment {
+    color: #90a955;
+}
+
+.code-block .keyword {
+    color: #dc143c;
+}
+
+.code-block .function {
+    color: #ffb347;
+}
+
+.code-block .string {
+    color: #daa520;
+}
+
+/* Navigation Controls */
+.navigation {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+    background: #faf8f3;
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+
+.nav-button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #a0522d, #8b4513);
+    color: #faf8f3;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background: linear-gradient(135deg, #d2691e, #cd853f);
+    transform: scale(1.05);
+}
+
+.nav-button:disabled {
+    background: #d4c4a8;
+    cursor: not-allowed;
+    transform: scale(1);
+}
+
+/* Slide Number Badge */
+.slide-number {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #d2691e, #cd853f);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Progress Bar */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff8c42, #d2691e, #8b4513);
+    transition: width 0.5s ease;
+    z-index: 1001;
+}
+
+/* Highlight Text */
+.highlight {
+    background: linear-gradient(120deg, #ff8c42 0%, #d2691e 100%);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Demo Box */
+.demo-box {
+    background: linear-gradient(135deg, #fff4e6 0%, #ffe4c4 100%);
+    border: 2px dashed #d2691e;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Link Buttons */
+.link-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ff8c42 0%, #d2691e 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.link-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+    color: white;
+}
+
+/* Assignment Box */
+.assignment-box {
+    background: linear-gradient(135deg, #8b4513 0%, #704214 100%);
+    color: #faf8f3;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.assignment-box h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+}
+
+.assignment-box ul {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.assignment-box li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    color: #faf8f3;
+}
+
+.assignment-box li::before {
+    content: "🍂";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.assignment-box a {
+    color: #ffd700;
+}
+
+/* Comparison Table */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.comparison-table th {
+    background: linear-gradient(135deg, #8b4513, #704214);
+    color: #faf8f3;
+    padding: 15px;
+    text-align: left;
+    font-size: 1.1em;
+}
+
+.comparison-table td {
+    padding: 15px;
+    border-bottom: 1px solid #d2691e;
+    font-size: 1em;
+    background: #fff8f0;
+}
+
+.comparison-table tr:nth-child(even) td {
+    background: #faf5ed;
+}
+
+/* Quiz Preview Box */
+.quiz-preview {
+    background: linear-gradient(135deg, #ffe4b5 0%, #ffd4a3 100%);
+    border: 2px solid #ff8c00;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.quiz-preview h3 {
+    color: #8b4513;
+}
+
+/* Grading Criteria Box */
+.grading-criteria {
+    background: linear-gradient(135deg, #f0e68c 0%, #daa520 100%);
+    border: 2px solid #b8860b;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Interactive Demo */
+.interactive-demo {
+    background: linear-gradient(135deg, #fff8dc 0%, #faebd7 100%);
+    border: 2px solid #d2691e;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.demo-button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff8c42, #d2691e);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.demo-button:hover {
+    background: linear-gradient(135deg, #d2691e, #8b4513);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+}
+
+#demo-output {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #d2691e;
+    border-radius: 5px;
+    min-height: 50px;
+}
+
+/* Scrollbar styling for autumn theme */
+.slide::-webkit-scrollbar {
+    width: 10px;
+}
+
+.slide::-webkit-scrollbar-track {
+    background: #faf8f3;
+    border-radius: 5px;
+}
+
+.slide::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #d2691e, #cd853f);
+    border-radius: 5px;
+}
+
+.slide::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #8b4513, #704214);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .slide {
+        padding: 30px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    h2 {
+        font-size: 1.6em;
+    }
+    
+    h3 {
+        font-size: 1.3em;
+    }
+    
+    p, li {
+        font-size: 1.1em;
+    }
+    
+    .code-block {
+        font-size: 0.9em;
+        padding: 15px;
+    }
+    
+    .nav-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    
+    .navigation {
+        padding: 10px 20px;
+    }
+}

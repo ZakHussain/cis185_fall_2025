@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIS 185 - DOM Manipulation & JavaScript</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide active">
+        <div class="slide-number">1 / 16</div>
+        <h1>DOM Manipulation & JavaScript</h1>
+        <h2>Week 5 - Tuesday, October 21</h2>
+
+        <div class="demo-box">
+          <p><strong>Today's Topics:</strong></p>
+          <p>
+            Introduction to JavaScript, DOM Manipulation, Event Handling, and
+            Integration with HTML
+          </p>
+        </div>
+
+        <div class="quiz-preview">
+          <h3>📝 Quiz 4 Today</h3>
+          <p>First 10 minutes of class - Based on last week's javascript material</p>
+        </div>
+      </div>
+
+      <!-- Slide 2: What is JavaScript? -->
+      <div class="slide">
+        <div class="slide-number">2 / 15</div>
+        <h1>What is JavaScript?</h1>
+
+        <ul>
+          <li>
+            <strong>Programming language</strong> that makes web pages
+            interactive
+          </li>
+          <li>
+            Runs in the <span class="highlight">browser</span> (client-side)
+          </li>
+          <li>Can respond to user actions (clicks, typing, hovering)</li>
+          <li>Can change HTML content and CSS styles dynamically</li>
+        </ul>
+
+        <div class="demo-box">
+          <p><strong>JavaScript is NOT Java!</strong></p>
+          <p>Despite similar names, they are completely different languages</p>
+        </div>
+
+        <h3>What Can JavaScript Do?</h3>
+        <ul>
+          <li>Change text content</li>
+          <li>Show/hide elements</li>
+          <li>Validate form input</li>
+          <li>Create animations</li>
+          <li>Load new content without refreshing</li>
+        </ul>
+      </div>
+
+      <!-- Slide 3: The DOM -->
+      <div class="slide">
+        <div class="slide-number">3 / 15</div>
+        <h1>The Document Object Model (DOM)</h1>
+
+        <p>
+          The DOM is a
+          <span class="highlight">tree-like representation</span> of your HTML
+          document that JavaScript can interact with.
+        </p>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+          "
+        >
+          <div>
+            <h3>HTML Code:</h3>
+            <div class="code-block">
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1</span> <span class="attribute">id</span>=<span class="value">"title"</span><span class="tag">&gt;</span>Hello<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p</span> <span class="attribute">class</span>=<span class="value">"text"</span><span class="tag">&gt;</span>Welcome<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>DOM Tree:</h3>
+            <svg
+              width="100%"
+              height="300"
+              viewBox="0 0 400 300"
+              style="background: #f8f8f8; border-radius: 10px; padding: 10px"
+            >
+              <!-- document node -->
+              <rect
+                x="150"
+                y="20"
+                width="100"
+                height="40"
+                fill="#667eea"
+                rx="5"
+              />
+              <text
+                x="200"
+                y="45"
+                text-anchor="middle"
+                fill="white"
+                font-size="14"
+                font-weight="bold"
+              >
+                document
+              </text>
+
+              <!-- html node -->
+              <rect
+                x="150"
+                y="90"
+                width="100"
+                height="40"
+                fill="#764ba2"
+                rx="5"
+              />
+              <text
+                x="200"
+                y="115"
+                text-anchor="middle"
+                fill="white"
+                font-size="14"
+                font-weight="bold"
+              >
+                html
+              </text>
+
+              <!-- body node -->
+              <rect
+                x="150"
+                y="160"
+                width="100"
+                height="40"
+                fill="#746767"
+                rx="5"
+              />
+              <text
+                x="200"
+                y="185"
+                text-anchor="middle"
+                fill="white"
+                font-size="14"
+                font-weight="bold"
+              >
+                body
+              </text>
+
+              <!-- h1 node -->
+              <rect
+                x="50"
+                y="230"
+                width="120"
+                height="40"
+                fill="#2a2f3c"
+                rx="5"
+              />
+              <text
+                x="110"
+                y="250"
+                text-anchor="middle"
+                fill="white"
+                font-size="13"
+              >
+                h1 #title
+              </text>
+              <text
+                x="110"
+                y="265"
+                text-anchor="middle"
+                fill="#ccc"
+                font-size="11"
+              >
+                "Hello"
+              </text>
+
+              <!-- p node -->
+              <rect
+                x="230"
+                y="230"
+                width="120"
+                height="40"
+                fill="#2a2f3c"
+                rx="5"
+              />
+              <text
+                x="290"
+                y="250"
+                text-anchor="middle"
+                fill="white"
+                font-size="13"
+              >
+                p .text
+              </text>
+              <text
+                x="290"
+                y="265"
+                text-anchor="middle"
+                fill="#ccc"
+                font-size="11"
+              >
+                "Welcome"
+              </text>
+
+              <!-- Connection lines -->
+              <line
+                x1="200"
+                y1="60"
+                x2="200"
+                y2="90"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="200"
+                y1="130"
+                x2="200"
+                y2="160"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="200"
+                y1="200"
+                x2="110"
+                y2="230"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="200"
+                y1="200"
+                x2="290"
+                y2="230"
+                stroke="#333"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <h3>Key Concepts:</h3>
+        <ul>
+          <li>
+            <strong>Parent-Child Relationship:</strong> body is the parent of h1
+            and p
+          </li>
+          <li>
+            <strong>Siblings:</strong> h1 and p are siblings (same parent)
+          </li>
+          <li>
+            <strong>Traversal:</strong> JavaScript can navigate up, down, and
+            across the tree
+          </li>
+        </ul>
+
+        <div class="demo-box">
+          <p>
+            Think of the DOM as a family tree where HTML elements are related as
+            parents, children, and siblings
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 4: Complex DOM Tree -->
+      <div class="slide">
+        <div class="slide-number">4 / 15</div>
+        <h1>More Complex DOM Structure</h1>
+
+        <p>Real websites have nested elements creating deeper DOM trees:</p>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 20px;
+            align-items: start;
+          "
+        >
+          <div>
+            <h3>HTML Code:</h3>
+            <div class="code-block" style="font-size: 0.9em">
+<span class="tag">&lt;body&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute">id</span>=<span class="value">"header"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h1&gt;</span>My Site<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;nav&gt;</span>
+      <span class="tag">&lt;a</span> <span class="attribute">href</span>=<span class="value">"#"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/a&gt;</span>
+      <span class="tag">&lt;a</span> <span class="attribute">href</span>=<span class="value">"#"</span><span class="tag">&gt;</span>About<span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"content"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Welcome!<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attribute">id</span>=<span class="value">"btn"</span><span class="tag">&gt;</span>Click<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>DOM Tree Visualization:</h3>
+            <svg
+              width="100%"
+              height="400"
+              viewBox="0 0 500 400"
+              style="background: #f8f8f8; border-radius: 10px; padding: 10px"
+            >
+              <!-- body node -->
+              <rect
+                x="200"
+                y="20"
+                width="80"
+                height="35"
+                fill="#667eea"
+                rx="5"
+              />
+              <text
+                x="240"
+                y="42"
+                text-anchor="middle"
+                fill="white"
+                font-size="13"
+                font-weight="bold"
+              >
+                body
+              </text>
+
+              <!-- div#header node -->
+              <rect
+                x="80"
+                y="90"
+                width="100"
+                height="35"
+                fill="#764ba2"
+                rx="5"
+              />
+              <text
+                x="130"
+                y="112"
+                text-anchor="middle"
+                fill="white"
+                font-size="12"
+              >
+                div #header
+              </text>
+
+              <!-- div.content node -->
+              <rect
+                x="320"
+                y="90"
+                width="100"
+                height="35"
+                fill="#764ba2"
+                rx="5"
+              />
+              <text
+                x="370"
+                y="112"
+                text-anchor="middle"
+                fill="white"
+                font-size="12"
+              >
+                div .content
+              </text>
+
+              <!-- h1 node -->
+              <rect
+                x="20"
+                y="170"
+                width="70"
+                height="35"
+                fill="#746767"
+                rx="5"
+              />
+              <text
+                x="55"
+                y="188"
+                text-anchor="middle"
+                fill="white"
+                font-size="11"
+              >
+                h1
+              </text>
+              <text
+                x="55"
+                y="200"
+                text-anchor="middle"
+                fill="#ddd"
+                font-size="10"
+              >
+                "My Site"
+              </text>
+
+              <!-- nav node -->
+              <rect
+                x="110"
+                y="170"
+                width="70"
+                height="35"
+                fill="#746767"
+                rx="5"
+              />
+              <text
+                x="145"
+                y="192"
+                text-anchor="middle"
+                fill="white"
+                font-size="11"
+              >
+                nav
+              </text>
+
+              <!-- p node -->
+              <rect
+                x="260"
+                y="170"
+                width="70"
+                height="35"
+                fill="#746767"
+                rx="5"
+              />
+              <text
+                x="295"
+                y="188"
+                text-anchor="middle"
+                fill="white"
+                font-size="11"
+              >
+                p
+              </text>
+              <text
+                x="295"
+                y="200"
+                text-anchor="middle"
+                fill="#ddd"
+                font-size="10"
+              >
+                "Welcome!"
+              </text>
+
+              <!-- button node -->
+              <rect
+                x="350"
+                y="170"
+                width="90"
+                height="35"
+                fill="#746767"
+                rx="5"
+              />
+              <text
+                x="395"
+                y="188"
+                text-anchor="middle"
+                fill="white"
+                font-size="11"
+              >
+                button #btn
+              </text>
+              <text
+                x="395"
+                y="200"
+                text-anchor="middle"
+                fill="#ddd"
+                font-size="10"
+              >
+                "Click"
+              </text>
+
+              <!-- a nodes under nav -->
+              <rect
+                x="60"
+                y="250"
+                width="60"
+                height="35"
+                fill="#2a2f3c"
+                rx="5"
+              />
+              <text
+                x="90"
+                y="268"
+                text-anchor="middle"
+                fill="white"
+                font-size="11"
+              >
+                a
+              </text>
+              <text
+                x="90"
+                y="280"
+                text-anchor="middle"
+                fill="#aaa"
+                font-size="10"
+              >
+                "Home"
+              </text>
+
+              <rect
+                x="140"
+                y="250"
+                width="60"
+                height="35"
+                fill="#2a2f3c"
+                rx="5"
+              />
+              <text
+                x="170"
+                y="268"
+                text-anchor="middle"
+                fill="white"
+                font-size="11"
+              >
+                a
+              </text>
+              <text
+                x="170"
+                y="280"
+                text-anchor="middle"
+                fill="#aaa"
+                font-size="10"
+              >
+                "About"
+              </text>
+
+              <!-- Connection lines -->
+              <!-- body to divs -->
+              <line
+                x1="240"
+                y1="55"
+                x2="130"
+                y2="90"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="240"
+                y1="55"
+                x2="370"
+                y2="90"
+                stroke="#333"
+                stroke-width="2"
+              />
+
+              <!-- header div to children -->
+              <line
+                x1="130"
+                y1="125"
+                x2="55"
+                y2="170"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="130"
+                y1="125"
+                x2="145"
+                y2="170"
+                stroke="#333"
+                stroke-width="2"
+              />
+
+              <!-- content div to children -->
+              <line
+                x1="370"
+                y1="125"
+                x2="295"
+                y2="170"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="370"
+                y1="125"
+                x2="395"
+                y2="170"
+                stroke="#333"
+                stroke-width="2"
+              />
+
+              <!-- nav to a tags -->
+              <line
+                x1="145"
+                y1="205"
+                x2="90"
+                y2="250"
+                stroke="#333"
+                stroke-width="2"
+              />
+              <line
+                x1="145"
+                y1="205"
+                x2="170"
+                y2="250"
+                stroke="#333"
+                stroke-width="2"
+              />
+
+              <!-- Level indicators -->
+              <text
+                x="10"
+                y="40"
+                fill="#666"
+                font-size="10"
+                font-style="italic"
+              >
+                Level 1
+              </text>
+              <text
+                x="10"
+                y="110"
+                fill="#666"
+                font-size="10"
+                font-style="italic"
+              >
+                Level 2
+              </text>
+              <text
+                x="10"
+                y="190"
+                fill="#666"
+                font-size="10"
+                font-style="italic"
+              >
+                Level 3
+              </text>
+              <text
+                x="10"
+                y="270"
+                fill="#666"
+                font-size="10"
+                font-style="italic"
+              >
+                Level 4
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        <h3>Important DOM Relationships:</h3>
+        <ul>
+          <li><strong>Parent of nav:</strong> div#header</li>
+          <li><strong>Children of body:</strong> div#header and div.content</li>
+          <li>
+            <strong>Siblings:</strong> The two anchor (a) tags are siblings
+          </li>
+          <li>
+            <strong>Descendants:</strong> All elements inside body are its
+            descendants
+          </li>
+        </ul>
+
+        <div class="demo-box">
+          <p>
+            <strong>JavaScript can navigate this tree:</strong> From any
+            element, you can access its parent, children, or siblings!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 5: Adding JavaScript to HTML -->
+      <div class="slide">
+        <div class="slide-number">5 / 15</div>
+        <h1>Adding JavaScript to HTML</h1>
+
+        <h2>Method 1: Inline JavaScript</h2>
+        <div class="code-block">
+<span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"alert('Hello!')"</span><span class="tag">&gt;</span>Click Me<span class="tag">&lt;/button&gt;</span>
+        </div>
+
+        <h2>Method 2: Internal JavaScript</h2>
+        <div class="code-block">
+<span class="tag">&lt;script&gt;</span>
+  <span class="keyword">function</span> <span class="function">sayHello</span>() {
+    <span class="function">alert</span>(<span class="string">'Hello from internal script!'</span>);
+  }
+<span class="tag">&lt;/script&gt;</span>
+        </div>
+
+        <h2>Method 3: External JavaScript (Recommended)</h2>
+        <div class="code-block">
+<span class="tag">&lt;script</span> <span class="attribute">src</span>=<span class="value">"script.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Best Practice:</strong> Place &lt;script&gt; tags at the end
+            of &lt;body&gt; for better page loading
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 6: Selecting Elements -->
+      <div class="slide">
+        <div class="slide-number">6 / 15</div>
+        <h1>Selecting Elements</h1>
+
+        <p>
+          Before we can manipulate elements, we need to
+          <span class="highlight">select them</span> from the DOM.
+        </p>
+
+        <h2>Main Selection Methods:</h2>
+
+        <h3>1. getElementById()</h3>
+        <div class="code-block">
+<span class="comment">// HTML: &lt;h1 id="title"&gt;Hello&lt;/h1&gt;</span>
+<span class="keyword">let</span> heading = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'title'</span>);
+        </div>
+
+        <h3>2. getElementsByClassName()</h3>
+        <div class="code-block">
+<span class="comment">// HTML: &lt;p class="text"&gt;Paragraph&lt;/p&gt;</span>
+<span class="keyword">let</span> paragraphs = <span class="property">document</span>.<span class="function">getElementsByClassName</span>(<span class="string">'text'</span>);
+        </div>
+
+        <h3>3. querySelector()</h3>
+        <div class="code-block">
+<span class="comment">// Selects first matching element</span>
+<span class="keyword">let</span> firstPara = <span class="property">document</span>.<span class="function">querySelector</span>(<span class="string">'.text'</span>);
+<span class="keyword">let</span> heading = <span class="property">document</span>.<span class="function">querySelector</span>(<span class="string">'#title'</span>);
+        </div>
+      </div>
+
+      <!-- Slide 7: More Selection Methods -->
+      <div class="slide">
+        <div class="slide-number">8 / 15</div>
+        <h1>More Selection Methods</h1>
+
+        <h3>4. querySelectorAll()</h3>
+        <div class="code-block">
+<span class="comment">// Selects ALL matching elements</span>
+<span class="keyword">let</span> allParas = <span class="property">document</span>.<span class="function">querySelectorAll</span>(<span class="string">'.text'</span>);
+<span class="keyword">let</span> allDivs = <span class="property">document</span>.<span class="function">querySelectorAll</span>(<span class="string">'div'</span>);
+        </div>
+
+        <h3>5. getElementsByTagName()</h3>
+        <div class="code-block">
+<span class="comment">// Selects all elements with specified tag</span>
+<span class="keyword">let</span> allImages = <span class="property">document</span>.<span class="function">getElementsByTagName</span>(<span class="string">'img'</span>);
+        </div>
+
+        <table class="comparison-table">
+          <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>getElementById</td>
+            <td>Single element</td>
+            <td>getElementById('header')</td>
+          </tr>
+          <tr>
+            <td>querySelector</td>
+            <td>First match</td>
+            <td>querySelector('.btn')</td>
+          </tr>
+          <tr>
+            <td>querySelectorAll</td>
+            <td>All matches</td>
+            <td>querySelectorAll('.btn')</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Slide 8: Modifying Content -->
+      <div class="slide">
+        <div class="slide-number">7 / 15</div>
+        <h1>Modifying Content</h1>
+
+        <h2>Changing Text Content</h2>
+        <div class="code-block">
+<span class="comment">// Select the element</span>
+<span class="keyword">let</span> heading = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'title'</span>);
+
+<span class="comment">// Change its text</span>
+heading.<span class="property">textContent</span> = <span class="string">'New Title'</span>;
+
+<span class="comment">// Or use innerHTML for HTML content</span>
+heading.<span class="property">innerHTML</span> = <span class="string">'&lt;em&gt;New Title&lt;/em&gt;'</span>;
+        </div>
+
+        <h2>Changing Attributes</h2>
+        <div class="code-block">
+<span class="comment">// Change an image source</span>
+<span class="keyword">let</span> img = <span class="property">document</span>.<span class="function">querySelector</span>(<span class="string">'img'</span>);
+img.<span class="property">src</span> = <span class="string">'new-image.jpg'</span>;
+img.<span class="property">alt</span> = <span class="string">'New description'</span>;
+
+<span class="comment">// Or use setAttribute</span>
+img.<span class="function">setAttribute</span>(<span class="string">'src'</span>, <span class="string">'new-image.jpg'</span>);
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>textContent vs innerHTML:</strong><br />
+            textContent = plain text only<br />
+            innerHTML = can include HTML tags
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 9: Modifying Styles -->
+      <div class="slide">
+        <div class="slide-number">9 / 15</div>
+        <h1>Modifying Styles</h1>
+
+        <h2>Changing CSS with JavaScript</h2>
+        <div class="code-block">
+<span class="keyword">let</span> element = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'myDiv'</span>);
+
+<span class="comment">// Change individual styles</span>
+element.<span class="property">style</span>.<span class="property">color</span> = <span class="string">'red'</span>;
+element.<span class="property">style</span>.<span class="property">backgroundColor</span> = <span class="string">'yellow'</span>;
+element.<span class="property">style</span>.<span class="property">fontSize</span> = <span class="string">'24px'</span>;
+element.<span class="property">style</span>.<span class="property">padding</span> = <span class="string">'10px'</span>;
+        </div>
+
+        <h2>Working with Classes</h2>
+        <div class="code-block">
+<span class="comment">// Add a class</span>
+element.<span class="property">classList</span>.<span class="function">add</span>(<span class="string">'highlight'</span>);
+
+<span class="comment">// Remove a class</span>
+element.<span class="property">classList</span>.<span class="function">remove</span>(<span class="string">'highlight'</span>);
+
+<span class="comment">// Toggle a class (add if not there, remove if there)</span>
+element.<span class="property">classList</span>.<span class="function">toggle</span>(<span class="string">'active'</span>);
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Note:</strong> CSS properties with hyphens become
+            camelCase<br />
+            background-color → backgroundColor<br />
+            font-size → fontSize
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 10: Event Handling Basics -->
+      <div class="slide">
+        <div class="slide-number">10 / 16</div>
+        <h1>Event Handling</h1>
+
+        <p>
+          Events are <span class="highlight">actions</span> that happen in the
+          browser (clicks, key presses, mouse movements)
+        </p>
+
+        <h2>Common Events:</h2>
+        <ul>
+          <li><strong>click</strong> - User clicks an element</li>
+          <li><strong>mouseover</strong> - Mouse enters an element</li>
+          <li><strong>mouseout</strong> - Mouse leaves an element</li>
+          <li><strong>keydown</strong> - User presses a key</li>
+          <li><strong>submit</strong> - Form is submitted</li>
+          <li><strong>load</strong> - Page finishes loading</li>
+        </ul>
+
+        <h2>Adding Event Listeners</h2>
+        <div class="code-block">
+<span class="keyword">let</span> button = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'myButton'</span>);
+
+button.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  <span class="function">alert</span>(<span class="string">'Button was clicked!'</span>);
+});
+        </div>
+      </div>
+
+      <!-- Slide 11: Event Handling Examples -->
+      <div class="slide">
+        <div class="slide-number">11 / 16</div>
+        <h1>Event Handling Examples</h1>
+
+        <h2>Multiple Ways to Handle Events</h2>
+
+        <h3>Method 1: Inline (Not Recommended)</h3>
+        <div class="code-block">
+<span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"handleClick()"</span><span class="tag">&gt;</span>Click<span class="tag">&lt;/button&gt;</span>
+        </div>
+
+        <h3>Method 2: Property Assignment</h3>
+        <div class="code-block">
+button.<span class="property">onclick</span> = <span class="keyword">function</span>() {
+  <span class="function">console</span>.<span class="function">log</span>(<span class="string">'Clicked!'</span>);
+};
+        </div>
+
+        <h3>Method 3: addEventListener (Best Practice)</h3>
+        <div class="code-block">
+button.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  <span class="function">console</span>.<span class="function">log</span>(<span class="string">'Clicked!'</span>);
+});
+
+<span class="comment">// Can add multiple listeners to same event</span>
+button.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  <span class="function">console</span>.<span class="function">log</span>(<span class="string">'Another action!'</span>);
+});
+        </div>
+      </div>
+
+      <!-- Slide 12: Practical Example -->
+      <div class="slide">
+        <div class="slide-number">12 / 16</div>
+        <h1>Complete Example: Interactive Page</h1>
+
+        <h2>HTML Structure:</h2>
+        <div class="code-block">
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;title&gt;</span>Interactive Demo<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+  <span class="tag">&lt;h1</span> <span class="attribute">id</span>=<span class="value">"heading"</span><span class="tag">&gt;</span>Welcome!<span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attribute">id</span>=<span class="value">"changeBtn"</span><span class="tag">&gt;</span>Change Text<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attribute">id</span>=<span class="value">"colorBtn"</span><span class="tag">&gt;</span>Change Color<span class="tag">&lt;/button&gt;</span>
+  
+  <span class="tag">&lt;script</span> <span class="attribute">src</span>=<span class="value">"script.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+        </div>
+      </div>
+
+      <!-- Slide 13: JavaScript for Example -->
+      <div class="slide">
+        <div class="slide-number">13 / 16</div>
+        <h1>JavaScript Code (script.js)</h1>
+
+        <div class="code-block">
+<span class="comment">// Select elements</span>
+<span class="keyword">let</span> heading = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'heading'</span>);
+<span class="keyword">let</span> changeBtn = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'changeBtn'</span>);
+<span class="keyword">let</span> colorBtn = <span class="property">document</span>.<span class="function">getElementById</span>(<span class="string">'colorBtn'</span>);
+
+<span class="comment">// Add event listener for text change</span>
+changeBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  heading.<span class="property">textContent</span> = <span class="string">'Text Changed!'</span>;
+});
+
+<span class="comment">// Add event listener for color change</span>
+colorBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  heading.<span class="property">style</span>.<span class="property">color</span> = <span class="string">'blue'</span>;
+  heading.<span class="property">style</span>.<span class="property">fontSize</span> = <span class="string">'40px'</span>;
+});
+
+<span class="comment">// Add mouseover effect</span>
+heading.<span class="function">addEventListener</span>(<span class="string">'mouseover'</span>, <span class="keyword">function</span>() {
+  heading.<span class="property">style</span>.<span class="property">backgroundColor</span> = <span class="string">'yellow'</span>;
+});
+
+heading.<span class="function">addEventListener</span>(<span class="string">'mouseout'</span>, <span class="keyword">function</span>() {
+  heading.<span class="property">style</span>.<span class="property">backgroundColor</span> = <span class="string">'white'</span>;
+});
+        </div>
+      </div>
+
+      <!-- Slide 14: Live Demo -->
+      <div class="slide">
+        <div class="slide-number">14 / 16</div>
+        <h1>Try It Yourself!</h1>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div>
+            <h3>Interactive Demo:</h3>
+            <div class="interactive-demo">
+              <h2 id="demoHeading" style="color: black; transition: all 0.3s">
+                This is interactive text
+              </h2>
+              <p id="demoText">
+                Click the buttons to see JavaScript in action!
+              </p>
+
+              <button class="demo-button" id="btn1">Change Heading</button>
+              <button class="demo-button" id="btn2">Make Purple</button>
+              <button class="demo-button" id="btn3">Make Bigger</button>
+              <button class="demo-button" id="btn4">Change Paragraph</button>
+              <button class="demo-button" id="btn5">Add Background</button>
+
+              <div
+                id="demo-output"
+                style="
+                  margin-top: 15px;
+                  padding: 10px;
+                  background: #f0f0f0;
+                  border-radius: 5px;
+                  min-height: 40px;
+                "
+              >
+                <p style="margin: 0">Mouse events will appear here...</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3>JavaScript Being Executed:</h3>
+            <div
+              class="code-block"
+              style="min-height: 100px; display: flex; align-items: center"
+            >
+              <span id="codeDisplay" style="color: #dcdcaa"
+                ><span class="comment">// Click a button to see the JavaScript code</span></span
+              >
+            </div>
+
+            <h4 style="margin-top: 20px; font-size: 1.2em">
+              Mouse Event Listeners (Active):
+            </h4>
+            <div class="code-block" style="font-size: 0.9em">
+<span class="comment">// Mouseover event</span>
+heading.<span class="function">addEventListener</span>(<span class="string">'mouseover'</span>, <span class="keyword">function</span>() {
+  output.<span class="property">innerHTML</span> = <span class="string">'Mouse is over the heading!'</span>;
+});
+
+<span class="comment">// Mouseout event</span>
+heading.<span class="function">addEventListener</span>(<span class="string">'mouseout'</span>, <span class="keyword">function</span>() {
+  output.<span class="property">innerHTML</span> = <span class="string">'Mouse left the heading'</span>;
+});
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Summary & Next Class -->
+      <div class="slide">
+        <div class="slide-number">15 / 15</div>
+        <h1>Summary</h1>
+
+        <h2>What We Learned Today:</h2>
+        <ul>
+          <li>What JavaScript is and how it works with HTML</li>
+          <li>The Document Object Model (DOM)</li>
+          <li>How to select elements (getElementById, querySelector)</li>
+          <li>How to modify content and styles</li>
+          <li>How to handle events (clicks, mouseover, etc.)</li>
+          <li>Best practices for adding JavaScript to HTML</li>
+        </ul>
+
+        <div class="assignment-box">
+          <h3>📚 Practice This Week:</h3>
+          <ul>
+            <li>Create a simple interactive webpage</li>
+            <li>Practice selecting and modifying elements</li>
+            <li>Add at least 3 different event handlers</li>
+            <li>Try both internal and external JavaScript</li>
+          </ul>
+        </div>
+
+        <div class="assignment-box">
+          <h3>Deep Dive!</h3>
+          <ul>
+            <li>Watch this video for an in depth understanding of the JavaScript DOM</li>
+            <li><a href="https://www.youtube.com/watch?v=c6IyCwAV6BY&t=1" style="color: white; text-decoration: underline;">Watch freecodecamp video</a></li>
+          </ul>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Next Class (Thursday):</strong><br />
+            Interactive Forms - Form controls, validation, and processing user
+            input
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+      <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+        ← Previous
+      </button>
+      <span id="slideInfo">Slide 1 of 15</span>
+      <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+        Next →
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
