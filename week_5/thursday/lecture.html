@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIS 185 - Interactive Forms</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide active">
+        <div class="slide-number">1 / 18</div>
+        <h1>🎃 Interactive Forms 🎃</h1>
+        <h2>Week 5 - Thursday, October 23</h2>
+
+        <div class="demo-box">
+          <p><strong>Today's Topics:</strong></p>
+          <p>HTML Form Controls • Form Validation • Processing User Input</p>
+        </div>
+
+        <div class="assignment-box">
+          <h3>Learning Objectives:</h3>
+          <ul>
+            <li>Master all HTML form controls</li>
+            <li>Understand form validation techniques</li>
+            <li>Process and handle user input with JavaScript</li>
+            <li>Create interactive, user-friendly forms</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slide 2: What are Forms? -->
+      <div class="slide">
+        <div class="slide-number">2 / 18</div>
+        <h1>What are HTML Forms?</h1>
+
+        <p>
+          Forms are <span class="highlight">interactive sections</span> of web
+          pages that collect user input.
+        </p>
+
+        <h2>Common Uses:</h2>
+        <ul>
+          <li>Login and registration</li>
+          <li>Contact forms</li>
+          <li>Surveys and feedback</li>
+          <li>Shopping checkouts</li>
+          <li>Search boxes</li>
+          <li>Comments and reviews</li>
+        </ul>
+
+        <h2>Basic Form Structure:</h2>
+        <div class="code-block">
+          <span class="tag">&lt;form</span>
+          <span class="attribute">action</span>=<span class="value"
+            >"/submit"</span
+          >
+          <span class="attribute">method</span>=<span class="value">"post"</span
+          ><span class="tag">&gt;</span>
+          <span class="comment">&lt;!-- Form controls go here --&gt;</span>
+          <span class="tag">&lt;/form&gt;</span>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Key Point:</strong> Forms are containers for various input
+            controls
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 3: Text Input Controls -->
+      <div class="slide">
+        <div class="slide-number">3 / 18</div>
+        <h1>Text Input Controls</h1>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+          "
+        >
+          <div>
+            <h3>1. Text Input - Code:</h3>
+            <div class="code-block">
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"username"</span
+              ><span class="tag">&gt;</span>Username:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"text"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"username"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"username"</span
+              >
+              <span class="attribute">placeholder</span>=<span class="value"
+                >"Enter username"</span
+              ><span class="tag">&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label for="username1">Username:</label>
+              <input
+                type="text"
+                id="username1"
+                name="username"
+                placeholder="Enter username"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+          "
+        >
+          <div>
+            <h3>2. Password Input - Code:</h3>
+            <div class="code-block">
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"password"</span
+              ><span class="tag">&gt;</span>Password:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"password"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"password"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"password"</span
+              ><span class="tag">&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label for="password1">Password:</label>
+              <input
+                type="password"
+                id="password1"
+                name="password"
+                placeholder="Type to see dots"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div>
+            <h3>3. Email Input - Code:</h3>
+            <div class="code-block">
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"email"</span
+              ><span class="tag">&gt;</span>Email:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"email"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"email"</span
+              >
+              <span class="attribute">required</span
+              ><span class="tag">&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label for="email1">Email:</label>
+              <input
+                type="email"
+                id="email1"
+                required
+                placeholder="user@example.com"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Pro Tip:</strong> Try typing in the fields above! Notice how
+            password hides characters.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 4: More Input Types -->
+      <div class="slide">
+        <div class="slide-number">4 / 18</div>
+        <h1>More Input Types</h1>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div>
+            <h3>Number Input - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"number"</span
+              >
+              <span class="attribute">min</span>=<span class="value">"1"</span>
+              <span class="attribute">max</span>=<span class="value"
+                >"100"</span
+              >
+              <span class="attribute">step</span>=<span class="value">"5"</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"25"</span
+              ><span class="tag">&gt;</span>
+            </div>
+
+            <h3>Date Input - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"date"</span
+              >
+              <span class="attribute">min</span>=<span class="value"
+                >"2024-01-01"</span
+              >
+              <span class="attribute">max</span>=<span class="value"
+                >"2024-12-31"</span
+              ><span class="tag">&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label>Number (1-100):</label>
+              <input type="number" min="1" max="100" step="5" value="25" />
+
+              <div style="margin-top: 15px">
+                <label>Date:</label>
+                <input type="date" min="2024-01-01" max="2024-12-31" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+          "
+        >
+          <div>
+            <h3>Range Slider - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"range"</span
+              >
+              <span class="attribute">min</span>=<span class="value">"0"</span>
+              <span class="attribute">max</span>=<span class="value"
+                >"100"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"50"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"volume"</span
+              ><span class="tag">&gt;</span> <span class="tag">&lt;span</span>
+              <span class="attribute">id</span>=<span class="value"
+                >"volValue"</span
+              ><span class="tag">&gt;</span>50<span class="tag"
+                >&lt;/span&gt;</span
+              >
+            </div>
+
+            <h3>Color Picker - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"color"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"#ff6600"</span
+              ><span class="tag">&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label>Volume:</label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="50"
+                id="volumeSlider"
+                oninput="document.getElementById('volDisplay').textContent = this.value"
+              />
+              <span id="volDisplay">50</span>
+
+              <div style="margin-top: 15px">
+                <label>Pick Color:</label>
+                <input type="color" value="#ff6600" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Interactive:</strong> Try all the inputs above! Move the
+            slider, pick a date, choose a color!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 5: Textarea and Select -->
+      <div class="slide">
+        <div class="slide-number">5 / 18</div>
+        <h1>Textarea and Select Elements</h1>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+          "
+        >
+          <div>
+            <h3>Textarea - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"message"</span
+              ><span class="tag">&gt;</span>Message:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;textarea</span>
+              <span class="attribute">id</span>=<span class="value"
+                >"message"</span
+              >
+              <span class="attribute">rows</span>=<span class="value">"4"</span>
+              <span class="attribute">cols</span>=<span class="value"
+                >"30"</span
+              >
+              <span class="attribute">placeholder</span>=<span class="value"
+                >"Enter your message..."</span
+              ><span class="tag">&gt;&lt;/textarea&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label for="message1">Message:</label><br />
+              <textarea
+                id="message1"
+                rows="4"
+                cols="30"
+                placeholder="Enter your message..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div>
+            <h3>Select Dropdown - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"country"</span
+              ><span class="tag">&gt;</span>Country:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;select</span>
+              <span class="attribute">id</span>=<span class="value"
+                >"country"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"country"</span
+              ><span class="tag">&gt;</span>
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value">""</span
+              ><span class="tag">&gt;</span>Choose a country<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"usa"</span
+              ><span class="tag">&gt;</span>United States<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"canada"</span
+              ><span class="tag">&gt;</span>Canada<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"mexico"</span
+              >
+              <span class="attribute">selected</span
+              ><span class="tag">&gt;</span>Mexico<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;/select&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <label for="country1">Country:</label>
+              <select id="country1" name="country" style="width: 200px">
+                <option value="">Choose a country</option>
+                <option value="usa">United States</option>
+                <option value="canada">Canada</option>
+                <option value="mexico" selected>Mexico</option>
+              </select>
+              <p style="margin-top: 10px; font-size: 0.9em; color: #666">
+                Notice: Mexico is pre-selected with the 'selected' attribute
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Try it:</strong> Type in the textarea and change the
+            dropdown selection!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 6: Radio Buttons and Checkboxes -->
+      <div class="slide">
+        <div class="slide-number">6 / 18</div>
+        <h1>Radio Buttons and Checkboxes</h1>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+          "
+        >
+          <div>
+            <h3>Radio Buttons - Code:</h3>
+            <div class="code-block" style="font-size: 0.9em">
+              <span class="tag">&lt;fieldset&gt;</span>
+              <span class="tag">&lt;legend&gt;</span>Choose your costume:<span
+                class="tag"
+                >&lt;/legend&gt;</span
+              >
+
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"radio"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"vampire"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"costume"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"vampire"</span
+              ><span class="tag">&gt;</span> <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"vampire"</span
+              ><span class="tag">&gt;</span>Vampire 🧛<span class="tag"
+                >&lt;/label&gt;</span
+              >
+
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"radio"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"witch"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"costume"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"witch"</span
+              ><span class="tag">&gt;</span> <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"witch"</span
+              ><span class="tag">&gt;</span>Witch 🧙<span class="tag"
+                >&lt;/label&gt;</span
+              >
+
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"radio"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"ghost"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"costume"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"ghost"</span
+              ><span class="tag">&gt;</span> <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"ghost"</span
+              ><span class="tag">&gt;</span>Ghost 👻<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;/fieldset&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <fieldset style="border: 2px solid #ff6600; padding: 10px">
+                <legend style="color: #663399; font-weight: bold">
+                  Choose your costume:
+                </legend>
+
+                <div style="margin: 5px 0">
+                  <input
+                    type="radio"
+                    id="vampire1"
+                    name="costume1"
+                    value="vampire"
+                  />
+                  <label for="vampire1" style="width: auto">Vampire 🧛</label>
+                </div>
+
+                <div style="margin: 5px 0">
+                  <input
+                    type="radio"
+                    id="witch1"
+                    name="costume1"
+                    value="witch"
+                  />
+                  <label for="witch1" style="width: auto">Witch 🧙</label>
+                </div>
+
+                <div style="margin: 5px 0">
+                  <input
+                    type="radio"
+                    id="ghost1"
+                    name="costume1"
+                    value="ghost"
+                  />
+                  <label for="ghost1" style="width: auto">Ghost 👻</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div>
+            <h3>Checkboxes - Code:</h3>
+            <div class="code-block" style="font-size: 0.9em">
+              <span class="tag">&lt;fieldset&gt;</span>
+              <span class="tag">&lt;legend&gt;</span>Select treats:<span
+                class="tag"
+                >&lt;/legend&gt;</span
+              >
+
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"checkbox"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"candy"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"treats"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"candy"</span
+              >
+              <span class="attribute">checked</span
+              ><span class="tag">&gt;</span> <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"candy"</span
+              ><span class="tag">&gt;</span>Candy 🍬<span class="tag"
+                >&lt;/label&gt;</span
+              >
+
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"checkbox"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"chocolate"</span
+              >
+              <span class="attribute">name</span>=<span class="value"
+                >"treats"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"chocolate"</span
+              ><span class="tag">&gt;</span> <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"chocolate"</span
+              ><span class="tag">&gt;</span>Chocolate 🍫<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;/fieldset&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <fieldset style="border: 2px solid #ff6600; padding: 10px">
+                <legend style="color: #663399; font-weight: bold">
+                  Select treats:
+                </legend>
+
+                <div style="margin: 5px 0">
+                  <input
+                    type="checkbox"
+                    id="candy1"
+                    name="treats1"
+                    value="candy"
+                    checked
+                  />
+                  <label for="candy1" style="width: auto">Candy 🍬</label>
+                </div>
+
+                <div style="margin: 5px 0">
+                  <input
+                    type="checkbox"
+                    id="chocolate1"
+                    name="treats1"
+                    value="chocolate"
+                  />
+                  <label for="chocolate1" style="width: auto"
+                    >Chocolate 🍫</label
+                  >
+                </div>
+
+                <div style="margin: 5px 0">
+                  <input
+                    type="checkbox"
+                    id="cookies1"
+                    name="treats1"
+                    value="cookies"
+                  />
+                  <label for="cookies1" style="width: auto">Cookies 🍪</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Key Difference:</strong> Radio = one choice only, Checkboxes
+            = multiple choices allowed!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 7: Buttons -->
+      <div class="slide">
+        <div class="slide-number">7 / 18</div>
+        <h1>Form Buttons</h1>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div>
+            <h3>1. Submit Button - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="comment">&lt;!-- Submits the form --&gt;</span>
+              <span class="tag">&lt;button</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"submit"</span
+              ><span class="tag">&gt;</span>Submit Form<span class="tag"
+                >&lt;/button&gt;</span
+              >
+
+              <span class="comment"
+                >&lt;!-- Alternative using input --&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"submit"</span
+              >
+              <span class="attribute">value</span>=<span class="value"
+                >"Submit"</span
+              ><span class="tag">&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <button type="submit" style="margin: 5px">Submit Form</button>
+              <input
+                type="submit"
+                value="Submit"
+                style="
+                  margin: 5px;
+                  padding: 10px 20px;
+                  background: linear-gradient(135deg, #663399, #ff6600);
+                  color: white;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                "
+              />
+              <p style="font-size: 0.9em; color: #666; margin-top: 10px">
+                Both create submit buttons!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+          "
+        >
+          <div>
+            <h3>2. Reset Button - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="comment">&lt;!-- Clears all form fields --&gt;</span>
+              <span class="tag">&lt;button</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"reset"</span
+              ><span class="tag">&gt;</span>Clear Form<span class="tag"
+                >&lt;/button&gt;</span
+              >
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <form>
+                <input
+                  type="text"
+                  placeholder="Type something..."
+                  style="margin-bottom: 10px"
+                />
+                <button type="reset">Clear Form</button>
+              </form>
+              <p style="font-size: 0.9em; color: #666; margin-top: 10px">
+                Type above, then click Clear!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+          "
+        >
+          <div>
+            <h3>3. Regular Button - Code:</h3>
+            <div class="code-block" style="font-size: 0.95em">
+              <span class="comment"
+                >&lt;!-- Needs JavaScript to work --&gt;</span
+              >
+              <span class="tag">&lt;button</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"button"</span
+              >
+              <span class="attribute">onclick</span>=<span class="value"
+                >"alert('Boo! 🎃')"</span
+              ><span class="tag">&gt;</span>
+              Click Me
+              <span class="tag">&lt;/button&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Output:</h3>
+            <div class="form-demo">
+              <button type="button" onclick="alert('Boo! 🎃')">Click Me</button>
+              <p style="font-size: 0.9em; color: #666; margin-top: 10px">
+                Click for a Halloween surprise!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>⚠️ Important:</strong> If you don't specify type, buttons
+            default to type="submit"!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 8: Form Attributes -->
+      <div class="slide">
+        <div class="slide-number">8 / 18</div>
+        <h1>Important Form Attributes</h1>
+
+        <table class="comparison-table">
+          <tr>
+            <th>Attribute</th>
+            <th>Purpose</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td><strong>required</strong></td>
+            <td>Field must be filled</td>
+            <td>&lt;input required&gt;</td>
+          </tr>
+          <tr>
+            <td><strong>disabled</strong></td>
+            <td>Field cannot be edited</td>
+            <td>&lt;input disabled&gt;</td>
+          </tr>
+          <tr>
+            <td><strong>readonly</strong></td>
+            <td>Can see but not edit</td>
+            <td>&lt;input readonly&gt;</td>
+          </tr>
+          <tr>
+            <td><strong>placeholder</strong></td>
+            <td>Hint text</td>
+            <td>&lt;input placeholder="Enter name"&gt;</td>
+          </tr>
+          <tr>
+            <td><strong>value</strong></td>
+            <td>Default value</td>
+            <td>&lt;input value="Default"&gt;</td>
+          </tr>
+          <tr>
+            <td><strong>maxlength</strong></td>
+            <td>Character limit</td>
+            <td>&lt;input maxlength="10"&gt;</td>
+          </tr>
+          <tr>
+            <td><strong>pattern</strong></td>
+            <td>Regex validation</td>
+            <td>&lt;input pattern="[A-Z]{3}"&gt;</td>
+          </tr>
+        </table>
+
+        <div class="demo-box">
+          <p>These attributes provide built-in HTML5 validation!</p>
+        </div>
+      </div>
+
+      <!-- Slide 9: Complete Form Example -->
+      <div class="slide">
+        <div class="slide-number">9 / 18</div>
+        <h1>Complete Form Example</h1>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px">
+          <div>
+            <h3>HTML Code:</h3>
+            <div
+              class="code-block"
+              style="font-size: 0.85em; max-height: 400px; overflow-y: auto"
+            >
+              <span class="tag">&lt;form</span>
+              <span class="attribute">id</span>=<span class="value"
+                >"registrationForm"</span
+              ><span class="tag">&gt;</span>
+              <span class="tag">&lt;fieldset&gt;</span>
+              <span class="tag">&lt;legend&gt;</span>🎃 Halloween Party
+              Registration 🎃<span class="tag">&lt;/legend&gt;</span>
+
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"name"</span
+              ><span class="tag">&gt;</span>Name:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"text"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"name"</span
+              >
+              <span class="attribute">required</span
+              ><span class="tag">&gt;</span>
+
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"email"</span
+              ><span class="tag">&gt;</span>Email:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"email"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"email"</span
+              >
+              <span class="attribute">required</span
+              ><span class="tag">&gt;</span>
+
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"costume"</span
+              ><span class="tag">&gt;</span>Costume:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;select</span>
+              <span class="attribute">id</span>=<span class="value"
+                >"costume"</span
+              ><span class="tag">&gt;</span>
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"vampire"</span
+              ><span class="tag">&gt;</span>Vampire 🧛<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"witch"</span
+              ><span class="tag">&gt;</span>Witch 🧙<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;option</span>
+              <span class="attribute">value</span>=<span class="value"
+                >"ghost"</span
+              ><span class="tag">&gt;</span>Ghost 👻<span class="tag"
+                >&lt;/option&gt;</span
+              >
+              <span class="tag">&lt;/select&gt;</span>
+
+              <span class="tag">&lt;label</span>
+              <span class="attribute">for</span>=<span class="value"
+                >"guests"</span
+              ><span class="tag">&gt;</span>Guests:<span class="tag"
+                >&lt;/label&gt;</span
+              >
+              <span class="tag">&lt;input</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"number"</span
+              >
+              <span class="attribute">id</span>=<span class="value"
+                >"guests"</span
+              >
+              <span class="attribute">min</span>=<span class="value">"1"</span>
+              <span class="attribute">max</span>=<span class="value">"5"</span
+              ><span class="tag">&gt;</span>
+
+              <span class="tag">&lt;button</span>
+              <span class="attribute">type</span>=<span class="value"
+                >"submit"</span
+              ><span class="tag">&gt;</span>Register<span class="tag"
+                >&lt;/button&gt;</span
+              >
+              <span class="tag">&lt;/fieldset&gt;</span>
+              <span class="tag">&lt;/form&gt;</span>
+            </div>
+          </div>
+          <div>
+            <h3>Rendered Form:</h3>
+            <div class="form-demo">
+              <form id="registrationForm2" onsubmit="return false;">
+                <fieldset
+                  style="
+                    border: 2px solid #ff6600;
+                    padding: 15px;
+                    border-radius: 10px;
+                  "
+                >
+                  <legend
+                    style="color: #663399; font-weight: bold; font-size: 1.1em"
+                  >
+                    🎃 Halloween Party Registration 🎃
+                  </legend>
+
+                  <div style="margin-bottom: 10px">
+                    <label
+                      for="name2"
+                      style="display: inline-block; width: 80px"
+                      >Name:</label
+                    >
+                    <input
+                      type="text"
+                      id="name2"
+                      required
+                      style="width: 150px"
+                    />
+                  </div>
+
+                  <div style="margin-bottom: 10px">
+                    <label
+                      for="email2"
+                      style="display: inline-block; width: 80px"
+                      >Email:</label
+                    >
+                    <input
+                      type="email"
+                      id="email2"
+                      required
+                      style="width: 150px"
+                    />
+                  </div>
+
+                  <div style="margin-bottom: 10px">
+                    <label
+                      for="costume2"
+                      style="display: inline-block; width: 80px"
+                      >Costume:</label
+                    >
+                    <select id="costume2" style="width: 150px">
+                      <option value="vampire">Vampire 🧛</option>
+                      <option value="witch">Witch 🧙</option>
+                      <option value="ghost">Ghost 👻</option>
+                    </select>
+                  </div>
+
+                  <div style="margin-bottom: 15px">
+                    <label
+                      for="guests2"
+                      style="display: inline-block; width: 80px"
+                      >Guests:</label
+                    >
+                    <input
+                      type="number"
+                      id="guests2"
+                      min="1"
+                      max="5"
+                      value="1"
+                      style="width: 150px"
+                    />
+                  </div>
+
+                  <button type="submit" onclick="alert('Form submitted! 🎃')">
+                    Register
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Try it:</strong> This is a working form! Fill it out and
+            click Register!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 10: JavaScript Form Access -->
+      <div class="slide">
+        <div class="slide-number">10 / 18</div>
+        <h1>Accessing Forms with JavaScript</h1>
+
+        <h2>Getting Form Elements</h2>
+        <div class="code-block">
+          <span class="comment">// Get the form</span>
+          <span class="keyword">let</span> form =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'myForm'</span>);
+
+          <span class="comment">// Get input values</span>
+          <span class="keyword">let</span> username =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'username'</span>).<span class="property"
+            >value</span
+          >; <span class="keyword">let</span> email =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'email'</span>).<span class="property"
+            >value</span
+          >;
+
+          <span class="comment">// Get selected option</span>
+          <span class="keyword">let</span> selectBox =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'country'</span>);
+          <span class="keyword">let</span> selectedValue = selectBox.<span
+            class="property"
+            >value</span
+          >; <span class="keyword">let</span> selectedText = selectBox.<span
+            class="property"
+            >options</span
+          >[selectBox.<span class="property">selectedIndex</span>].<span
+            class="property"
+            >text</span
+          >;
+
+          <span class="comment">// Get checked checkboxes</span>
+          <span class="keyword">let</span> checkbox =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'agree'</span>);
+          <span class="keyword">if</span> (checkbox.<span class="property"
+            >checked</span
+          >) { <span class="function">console</span>.<span class="function"
+            >log</span
+          >(<span class="string">'User agreed!'</span>); }
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Remember:</strong> .value gets the current value of any
+            input field
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 11: Form Events -->
+      <div class="slide">
+        <div class="slide-number">11 / 18</div>
+        <h1>Form Events</h1>
+
+        <h2>Common Form Events:</h2>
+        <ul>
+          <li><strong>submit</strong> - Form is submitted</li>
+          <li><strong>change</strong> - Input value changes</li>
+          <li><strong>input</strong> - User types in field</li>
+          <li><strong>focus</strong> - Field gets focus</li>
+          <li><strong>blur</strong> - Field loses focus</li>
+        </ul>
+
+        <h2>Handling Form Submission</h2>
+        <div class="code-block">
+          <span class="keyword">let</span> form =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'myForm'</span>); form.<span class="function"
+            >addEventListener</span
+          >(<span class="string">'submit'</span>,
+          <span class="keyword">function</span>(<span class="property"
+            >event</span
+          >) {
+          <span class="comment">// Prevent default submission</span>
+          event.<span class="function">preventDefault</span>();
+
+          <span class="comment">// Get form data</span>
+          <span class="keyword">let</span> name =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'name'</span>).<span class="property"
+            >value</span
+          >;
+
+          <span class="comment">// Process the data</span>
+          <span class="function">console</span>.<span class="function">log</span
+          >(<span class="string">'Form submitted with name:'</span>, name); });
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Important:</strong> preventDefault() stops the form from
+            refreshing the page!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 12: Real-time Validation -->
+      <div class="slide">
+        <div class="slide-number">12 / 18</div>
+        <h1>Real-time Validation</h1>
+
+        <h2>Validating as User Types</h2>
+        <div class="code-block">
+          <span class="keyword">let</span> emailInput =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'email'</span>);
+          <span class="keyword">let</span> errorMsg =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'emailError'</span>); emailInput.<span
+            class="function"
+            >addEventListener</span
+          >(<span class="string">'input'</span>,
+          <span class="keyword">function</span>() {
+          <span class="keyword">let</span> email = emailInput.<span
+            class="property"
+            >value</span
+          >;
+
+          <span class="comment">// Simple email validation</span>
+          <span class="keyword">if</span> (!email.<span class="function"
+            >includes</span
+          >(<span class="string">'@'</span>)) { errorMsg.<span class="property"
+            >textContent</span
+          >
+          = <span class="string">'Please include @ in email'</span>;
+          errorMsg.<span class="property">style</span>.<span class="property"
+            >color</span
+          >
+          = <span class="string">'red'</span>; }
+          <span class="keyword">else</span> { errorMsg.<span class="property"
+            >textContent</span
+          >
+          = <span class="string">'✓ Valid email'</span>; errorMsg.<span
+            class="property"
+            >style</span
+          >.<span class="property">color</span> =
+          <span class="string">'green'</span>; } });
+        </div>
+
+        <h2>Password Strength Checker</h2>
+        <div class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">checkPasswordStrength</span>(<span
+            class="property"
+            >password</span
+          >) { <span class="keyword">if</span> (password.<span class="property"
+            >length</span
+          >
+          < 6) <span class="keyword">return</span>
+          <span class="string">'Weak'</span>;
+          <span class="keyword">if</span> (password.<span class="property"
+            >length</span
+          >
+          < 10) <span class="keyword">return</span>
+          <span class="string">'Medium'</span>;
+          <span class="keyword">return</span>
+          <span class="string">'Strong'</span>; }
+        </div>
+      </div>
+
+      <!-- Slide 13: Form Validation Example -->
+      <div class="slide">
+        <div class="slide-number">13 / 18</div>
+        <h1>Complete Validation Example</h1>
+
+        <div class="code-block" style="font-size: 0.9em">
+          <span class="keyword">function</span>
+          <span class="function">validateForm</span>() {
+          <span class="keyword">let</span> isValid =
+          <span class="value">true</span>;
+
+          <span class="comment">// Check name</span>
+          <span class="keyword">let</span> name =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'name'</span>).<span class="property"
+            >value</span
+          >; <span class="keyword">if</span> (name.<span class="property"
+            >length</span
+          >
+          < 2) { <span class="function">showError</span>(<span class="string"
+            >'name'</span
+          >, <span class="string">'Name must be at least 2 characters'</span>);
+          isValid = <span class="value">false</span>; }
+
+          <span class="comment">// Check email</span>
+          <span class="keyword">let</span> email =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'email'</span>).<span class="property"
+            >value</span
+          >; <span class="keyword">if</span> (!email.<span class="function"
+            >includes</span
+          >(<span class="string">'@'</span>) || !email.<span class="function"
+            >includes</span
+          >(<span class="string">'.'</span>)) {
+          <span class="function">showError</span>(<span class="string"
+            >'email'</span
+          >, <span class="string">'Please enter a valid email'</span>); isValid
+          = <span class="value">false</span>; }
+
+          <span class="comment">// Check if terms accepted</span>
+          <span class="keyword">let</span> terms =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'terms'</span>);
+          <span class="keyword">if</span> (!terms.<span class="property"
+            >checked</span
+          >) { <span class="function">showError</span>(<span class="string"
+            >'terms'</span
+          >, <span class="string">'You must accept the terms'</span>); isValid =
+          <span class="value">false</span>; }
+
+          <span class="keyword">return</span> isValid; }
+        </div>
+      </div>
+
+      <!-- Slide 14: Interactive Demo -->
+      <div class="slide">
+        <div class="slide-number">14 / 18</div>
+        <h1>Try It: Interactive Form</h1>
+
+        <div class="form-demo">
+          <form id="demoForm" onsubmit="return false;">
+            <h3>🎃 Halloween Party RSVP 🎃</h3>
+
+            <div style="margin: 10px 0">
+              <label for="demoName">Name:</label>
+              <input type="text" id="demoName" required />
+              <span id="nameMsg" style="margin-left: 10px"></span>
+            </div>
+
+            <div style="margin: 10px 0">
+              <label for="demoEmail">Email:</label>
+              <input type="email" id="demoEmail" required />
+              <span id="emailMsg" style="margin-left: 10px"></span>
+            </div>
+
+            <div style="margin: 10px 0">
+              <label for="demoCostume">Costume:</label>
+              <select id="demoCostume">
+                <option value="">Choose...</option>
+                <option value="vampire">Vampire 🧛</option>
+                <option value="witch">Witch 🧙</option>
+                <option value="ghost">Ghost 👻</option>
+                <option value="zombie">Zombie 🧟</option>
+              </select>
+            </div>
+
+            <div style="margin: 10px 0">
+              <label>Bringing:</label>
+              <input type="checkbox" id="snacks" />
+              <label for="snacks" style="width: auto">Snacks</label>
+              <input type="checkbox" id="drinks" />
+              <label for="drinks" style="width: auto">Drinks</label>
+            </div>
+
+            <button type="button" onclick="validateDemo()">Submit RSVP</button>
+            <button type="reset">Clear Form</button>
+
+            <div
+              id="formResult"
+              style="margin-top: 15px; padding: 10px; display: none"
+            ></div>
+          </form>
+        </div>
+
+        <script>
+          // Real-time validation
+          document
+            .getElementById("demoName")
+            .addEventListener("input", function () {
+              let msg = document.getElementById("nameMsg");
+              if (this.value.length < 2) {
+                msg.textContent = "❌ Too short";
+                msg.style.color = "red";
+              } else {
+                msg.textContent = "✓";
+                msg.style.color = "green";
+              }
+            });
+
+          document
+            .getElementById("demoEmail")
+            .addEventListener("input", function () {
+              let msg = document.getElementById("emailMsg");
+              if (!this.value.includes("@")) {
+                msg.textContent = "❌ Missing @";
+                msg.style.color = "red";
+              } else {
+                msg.textContent = "✓";
+                msg.style.color = "green";
+              }
+            });
+
+          function validateDemo() {
+            let name = document.getElementById("demoName").value;
+            let email = document.getElementById("demoEmail").value;
+            let costume = document.getElementById("demoCostume").value;
+            let result = document.getElementById("formResult");
+
+            if (!name || !email || !costume) {
+              result.className = "invalid";
+              result.textContent = "Please fill in all required fields!";
+            } else {
+              result.className = "valid";
+              result.innerHTML = `🎃 Success! ${name} is coming as a ${costume}!`;
+            }
+            result.style.display = "block";
+          }
+        </script>
+      </div>
+
+      <!-- Slide 15: Processing Form Data -->
+      <div class="slide">
+        <div class="slide-number">15 / 18</div>
+        <h1>Processing Form Data</h1>
+
+        <h2>Collecting All Form Data</h2>
+        <div class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">processForm</span>() {
+          <span class="comment">// Create data object</span>
+          <span class="keyword">let</span> formData = { name:
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'name'</span>).<span class="property"
+            >value</span
+          >, email: <span class="property">document</span>.<span
+            class="function"
+            >getElementById</span
+          >(<span class="string">'email'</span>).<span class="property"
+            >value</span
+          >, country: <span class="property">document</span>.<span
+            class="function"
+            >getElementById</span
+          >(<span class="string">'country'</span>).<span class="property"
+            >value</span
+          >, newsletter: <span class="property">document</span>.<span
+            class="function"
+            >getElementById</span
+          >(<span class="string">'newsletter'</span>).<span class="property"
+            >checked</span
+          >
+          };
+
+          <span class="comment">// Display the data</span>
+          <span class="function">console</span>.<span class="function">log</span
+          >(<span class="string">'Form Data:'</span>, formData);
+
+          <span class="comment">// Show confirmation</span>
+          <span class="function">alert</span>(<span class="string"
+            >`Thanks ${formData.name}! We'll email you at
+            ${formData.email}`</span
+          >);
+
+          <span class="comment">// Clear the form</span>
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'myForm'</span>).<span class="function"
+            >reset</span
+          >(); }
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Next Steps:</strong> In real applications, this data would
+            be sent to a server
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 16: FormData API -->
+      <div class="slide">
+        <div class="slide-number">16 / 18</div>
+        <h1>Modern Approach: FormData API</h1>
+
+        <h2>Easier Way to Get All Form Data</h2>
+        <div class="code-block">
+          <span class="keyword">let</span> form =
+          <span class="property">document</span>.<span class="function"
+            >getElementById</span
+          >(<span class="string">'myForm'</span>); form.<span class="function"
+            >addEventListener</span
+          >(<span class="string">'submit'</span>,
+          <span class="keyword">function</span>(<span class="property"
+            >event</span
+          >) { event.<span class="function">preventDefault</span>();
+
+          <span class="comment">// Get all form data at once</span>
+          <span class="keyword">let</span> formData =
+          <span class="keyword">new</span>
+          <span class="function">FormData</span>(form);
+
+          <span class="comment">// Convert to object</span>
+          <span class="keyword">let</span> data = {}; formData.<span
+            class="function"
+            >forEach</span
+          >((<span class="property">value</span>,
+          <span class="property">key</span>) => { data[key] = value; });
+
+          <span class="function">console</span>.<span class="function">log</span
+          >(<span class="string">'All form data:'</span>, data); });
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>FormData</strong> automatically collects all named form
+            fields!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 17: Best Practices -->
+      <div class="slide">
+        <div class="slide-number">17 / 18</div>
+        <h1>Form Best Practices</h1>
+
+        <h2>✅ DO:</h2>
+        <ul>
+          <li>
+            Always use <strong>labels</strong> with correct 'for' attributes
+          </li>
+          <li>Group related fields with <strong>fieldset</strong></li>
+          <li>Provide <strong>immediate feedback</strong> for validation</li>
+          <li>
+            Use <strong>preventDefault()</strong> when handling forms with JS
+          </li>
+          <li>Add <strong>placeholder text</strong> for guidance</li>
+          <li>Make forms <strong>keyboard accessible</strong></li>
+          <li>
+            Use appropriate <strong>input types</strong> (email, tel, date)
+          </li>
+        </ul>
+
+        <h2>❌ DON'T:</h2>
+        <ul>
+          <li>Rely only on client-side validation</li>
+          <li>Make all fields required unnecessarily</li>
+          <li>Use placeholders instead of labels</li>
+          <li>Forget to test form on mobile devices</li>
+        </ul>
+
+        <div class="demo-box">
+          <p>
+            <strong>Golden Rule:</strong> Always validate on both client AND
+            server!
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 18: Summary -->
+      <div class="slide">
+        <div class="slide-number">18 / 18</div>
+        <h1>Summary</h1>
+
+        <h2>What We Learned and Assignment 5:</h2>
+        <ul>
+          <li>✓ All HTML form controls (inputs, select, textarea)</li>
+          <li>✓ Radio buttons vs checkboxes</li>
+          <li>✓ Form attributes and validation</li>
+          <li>✓ Accessing form data with JavaScript</li>
+          <li>✓ Form events (submit, input, change)</li>
+          <li>✓ Real-time validation techniques</li>
+          <li>✓ Processing and collecting form data</li>
+        </ul>
+
+        <div class="assignment-box">
+          <h3>Assignment 5 This Week:</h3>
+          <ul>
+            <li>Create a complete registration form for a fun, halloween themed-party or event!</li>
+            <li>Add all types of input controls that you can think of</li>
+            <li>Implement JavaScript validation!</li>
+            <li>Process form data on submission</li>
+            <li>Style your form with CSS</li>
+            <li>Readme should talk about the DOM techniques you used and where you used them</li>
+          </ul>
+        </div>
+
+        <div class="demo-box">
+          <p><strong>Next Week:</strong> More Advanced JavaScript and APIs!</p>
+          <p>🎃 Happy Coding! 🎃</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+      <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+        ← Previous
+      </button>
+      <span id="slideInfo">Slide 1 of 18</span>
+      <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+        Next →
+      </button>
+    </div>
+    <script src="slides.js" defer></script>
+    <script src="forms.js" defer></script>
+  </body>
+</html>
