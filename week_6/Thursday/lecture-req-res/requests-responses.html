@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIS 185 - Requests and Responses</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .api-demo {
+        background: white;
+        border: 3px solid #ff6b35;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .api-button {
+        background: linear-gradient(135deg, #ff6b35 0%, #8b2b99 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        margin: 5px;
+        transition: transform 0.2s;
+        font-weight: bold;
+      }
+
+      .api-button:hover {
+        transform: scale(1.05);
+      }
+
+      .api-button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: scale(1);
+      }
+
+      .response-box {
+        background: #1a1a2e;
+        color: #d4d4d4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        max-height: 200px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .status-indicator {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-weight: bold;
+        margin: 5px;
+      }
+
+      .status-loading {
+        background: #ffc107;
+        color: #000;
+      }
+
+      .status-success {
+        background: #28a745;
+        color: white;
+      }
+
+      .status-error {
+        background: #dc3545;
+        color: white;
+      }
+
+      .result-display {
+        background: #f8f9fa;
+        border: 2px solid #8b2b99;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        text-align: center;
+      }
+
+      .result-display img {
+        max-width: 200px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .result-display h3 {
+        color: #8b2b99;
+        margin: 10px 0;
+      }
+
+      .result-display p {
+        color: #333;
+        font-size: 1.1em;
+      }
+
+      .input-group {
+        margin: 15px 0;
+      }
+
+      .input-group input {
+        padding: 10px 15px;
+        font-size: 16px;
+        border: 2px solid #ff6b35;
+        border-radius: 20px;
+        width: 200px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+      <!-- SLIDE 1: Title Slide -->
+      <div class="slide active">
+        <div class="slide-number">1 / 10</div>
+        <h1>Requests and Responses</h1>
+        <h2>Getting Data from APIs with JavaScript</h2>
+
+        <p>In this lecture, we'll explore:</p>
+        <ul>
+          <li>What are HTTP requests and responses?</li>
+          <li>Using the Fetch API</li>
+          <li>Working with JSON data</li>
+          <li>Handling async operations with Promises</li>
+          <li>Real-world API examples (Star Wars & Pokémon!)</li>
+        </ul>
+      </div>
+
+      <!-- SLIDE 2: What are Requests and Responses? -->
+      <div class="slide">
+        <div class="slide-number">2 / 10</div>
+        <h1>HTTP Requests and Responses</h1>
+        <h2>Client-Server Communication</h2>
+
+        <p>
+          When you interact with a website, your browser (client) sends
+          <strong>requests</strong> to a server, and the server sends back
+          <strong>responses</strong>.
+        </p>
+
+        <div class="demo-box">
+          <p>
+            <strong>Request:</strong> "Hey server, can I get data about Luke
+            Skywalker?"
+          </p>
+          <p style="font-size: 2em; margin: 20px 0">⬇️</p>
+          <p>
+            <strong>Response:</strong> "Sure! Here's the data: { name: 'Luke
+            Skywalker', height: '172', ... }"
+          </p>
+        </div>
+
+        <h3>Common HTTP Methods:</h3>
+        <ul>
+          <li>
+            <span class="highlight">GET</span> - Retrieve data from a server
+          </li>
+          <li><span class="highlight">POST</span> - Send data to a server</li>
+          <li><span class="highlight">PUT</span> - Update existing data</li>
+          <li><span class="highlight">DELETE</span> - Remove data</li>
+        </ul>
+      </div>
+
+      <!-- SLIDE 3: Introduction to Fetch API -->
+      <div class="slide">
+        <div class="slide-number">3 / 10</div>
+        <h1>The Fetch API</h1>
+        <h2>Making HTTP Requests in JavaScript</h2>
+
+        <p>The Fetch API provides a modern way to make HTTP requests:</p>
+
+        <div class="code-block">
+          <span class="comment">// Basic fetch request</span>
+          <span class="property">fetch</span>(<span class="value"
+            >"https://swapi.dev/api/people/1/"</span
+          >) .<span class="property">then</span>(response => response.<span
+            class="property"
+            >json</span
+          >()) .<span class="property">then</span>(data => { console.log(data);
+          <span class="comment">// Process the data</span> }) .<span
+            class="property"
+            >catch</span
+          >(error => { console.error(<span class="value">"Error:"</span>,
+          error); });
+        </div>
+
+        <div class="demo-box">
+          <p><strong>Key Points:</strong></p>
+          <ul style="text-align: left">
+            <li><span class="highlight">fetch()</span> returns a Promise</li>
+            <li><span class="highlight">.then()</span> handles the response</li>
+            <li><span class="highlight">.json()</span> parses JSON data</li>
+            <li><span class="highlight">.catch()</span> handles errors</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: Understanding Promises -->
+      <div class="slide">
+        <div class="slide-number">4 / 10</div>
+        <h1>Promises and Async Operations</h1>
+        <h2>Handling Asynchronous Code</h2>
+
+        <p>
+          JavaScript is <strong>asynchronous</strong> - it doesn't wait for long
+          operations to complete.
+        </p>
+
+        <div class="code-block">
+          <span class="comment">// Promises have three states:</span>
+          <span class="comment">// 1. Pending - waiting for result</span>
+          <span class="comment">// 2. Fulfilled - operation succeeded</span>
+          <span class="comment">// 3. Rejected - operation failed</span>
+
+          <span class="tag">let</span> promise =
+          <span class="property">fetch</span>(<span class="value"
+            >"https://api.example.com/data"</span
+          >); promise .<span class="property">then</span>(response => {
+          <span class="comment">// This runs when fulfilled</span>
+          <span class="tag">return</span> response.<span class="property"
+            >json</span
+          >(); }) .<span class="property">catch</span>(error => {
+          <span class="comment">// This runs when rejected</span>
+          console.error(error); });
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Why Async?</strong> Network requests take time. Promises let
+            your code continue running while waiting for the response!
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Async/Await Syntax -->
+      <div class="slide">
+        <div class="slide-number">5 / 10</div>
+        <h1>Async/Await</h1>
+        <h2>Cleaner Asynchronous Code</h2>
+
+        <p>
+          The <span class="highlight">async/await</span> syntax makes
+          asynchronous code look synchronous:
+        </p>
+
+        <div class="code-block">
+          <span class="comment">// Using .then() chains</span>
+          <span class="property">fetch</span>(<span class="value"
+            >"https://swapi.dev/api/people/1/"</span
+          >) .<span class="property">then</span>(response => response.<span
+            class="property"
+            >json</span
+          >()) .<span class="property">then</span>(data => console.log(data))
+          .<span class="property">catch</span>(error => console.error(error));
+
+          <span class="comment">// Using async/await (cleaner!)</span>
+          <span class="tag">async function</span>
+          <span class="property">getData</span>() {
+          <span class="tag">try</span> { <span class="tag">let</span> response =
+          <span class="tag">await</span>
+          <span class="property">fetch</span>(<span class="value"
+            >"https://swapi.dev/api/people/1/"</span
+          >); <span class="tag">let</span> data =
+          <span class="tag">await</span> response.<span class="property"
+            >json</span
+          >(); console.log(data); } <span class="tag">catch</span> (error) {
+          console.error(error); } }
+
+          <span class="property">getData</span>();
+        </div>
+      </div>
+
+      <!-- SLIDE 6: Star Wars API Demo -->
+      <div class="slide">
+        <div class="slide-number">6 / 10</div>
+        <h1>Live Demo: Star Wars API</h1>
+        <h2>Fetching Character Data</h2>
+
+        <div class="code-block">
+          <span class="tag">async function</span>
+          <span class="property">getStarWarsCharacter</span>(id) {
+          <span class="tag">let</span> url =
+          <span class="value">`https://swapi.dev/api/people/</span
+          ><span class="value">${</span>id<span class="value">}</span
+          ><span class="value">/`</span>; <span class="tag">let</span> response
+          = <span class="tag">await</span>
+          <span class="property">fetch</span>(url);
+          <span class="tag">let</span> data =
+          <span class="tag">await</span> response.<span class="property"
+            >json</span
+          >(); <span class="tag">return</span> data; }
+        </div>
+
+        <div class="api-demo">
+          <h3 style="color: #8b2b99">Try It Out!</h3>
+          <button class="api-button" onclick="fetchStarWarsCharacter(1)">
+            Luke Skywalker
+          </button>
+          <button class="api-button" onclick="fetchStarWarsCharacter(4)">
+            Darth Vader
+          </button>
+          <button class="api-button" onclick="fetchStarWarsCharacter(5)">
+            Leia Organa
+          </button>
+
+          <div id="sw-status"></div>
+          <div id="sw-request" class="response-box" style="display: none"></div>
+          <div
+            id="sw-response"
+            class="response-box"
+            style="display: none"
+          ></div>
+          <div
+            id="sw-result"
+            class="result-display"
+            style="display: none"
+          ></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Pokémon API Demo -->
+      <div class="slide">
+        <div class="slide-number">7 / 10</div>
+        <h1>Live Demo: Pokémon API</h1>
+        <h2>Fetching Pokémon Data with Images</h2>
+
+        <div class="code-block">
+          <span class="tag">async function</span>
+          <span class="property">getPokemon</span>(name) {
+          <span class="tag">let</span> url =
+          <span class="value">`https://pokeapi.co/api/v2/pokemon/</span
+          ><span class="value">${</span>name<span class="value">}</span
+          ><span class="value">`</span>; <span class="tag">let</span> response =
+          <span class="tag">await</span>
+          <span class="property">fetch</span>(url);
+          <span class="tag">let</span> data =
+          <span class="tag">await</span> response.<span class="property"
+            >json</span
+          >(); <span class="tag">return</span> data; }
+        </div>
+
+        <div class="api-demo">
+          <h3 style="color: #8b2b99">Try It Out!</h3>
+          <button class="api-button" onclick="fetchPokemon('pikachu')">
+            Pikachu
+          </button>
+          <button class="api-button" onclick="fetchPokemon('charizard')">
+            Charizard
+          </button>
+          <button class="api-button" onclick="fetchPokemon('mewtwo')">
+            Mewtwo
+          </button>
+
+          <div class="input-group">
+            <input
+              type="text"
+              id="pokemonInput"
+              placeholder="Enter Pokémon name"
+            />
+            <button class="api-button" onclick="fetchPokemonByName()">
+              Search
+            </button>
+          </div>
+
+          <div id="poke-status"></div>
+          <div
+            id="poke-request"
+            class="response-box"
+            style="display: none"
+          ></div>
+          <div
+            id="poke-response"
+            class="response-box"
+            style="display: none"
+          ></div>
+          <div
+            id="poke-result"
+            class="result-display"
+            style="display: none"
+          ></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: Handling Response Data -->
+      <div class="slide">
+        <div class="slide-number">8 / 10</div>
+        <h1>Processing Response Data</h1>
+        <h2>Working with JSON Objects</h2>
+
+        <div class="code-block">
+          <span class="tag">async function</span>
+          <span class="property">displayPokemon</span>(name) {
+          <span class="tag">let</span> response =
+          <span class="tag">await</span>
+          <span class="property">fetch</span>(<span class="value"
+            >`https://pokeapi.co/api/v2/pokemon/</span
+          ><span class="value">${</span>name<span class="value">}</span
+          ><span class="value">`</span>); <span class="tag">let</span> pokemon =
+          <span class="tag">await</span> response.<span class="property"
+            >json</span
+          >();
+
+          <span class="comment">// Extract specific data from response</span>
+          <span class="tag">let</span> pokemonInfo = { name: pokemon.name, id:
+          pokemon.id, height: pokemon.height, weight: pokemon.weight, types:
+          pokemon.types.<span class="property">map</span>(t => t.type.name),
+          sprite: pokemon.sprites.front_default };
+
+          <span class="comment">// Display in HTML</span>
+          document.<span class="property">getElementById</span>(<span
+            class="value"
+            >"display"</span
+          >).innerHTML = <span class="value">` &lt;h3&gt;</span
+          ><span class="value">${</span>pokemonInfo.name<span class="value"
+            >}</span
+          ><span class="value">&lt;/h3&gt; &lt;img src="</span
+          ><span class="value">${</span>pokemonInfo.sprite<span class="value"
+            >}</span
+          ><span class="value">" /&gt; &lt;p&gt;Type: </span
+          ><span class="value">${</span>pokemonInfo.types.<span class="property"
+            >join</span
+          >(<span class="value">", "</span>)<span class="value">}</span
+          ><span class="value">&lt;/p&gt; `</span>; }
+        </div>
+      </div>
+
+      <!-- SLIDE 9: Error Handling -->
+      <div class="slide">
+        <div class="slide-number">9 / 10</div>
+        <h1>Error Handling</h1>
+        <h2>What Happens When Things Go Wrong?</h2>
+
+        <div class="code-block">
+          <span class="tag">async function</span>
+          <span class="property">fetchWithErrorHandling</span>(url) {
+          <span class="tag">try</span> { <span class="tag">let</span> response =
+          <span class="tag">await</span>
+          <span class="property">fetch</span>(url);
+
+          <span class="comment"
+            >// Check if response is OK (status 200-299)</span
+          >
+          <span class="tag">if</span> (!response.ok) {
+          <span class="tag">throw new</span> Error(<span class="value"
+            >`HTTP error! Status: </span
+          ><span class="value">${</span>response.status<span class="value"
+            >}</span
+          ><span class="value">`</span>); }
+
+          <span class="tag">let</span> data =
+          <span class="tag">await</span> response.<span class="property"
+            >json</span
+          >(); <span class="tag">return</span> data; }
+          <span class="tag">catch</span> (error) {
+          <span class="comment"
+            >// Handle network errors, invalid JSON, etc.</span
+          >
+          console.error(<span class="value">"Fetch error:"</span>,
+          error.message); <span class="tag">return</span>
+          <span class="tag">null</span>; } }
+        </div>
+
+        <div class="demo-box">
+          <p><strong>Common Errors:</strong></p>
+          <ul style="text-align: left">
+            <li>Network error (no internet connection)</li>
+            <li>404 - Resource not found</li>
+            <li>500 - Server error</li>
+            <li>Invalid JSON in response</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: Complete Example -->
+      <div class="slide">
+        <div class="slide-number">10 / 10</div>
+        <h1>Complete Example</h1>
+        <h2>Pokémon Battle Simulator</h2>
+
+        <div class="code-block">
+          <span class="tag">async function</span>
+          <span class="property">comparePokemon</span>(name1, name2) {
+          <span class="tag">try</span> {
+          <span class="comment">// Fetch both Pokémon in parallel</span>
+          <span class="tag">let</span> [poke1, poke2] =
+          <span class="tag">await</span> Promise.<span class="property"
+            >all</span
+          >([ <span class="property">fetch</span>(<span class="value"
+            >`https://pokeapi.co/api/v2/pokemon/</span
+          ><span class="value">${</span>name1<span class="value">}</span
+          ><span class="value">`</span>).<span class="property">then</span>(r =>
+          r.<span class="property">json</span>()),
+          <span class="property">fetch</span>(<span class="value"
+            >`https://pokeapi.co/api/v2/pokemon/</span
+          ><span class="value">${</span>name2<span class="value">}</span
+          ><span class="value">`</span>).<span class="property">then</span>(r =>
+          r.<span class="property">json</span>()) ]);
+
+          <span class="comment">// Calculate total stats</span>
+          <span class="tag">let</span> stats1 = poke1.stats.<span
+            class="property"
+            >reduce</span
+          >((sum, s) => sum + s.base_stat, <span class="value">0</span>);
+          <span class="tag">let</span> stats2 = poke2.stats.<span
+            class="property"
+            >reduce</span
+          >((sum, s) => sum + s.base_stat, <span class="value">0</span>);
+
+          <span class="comment">// Determine winner</span>
+          <span class="tag">let</span> winner = stats1 > stats2 ? poke1.name :
+          poke2.name; console.log(<span class="value">`Winner: </span
+          ><span class="value">${</span>winner<span class="value">}</span
+          ><span class="value">!`</span>); }
+          <span class="tag">catch</span> (error) { console.error(<span
+            class="value"
+            >"Battle error:"</span
+          >, error); } }
+
+          <span class="property">comparePokemon</span>(<span class="value"
+            >"pikachu"</span
+          >, <span class="value">"charizard"</span>);
+        </div>
+
+        <div class="api-demo">
+          <h3 style="color: #8b2b99">Pokémon Battle!</h3>
+          <button
+            class="api-button"
+            onclick="pokemonBattle('pikachu', 'charizard')"
+          >
+            Pikachu vs Charizard
+          </button>
+          <button
+            class="api-button"
+            onclick="pokemonBattle('mewtwo', 'pikachu')"
+          >
+            Mewtwo vs Pikachu
+          </button>
+
+          <div id="battle-status"></div>
+          <div
+            id="battle-result"
+            class="result-display"
+            style="display: none"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+      <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+        ← Previous
+      </button>
+      <span id="slideInfo">Slide 1 of 10</span>
+      <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+        Next →
+      </button>
+    </div>
+
+    <script src="slides.js"></script>
+    <script>
+      // Star Wars API Functions
+      async function fetchStarWarsCharacter(id) {
+        const statusDiv = document.getElementById("sw-status");
+        const requestDiv = document.getElementById("sw-request");
+        const responseDiv = document.getElementById("sw-response");
+        const resultDiv = document.getElementById("sw-result");
+
+        // Show loading
+        statusDiv.innerHTML =
+          '<span class="status-indicator status-loading">⏳ Loading...</span>';
+        resultDiv.style.display = "none";
+        requestDiv.style.display = "block";
+        responseDiv.style.display = "none";
+
+        const url = `https://swapi.dev/api/people/${id}/`;
+        requestDiv.textContent = `REQUEST SENT:\nGET ${url}`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Show success
+          statusDiv.innerHTML =
+            '<span class="status-indicator status-success">✓ Success!</span>';
+
+          // Show response
+          responseDiv.style.display = "block";
+          responseDiv.textContent = `RESPONSE RECEIVED:\n${JSON.stringify(
+            data,
+            null,
+            2
+          )}`;
+
+          // Display formatted result
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = `
+                    <h3>${data.name}</h3>
+                    <p><strong>Height:</strong> ${data.height} cm</p>
+                    <p><strong>Mass:</strong> ${data.mass} kg</p>
+                    <p><strong>Birth Year:</strong> ${data.birth_year}</p>
+                    <p><strong>Gender:</strong> ${data.gender}</p>
+                    <p><strong>Eye Color:</strong> ${data.eye_color}</p>
+                `;
+        } catch (error) {
+          statusDiv.innerHTML =
+            '<span class="status-indicator status-error">✗ Error!</span>';
+          responseDiv.style.display = "block";
+          responseDiv.textContent = `ERROR:\n${error.message}`;
+        }
+      }
+
+      // Pokémon API Functions
+      async function fetchPokemon(pokemonName) {
+        const statusDiv = document.getElementById("poke-status");
+        const requestDiv = document.getElementById("poke-request");
+        const responseDiv = document.getElementById("poke-response");
+        const resultDiv = document.getElementById("poke-result");
+
+        // Show loading
+        statusDiv.innerHTML =
+          '<span class="status-indicator status-loading">⏳ Loading...</span>';
+        resultDiv.style.display = "none";
+        requestDiv.style.display = "block";
+        responseDiv.style.display = "none";
+
+        const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`;
+        requestDiv.textContent = `REQUEST SENT:\nGET ${url}`;
+
+        try {
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error(`Pokémon not found: ${pokemonName}`);
+          }
+
+          const data = await response.json();
+
+          // Show success
+          statusDiv.innerHTML =
+            '<span class="status-indicator status-success">✓ Success!</span>';
+
+          // Show response (truncated for readability)
+          responseDiv.style.display = "block";
+          const truncatedData = {
+            name: data.name,
+            id: data.id,
+            height: data.height,
+            weight: data.weight,
+            types: data.types,
+            sprites: { front_default: data.sprites.front_default },
+          };
+          responseDiv.textContent = `RESPONSE RECEIVED (truncated):\n${JSON.stringify(
+            truncatedData,
+            null,
+            2
+          )}`;
+
+          // Display formatted result with image
+          const types = data.types.map((t) => t.type.name).join(", ");
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = `
+                    <img src="${data.sprites.front_default}" alt="${
+            data.name
+          }" />
+                    <h3>${data.name.toUpperCase()}</h3>
+                    <p><strong>Type:</strong> ${types}</p>
+                    <p><strong>Height:</strong> ${data.height / 10} m</p>
+                    <p><strong>Weight:</strong> ${data.weight / 10} kg</p>
+                    <p><strong>ID:</strong> #${data.id}</p>
+                `;
+        } catch (error) {
+          statusDiv.innerHTML =
+            '<span class="status-indicator status-error">✗ Error!</span>';
+          responseDiv.style.display = "block";
+          responseDiv.textContent = `ERROR:\n${error.message}`;
+        }
+      }
+
+      function fetchPokemonByName() {
+        const input = document.getElementById("pokemonInput");
+        const name = input.value.trim();
+        if (name) {
+          fetchPokemon(name);
+        }
+      }
+
+      // Allow Enter key in input
+      document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("pokemonInput");
+        if (input) {
+          input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+              fetchPokemonByName();
+            }
+          });
+        }
+      });
+
+      // Pokémon Battle Function
+      async function pokemonBattle(name1, name2) {
+        const statusDiv = document.getElementById("battle-status");
+        const resultDiv = document.getElementById("battle-result");
+
+        statusDiv.innerHTML =
+          '<span class="status-indicator status-loading">⏳ Battle in progress...</span>';
+        resultDiv.style.display = "none";
+
+        try {
+          // Fetch both Pokémon in parallel
+          const [response1, response2] = await Promise.all([
+            fetch(`https://pokeapi.co/api/v2/pokemon/${name1}`),
+            fetch(`https://pokeapi.co/api/v2/pokemon/${name2}`),
+          ]);
+
+          const [poke1, poke2] = await Promise.all([
+            response1.json(),
+            response2.json(),
+          ]);
+
+          // Calculate total stats
+          const stats1 = poke1.stats.reduce((sum, s) => sum + s.base_stat, 0);
+          const stats2 = poke2.stats.reduce((sum, s) => sum + s.base_stat, 0);
+
+          // Determine winner
+          const winner = stats1 > stats2 ? poke1 : poke2;
+          const loser = stats1 > stats2 ? poke2 : poke1;
+
+          statusDiv.innerHTML =
+            '<span class="status-indicator status-success">✓ Battle Complete!</span>';
+
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = `
+                    <h3>🏆 ${winner.name.toUpperCase()} WINS! 🏆</h3>
+                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+                        <div>
+                            <img src="${poke1.sprites.front_default}" alt="${
+            poke1.name
+          }" />
+                            <h4>${poke1.name.toUpperCase()}</h4>
+                            <p>Total Stats: ${stats1}</p>
+                        </div>
+                        <div style="font-size: 3em;">⚔️</div>
+                        <div>
+                            <img src="${poke2.sprites.front_default}" alt="${
+            poke2.name
+          }" />
+                            <h4>${poke2.name.toUpperCase()}</h4>
+                            <p>Total Stats: ${stats2}</p>
+                        </div>
+                    </div>
+                    <p><strong>Winner's Stats:</strong> ${
+                      stats1 > stats2 ? stats1 : stats2
+                    } vs ${stats1 > stats2 ? stats2 : stats1}</p>
+                `;
+        } catch (error) {
+          statusDiv.innerHTML =
+            '<span class="status-indicator status-error">✗ Battle Error!</span>';
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - Advanced JavaScript</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 10</div>
+            <h1>Advanced JavaScript</h1>
+            <h2>Arrays, Objects, Core Objects, and JSON</h2>
+            
+            <p>In this lecture, we'll explore:</p>
+            <ul>
+                <li>Advanced array methods</li>
+                <li>Working with objects</li>
+                <li>Core JavaScript objects (Date, Math, String)</li>
+                <li>JSON for data exchange</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 2: Arrays - Basics and Common Methods -->
+        <div class="slide">
+            <div class="slide-number">2 / 10</div>
+            <h1>JavaScript Arrays</h1>
+            <h2>Creating and Manipulating Arrays</h2>
+            
+            <p>Arrays are ordered collections that can hold multiple values:</p>
+            
+            <div class="code-block">
+<span class="comment">// Creating arrays</span>
+<span class="tag">let</span> fruits = [<span class="value">"apple"</span>, <span class="value">"banana"</span>, <span class="value">"orange"</span>];
+<span class="tag">let</span> numbers = [<span class="value">1</span>, <span class="value">2</span>, <span class="value">3</span>, <span class="value">4</span>, <span class="value">5</span>];
+
+<span class="comment">// Common methods</span>
+fruits.<span class="property">push</span>(<span class="value">"grape"</span>);        <span class="comment">// Add to end</span>
+fruits.<span class="property">pop</span>();                <span class="comment">// Remove from end</span>
+fruits.<span class="property">unshift</span>(<span class="value">"mango"</span>);    <span class="comment">// Add to beginning</span>
+fruits.<span class="property">shift</span>();             <span class="comment">// Remove from beginning</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Key Point:</strong> Arrays are zero-indexed. The first element is at index 0.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Advanced Array Methods -->
+        <div class="slide">
+            <div class="slide-number">3 / 10</div>
+            <h1>Advanced Array Methods</h1>
+            <h2>forEach, map, filter, reduce</h2>
+            
+            <div class="code-block">
+<span class="tag">let</span> numbers = [<span class="value">1</span>, <span class="value">2</span>, <span class="value">3</span>, <span class="value">4</span>, <span class="value">5</span>];
+
+<span class="comment">// forEach - iterate over each element</span>
+numbers.<span class="property">forEach</span>(num => console.log(num));
+
+<span class="comment">// map - transform each element</span>
+<span class="tag">let</span> doubled = numbers.<span class="property">map</span>(num => num * <span class="value">2</span>);
+<span class="comment">// Result: [2, 4, 6, 8, 10]</span>
+
+<span class="comment">// filter - select elements that match condition</span>
+<span class="tag">let</span> evens = numbers.<span class="property">filter</span>(num => num % <span class="value">2</span> === <span class="value">0</span>);
+<span class="comment">// Result: [2, 4]</span>
+
+<span class="comment">// reduce - combine all elements into single value</span>
+<span class="tag">let</span> sum = numbers.<span class="property">reduce</span>((total, num) => total + num, <span class="value">0</span>);
+<span class="comment">// Result: 15</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: JavaScript Objects -->
+        <div class="slide">
+            <div class="slide-number">4 / 10</div>
+            <h1>JavaScript Objects</h1>
+            <h2>Creating and Accessing Object Properties</h2>
+            
+            <p>Objects store data as key-value pairs:</p>
+            
+            <div class="code-block">
+<span class="comment">// Creating an object</span>
+<span class="tag">let</span> student = {
+    name: <span class="value">"Alice"</span>,
+    age: <span class="value">20</span>,
+    major: <span class="value">"Computer Science"</span>,
+    gpa: <span class="value">3.8</span>
+};
+
+<span class="comment">// Accessing properties</span>
+console.log(student.<span class="property">name</span>);        <span class="comment">// Dot notation</span>
+console.log(student[<span class="value">"age"</span>]);       <span class="comment">// Bracket notation</span>
+
+<span class="comment">// Adding new properties</span>
+student.<span class="property">email</span> = <span class="value">"alice@example.com"</span>;
+
+<span class="comment">// Deleting properties</span>
+<span class="tag">delete</span> student.gpa;
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Object Methods and this -->
+        <div class="slide">
+            <div class="slide-number">5 / 10</div>
+            <h1>Object Methods</h1>
+            <h2>Functions Inside Objects</h2>
+            
+            <div class="code-block">
+<span class="tag">let</span> car = {
+    brand: <span class="value">"Toyota"</span>,
+    model: <span class="value">"Camry"</span>,
+    year: <span class="value">2024</span>,
+    
+    <span class="comment">// Method using 'this' keyword</span>
+    <span class="property">getInfo</span>: <span class="tag">function</span>() {
+        <span class="tag">return</span> <span class="value">`</span><span class="value">${</span><span class="tag">this</span>.year<span class="value">}</span> <span class="value">${</span><span class="tag">this</span>.brand<span class="value">}</span> <span class="value">${</span><span class="tag">this</span>.model<span class="value">}</span><span class="value">`</span>;
+    },
+    
+    <span class="comment">// Arrow function method (ES6)</span>
+    <span class="property">startEngine</span>: () => {
+        console.log(<span class="value">"Engine started!"</span>);
+    }
+};
+
+console.log(car.<span class="property">getInfo</span>());  <span class="comment">// "2024 Toyota Camry"</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Remember:</strong> The <span class="highlight">this</span> keyword refers to the object itself.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: The Date Object -->
+        <div class="slide">
+            <div class="slide-number">6 / 10</div>
+            <h1>The Date Object</h1>
+            <h2>Working with Dates and Times</h2>
+            
+            <div class="code-block">
+<span class="comment">// Creating Date objects</span>
+<span class="tag">let</span> now = <span class="tag">new</span> Date();                    <span class="comment">// Current date/time</span>
+<span class="tag">let</span> specific = <span class="tag">new</span> Date(<span class="value">"2024-10-31"</span>);  <span class="comment">// Specific date</span>
+
+<span class="comment">// Common Date methods</span>
+now.<span class="property">getFullYear</span>();     <span class="comment">// 2024</span>
+now.<span class="property">getMonth</span>();        <span class="comment">// 0-11 (0=January)</span>
+now.<span class="property">getDate</span>();         <span class="comment">// 1-31</span>
+now.<span class="property">getDay</span>();          <span class="comment">// 0-6 (0=Sunday)</span>
+now.<span class="property">getHours</span>();        <span class="comment">// 0-23</span>
+now.<span class="property">getMinutes</span>();      <span class="comment">// 0-59</span>
+
+<span class="comment">// Formatting dates</span>
+now.<span class="property">toDateString</span>();    <span class="comment">// "Tue Oct 28 2025"</span>
+now.<span class="property">toLocaleDateString</span>();  <span class="comment">// "10/28/2025"</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: The Math Object -->
+        <div class="slide">
+            <div class="slide-number">7 / 10</div>
+            <h1>The Math Object</h1>
+            <h2>Mathematical Operations and Constants</h2>
+            
+            <div class="code-block">
+<span class="comment">// Math constants</span>
+Math.<span class="property">PI</span>;          <span class="comment">// 3.141592653589793</span>
+Math.<span class="property">E</span>;           <span class="comment">// 2.718281828459045</span>
+
+<span class="comment">// Rounding methods</span>
+Math.<span class="property">round</span>(<span class="value">4.7</span>);   <span class="comment">// 5</span>
+Math.<span class="property">ceil</span>(<span class="value">4.1</span>);    <span class="comment">// 5 (round up)</span>
+Math.<span class="property">floor</span>(<span class="value">4.9</span>);   <span class="comment">// 4 (round down)</span>
+
+<span class="comment">// Common operations</span>
+Math.<span class="property">abs</span>(<span class="value">-5</span>);      <span class="comment">// 5 (absolute value)</span>
+Math.<span class="property">pow</span>(<span class="value">2</span>, <span class="value">3</span>);    <span class="comment">// 8 (2 to the power of 3)</span>
+Math.<span class="property">sqrt</span>(<span class="value">16</span>);     <span class="comment">// 4 (square root)</span>
+Math.<span class="property">random</span>();    <span class="comment">// Random number 0-1</span>
+
+<span class="comment">// Random integer between min and max</span>
+<span class="tag">function</span> <span class="property">randomInt</span>(min, max) {
+    <span class="tag">return</span> Math.<span class="property">floor</span>(Math.<span class="property">random</span>() * (max - min + <span class="value">1</span>)) + min;
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 8: String Methods -->
+        <div class="slide">
+            <div class="slide-number">8 / 10</div>
+            <h1>String Object Methods</h1>
+            <h2>Manipulating Text</h2>
+            
+            <div class="code-block">
+<span class="tag">let</span> text = <span class="value">"Hello World"</span>;
+
+<span class="comment">// Case conversion</span>
+text.<span class="property">toUpperCase</span>();        <span class="comment">// "HELLO WORLD"</span>
+text.<span class="property">toLowerCase</span>();        <span class="comment">// "hello world"</span>
+
+<span class="comment">// Searching</span>
+text.<span class="property">indexOf</span>(<span class="value">"World"</span>);      <span class="comment">// 6</span>
+text.<span class="property">includes</span>(<span class="value">"Hello"</span>);     <span class="comment">// true</span>
+text.<span class="property">startsWith</span>(<span class="value">"Hello"</span>);   <span class="comment">// true</span>
+
+<span class="comment">// Extracting</span>
+text.<span class="property">slice</span>(<span class="value">0</span>, <span class="value">5</span>);          <span class="comment">// "Hello"</span>
+text.<span class="property">substring</span>(<span class="value">6</span>, <span class="value">11</span>);     <span class="comment">// "World"</span>
+
+<span class="comment">// Modifying</span>
+text.<span class="property">replace</span>(<span class="value">"World"</span>, <span class="value">"JS"</span>);  <span class="comment">// "Hello JS"</span>
+text.<span class="property">trim</span>();                 <span class="comment">// Remove whitespace</span>
+text.<span class="property">split</span>(<span class="value">" "</span>);            <span class="comment">// ["Hello", "World"]</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Introduction to JSON -->
+        <div class="slide">
+            <div class="slide-number">9 / 10</div>
+            <h1>JSON - JavaScript Object Notation</h1>
+            <h2>Data Exchange Format</h2>
+            
+            <p>JSON is a text format for storing and transporting data:</p>
+            
+            <div class="code-block">
+<span class="comment">// JavaScript object</span>
+<span class="tag">let</span> person = {
+    name: <span class="value">"John"</span>,
+    age: <span class="value">30</span>,
+    city: <span class="value">"New York"</span>
+};
+
+<span class="comment">// Convert object to JSON string</span>
+<span class="tag">let</span> jsonString = JSON.<span class="property">stringify</span>(person);
+<span class="comment">// Result: '{"name":"John","age":30,"city":"New York"}'</span>
+
+<span class="comment">// Convert JSON string back to object</span>
+<span class="tag">let</span> parsedObject = JSON.<span class="property">parse</span>(jsonString);
+console.log(parsedObject.name);  <span class="comment">// "John"</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Use Case:</strong> JSON is commonly used for APIs and data storage.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Practical Example -->
+        <div class="slide">
+            <div class="slide-number">10 / 10</div>
+            <h1>Putting It All Together</h1>
+            <h2>Complete Example</h2>
+            
+            <div class="code-block">
+<span class="comment">// Create a student management system</span>
+<span class="tag">let</span> students = [
+    { name: <span class="value">"Alice"</span>, grades: [<span class="value">85</span>, <span class="value">90</span>, <span class="value">92</span>] },
+    { name: <span class="value">"Bob"</span>, grades: [<span class="value">78</span>, <span class="value">82</span>, <span class="value">88</span>] },
+    { name: <span class="value">"Carol"</span>, grades: [<span class="value">95</span>, <span class="value">93</span>, <span class="value">96</span>] }
+];
+
+<span class="comment">// Calculate average grade for each student</span>
+<span class="tag">let</span> results = students.<span class="property">map</span>(student => {
+    <span class="tag">let</span> avg = student.grades.<span class="property">reduce</span>((sum, grade) => 
+        sum + grade, <span class="value">0</span>) / student.grades.length;
+    
+    <span class="tag">return</span> {
+        name: student.name,
+        average: Math.<span class="property">round</span>(avg * <span class="value">100</span>) / <span class="value">100</span>
+    };
+});
+
+<span class="comment">// Find students with average > 85</span>
+<span class="tag">let</span> topStudents = results.<span class="property">filter</span>(s => s.average > <span class="value">85</span>);
+
+console.log(JSON.<span class="property">stringify</span>(topStudents, <span class="tag">null</span>, <span class="value">2</span>));
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 10</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script src="slides.js"></script>
+</body>
+</html>

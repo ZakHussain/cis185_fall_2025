@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIS 185 - Canvas API</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+      <!-- SLIDE 1: Title Slide -->
+      <div class="slide active">
+        <div class="slide-number">1 / 10</div>
+        <h1>Canvas API</h1>
+        <h2>Drawing and Animations with JavaScript</h2>
+
+        <p>In this lecture, we'll explore:</p>
+        <ul>
+          <li>What is the Canvas API?</li>
+          <li>Drawing shapes and paths</li>
+          <li>Working with colors and styles</li>
+          <li>Creating animations</li>
+          <li>Handling user interactions</li>
+        </ul>
+      </div>
+
+      <!-- SLIDE 2: Introduction to Canvas -->
+      <div class="slide">
+        <div class="slide-number">2 / 10</div>
+        <h1>What is the Canvas API?</h1>
+        <h2>An HTML5 Drawing Surface</h2>
+
+        <p>The Canvas API allows you to draw graphics using JavaScript:</p>
+
+        <div class="code-block">
+          <span class="comment"
+            >&lt;!-- HTML: Create a canvas element --&gt;</span
+          >
+          <span class="tag">&lt;canvas</span>
+          <span class="attribute">id</span>=<span class="value"
+            >"myCanvas"</span
+          >
+          <span class="attribute">width</span>=<span class="value">"500"</span>
+          <span class="attribute">height</span>=<span class="value">"400"</span
+          ><span class="tag">&gt;&lt;/canvas&gt;</span>
+
+          <span class="comment">// JavaScript: Get the canvas and context</span>
+          <span class="tag">let</span> canvas = document.<span class="property"
+            >getElementById</span
+          >(<span class="value">"myCanvas"</span>);
+          <span class="tag">let</span> ctx = canvas.<span class="property"
+            >getContext</span
+          >(<span class="value">"2d"</span>);
+
+          <span class="comment">// Now you can draw on ctx!</span>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Key Point:</strong> The canvas is a blank surface. You need
+            JavaScript to draw on it using the 2D rendering context (<span
+              class="highlight"
+              >ctx</span
+            >).
+          </p>
+          <canvas
+            id="canvas2"
+            width="400"
+            height="100"
+            style="
+              border: 2px solid #ff6b35;
+              background: white;
+              margin-top: 20px;
+            "
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: Drawing Rectangles -->
+      <div class="slide">
+        <div class="slide-number">3 / 10</div>
+        <h1>Drawing Rectangles</h1>
+        <h2>Basic Shape Methods</h2>
+
+        <div class="code-block">
+          <span class="tag">let</span> canvas = document.<span class="property"
+            >getElementById</span
+          >(<span class="value">"myCanvas"</span>);
+          <span class="tag">let</span> ctx = canvas.<span class="property"
+            >getContext</span
+          >(<span class="value">"2d"</span>);
+
+          <span class="comment">// Filled rectangle</span>
+          ctx.<span class="property">fillStyle</span> =
+          <span class="value">"orange"</span>; ctx.<span class="property"
+            >fillRect</span
+          >(<span class="value">50</span>, <span class="value">50</span>,
+          <span class="value">200</span>, <span class="value">100</span>);
+          <span class="comment">// fillRect(x, y, width, height)</span>
+
+          <span class="comment">// Outlined rectangle</span>
+          ctx.<span class="property">strokeStyle</span> =
+          <span class="value">"purple"</span>; ctx.<span class="property"
+            >lineWidth</span
+          >
+          = <span class="value">5</span>; ctx.<span class="property"
+            >strokeRect</span
+          >(<span class="value">300</span>, <span class="value">50</span>,
+          <span class="value">150</span>, <span class="value">100</span>);
+
+          <span class="comment">// Clear a rectangle area</span>
+          ctx.<span class="property">clearRect</span>(<span class="value"
+            >100</span
+          >, <span class="value">75</span>, <span class="value">50</span>,
+          <span class="value">50</span>);
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Coordinate System:</strong> (0, 0) is at the top-left
+            corner. X increases right, Y increases down.
+          </p>
+          <canvas
+            id="canvas3"
+            width="500"
+            height="200"
+            style="
+              border: 2px solid #ff6b35;
+              background: white;
+              margin-top: 20px;
+            "
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: Drawing Paths and Lines -->
+      <div class="slide">
+        <div class="slide-number">4 / 10</div>
+        <h1>Drawing Paths and Lines</h1>
+        <h2>Creating Custom Shapes</h2>
+
+        <div class="code-block">
+          <span class="comment">// Drawing a triangle</span>
+          ctx.<span class="property">beginPath</span>();
+          <span class="comment">// Start a new path</span> ctx.<span
+            class="property"
+            >moveTo</span
+          >(<span class="value">100</span>, <span class="value">50</span>);
+          <span class="comment">// Move to starting point</span> ctx.<span
+            class="property"
+            >lineTo</span
+          >(<span class="value">150</span>, <span class="value">150</span>);
+          <span class="comment">// Draw line to point</span> ctx.<span
+            class="property"
+            >lineTo</span
+          >(<span class="value">50</span>, <span class="value">150</span>);
+          <span class="comment">// Draw line to point</span> ctx.<span
+            class="property"
+            >closePath</span
+          >(); <span class="comment">// Connect back to start</span> ctx.<span
+            class="property"
+            >fillStyle</span
+          >
+          = <span class="value">"#ff6b35"</span>; ctx.<span class="property"
+            >fill</span
+          >(); <span class="comment">// Fill the shape</span>
+
+          <span class="comment">// Drawing a line</span>
+          ctx.<span class="property">beginPath</span>(); ctx.<span
+            class="property"
+            >moveTo</span
+          >(<span class="value">200</span>, <span class="value">50</span>);
+          ctx.<span class="property">lineTo</span>(<span class="value">300</span
+          >, <span class="value">150</span>); ctx.<span class="property"
+            >strokeStyle</span
+          >
+          = <span class="value">"black"</span>; ctx.<span class="property"
+            >lineWidth</span
+          >
+          = <span class="value">3</span>; ctx.<span class="property"
+            >stroke</span
+          >(); <span class="comment">// Draw the outline</span>
+        </div>
+
+        <div class="demo-box">
+          <canvas
+            id="canvas4"
+            width="500"
+            height="200"
+            style="border: 2px solid #ff6b35; background: white"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Drawing Circles and Arcs -->
+      <div class="slide">
+        <div class="slide-number">5 / 10</div>
+        <h1>Drawing Circles and Arcs</h1>
+        <h2>Using the arc() Method</h2>
+
+        <div class="code-block">
+          <span class="comment">// Draw a full circle</span>
+          ctx.<span class="property">beginPath</span>(); ctx.<span
+            class="property"
+            >arc</span
+          >(<span class="value">250</span>, <span class="value">200</span>,
+          <span class="value">50</span>, <span class="value">0</span>, Math.PI *
+          <span class="value">2</span>);
+          <span class="comment"
+            >// arc(x, y, radius, startAngle, endAngle)</span
+          >
+          ctx.<span class="property">fillStyle</span> =
+          <span class="value">"#8b2b99"</span>; ctx.<span class="property"
+            >fill</span
+          >();
+
+          <span class="comment">// Draw a semi-circle (arc)</span>
+          ctx.<span class="property">beginPath</span>(); ctx.<span
+            class="property"
+            >arc</span
+          >(<span class="value">400</span>, <span class="value">200</span>,
+          <span class="value">50</span>, <span class="value">0</span>, Math.PI);
+          <span class="comment"
+            >// 0 to Math.PI = half circle (180 degrees)</span
+          >
+          ctx.<span class="property">strokeStyle</span> =
+          <span class="value">"orange"</span>; ctx.<span class="property"
+            >lineWidth</span
+          >
+          = <span class="value">3</span>; ctx.<span class="property"
+            >stroke</span
+          >();
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Angles:</strong> Measured in radians. 2π (Math.PI * 2) =
+            360°, π = 180°
+          </p>
+          <canvas
+            id="canvas5"
+            width="500"
+            height="150"
+            style="
+              border: 2px solid #ff6b35;
+              background: white;
+              margin-top: 20px;
+            "
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: Colors, Gradients, and Text -->
+      <div class="slide">
+        <div class="slide-number">6 / 10</div>
+        <h1>Colors, Gradients, and Text</h1>
+        <h2>Styling Your Canvas</h2>
+
+        <div class="code-block">
+          <span class="comment">// Solid colors</span>
+          ctx.<span class="property">fillStyle</span> =
+          <span class="value">"red"</span>;
+          <span class="comment">// Color name</span> ctx.<span class="property"
+            >fillStyle</span
+          >
+          = <span class="value">"#ff6b35"</span>;
+          <span class="comment">// Hex color</span> ctx.<span class="property"
+            >fillStyle</span
+          >
+          = <span class="value">"rgb(255, 107, 53)"</span>;
+          <span class="comment">// RGB</span>
+
+          <span class="comment">// Linear gradient</span>
+          <span class="tag">let</span> gradient = ctx.<span class="property"
+            >createLinearGradient</span
+          >(<span class="value">0</span>, <span class="value">0</span>,
+          <span class="value">200</span>, <span class="value">0</span>);
+          gradient.<span class="property">addColorStop</span>(<span
+            class="value"
+            >0</span
+          >, <span class="value">"orange"</span>); gradient.<span
+            class="property"
+            >addColorStop</span
+          >(<span class="value">1</span>, <span class="value">"purple"</span>);
+          ctx.<span class="property">fillStyle</span> = gradient; ctx.<span
+            class="property"
+            >fillRect</span
+          >(<span class="value">50</span>, <span class="value">50</span>,
+          <span class="value">200</span>, <span class="value">100</span>);
+
+          <span class="comment">// Drawing text</span>
+          ctx.<span class="property">font</span> =
+          <span class="value">"30px Arial"</span>; ctx.<span class="property"
+            >fillStyle</span
+          >
+          = <span class="value">"black"</span>; ctx.<span class="property"
+            >fillText</span
+          >(<span class="value">"Hello Canvas!"</span>,
+          <span class="value">100</span>, <span class="value">250</span>);
+
+          <span class="comment">// Outlined text</span>
+          ctx.<span class="property">strokeText</span>(<span class="value"
+            >"Outlined"</span
+          >, <span class="value">100</span>, <span class="value">300</span>);
+        </div>
+
+        <div class="demo-box">
+          <canvas
+            id="canvas6"
+            width="500"
+            height="180"
+            style="border: 2px solid #ff6b35; background: white"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Images on Canvas -->
+      <div class="slide">
+        <div class="slide-number">7 / 10</div>
+        <h1>Drawing Images</h1>
+        <h2>Adding Images to Canvas</h2>
+
+        <div class="code-block">
+          <span class="comment">// Load and draw an image</span>
+          <span class="tag">let</span> img =
+          <span class="tag">new</span> Image(); img.<span class="property"
+            >src</span
+          >
+          = <span class="value">"pumpkin.png"</span>; img.<span class="property"
+            >onload</span
+          >
+          = <span class="tag">function</span>() {
+          <span class="comment">// Draw image at position</span>
+          ctx.<span class="property">drawImage</span>(img,
+          <span class="value">50</span>, <span class="value">50</span>);
+
+          <span class="comment">// Draw with custom size</span>
+          ctx.<span class="property">drawImage</span>(img,
+          <span class="value">200</span>, <span class="value">50</span>,
+          <span class="value">100</span>, <span class="value">100</span>);
+          <span class="comment">// drawImage(image, x, y, width, height)</span>
+
+          <span class="comment">// Crop and draw specific part</span>
+          ctx.<span class="property">drawImage</span>(img,
+          <span class="value">0</span>, <span class="value">0</span>,
+          <span class="value">50</span>, <span class="value">50</span>,
+          <span class="comment">// Source x, y, width, height</span>
+          <span class="value">350</span>, <span class="value">50</span>,
+          <span class="value">100</span>, <span class="value">100</span>
+          <span class="comment">// Dest x, y, width, height</span>
+          ); };
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Important:</strong> Always wait for the image to load using
+            <span class="highlight">onload</span> before drawing!
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: Basic Animation -->
+      <div class="slide">
+        <div class="slide-number">8 / 10</div>
+        <h1>Creating Animations</h1>
+        <h2>Using requestAnimationFrame()</h2>
+
+        <div class="code-block">
+          <span class="tag">let</span> x = <span class="value">0</span>;
+          <span class="tag">let</span> y = <span class="value">200</span>;
+          <span class="tag">let</span> speed = <span class="value">2</span>;
+
+          <span class="tag">function</span>
+          <span class="property">animate</span>() {
+          <span class="comment">// Clear the canvas</span>
+          ctx.<span class="property">clearRect</span>(<span class="value"
+            >0</span
+          >, <span class="value">0</span>, canvas.width, canvas.height);
+
+          <span class="comment">// Draw the object</span>
+          ctx.<span class="property">fillStyle</span> =
+          <span class="value">"orange"</span>; ctx.<span class="property"
+            >fillRect</span
+          >(x, y, <span class="value">50</span>, <span class="value">50</span>);
+
+          <span class="comment">// Update position</span>
+          x += speed;
+
+          <span class="comment">// Bounce off right edge</span>
+          <span class="tag">if</span> (x + <span class="value">50</span> >
+          canvas.width || x < <span class="value">0</span>) { speed = -speed; }
+
+          <span class="comment">// Request next frame</span>
+          <span class="property">requestAnimationFrame</span>(animate); }
+
+          <span class="property">animate</span>();
+          <span class="comment">// Start the animation</span>
+        </div>
+
+        <div class="demo-box">
+          <canvas
+            id="canvas8"
+            width="500"
+            height="100"
+            style="border: 2px solid #ff6b35; background: white"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: Mouse Interaction -->
+      <div class="slide">
+        <div class="slide-number">9 / 10</div>
+        <h1>Mouse Interaction</h1>
+        <h2>Handling Click and Draw Events</h2>
+
+        <div class="code-block">
+          <span class="comment">// Get mouse position relative to canvas</span>
+          <span class="tag">function</span>
+          <span class="property">getMousePos</span>(canvas, event) {
+          <span class="tag">let</span> rect = canvas.<span class="property"
+            >getBoundingClientRect</span
+          >(); <span class="tag">return</span> { x: event.clientX - rect.left,
+          y: event.clientY - rect.top }; }
+
+          <span class="comment">// Draw on click</span>
+          canvas.<span class="property">addEventListener</span>(<span
+            class="value"
+            >"click"</span
+          >, <span class="tag">function</span>(event) {
+          <span class="tag">let</span> pos =
+          <span class="property">getMousePos</span>(canvas, event); ctx.<span
+            class="property"
+            >beginPath</span
+          >(); ctx.<span class="property">arc</span>(pos.x, pos.y,
+          <span class="value">20</span>, <span class="value">0</span>, Math.PI *
+          <span class="value">2</span>); ctx.<span class="property"
+            >fillStyle</span
+          >
+          = <span class="value">"purple"</span>; ctx.<span class="property"
+            >fill</span
+          >(); });
+
+          <span class="comment">// Drawing while mouse is down</span>
+          <span class="tag">let</span> isDrawing =
+          <span class="tag">false</span>; canvas.<span class="property"
+            >addEventListener</span
+          >(<span class="value">"mousedown"</span>, () => isDrawing =
+          <span class="tag">true</span>); canvas.<span class="property"
+            >addEventListener</span
+          >(<span class="value">"mouseup"</span>, () => isDrawing =
+          <span class="tag">false</span>); canvas.<span class="property"
+            >addEventListener</span
+          >(<span class="value">"mousemove"</span>, draw);
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Try it:</strong> Click on the canvas below to draw circles!
+          </p>
+          <canvas
+            id="canvas9"
+            width="500"
+            height="150"
+            style="
+              border: 2px solid #ff6b35;
+              background: white;
+              cursor: crosshair;
+            "
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: Complete Example -->
+      <div class="slide">
+        <div class="slide-number">10 / 10</div>
+        <h1>Complete Example</h1>
+        <h2>Bouncing Ball Animation</h2>
+
+        <div class="code-block">
+          <span class="tag">let</span> canvas = document.<span class="property"
+            >getElementById</span
+          >(<span class="value">"myCanvas"</span>);
+          <span class="tag">let</span> ctx = canvas.<span class="property"
+            >getContext</span
+          >(<span class="value">"2d"</span>);
+
+          <span class="tag">let</span> ball = { x:
+          <span class="value">250</span>, y: <span class="value">200</span>,
+          radius: <span class="value">20</span>, dx:
+          <span class="value">3</span>,
+          <span class="comment">// Velocity in x direction</span> dy:
+          <span class="value">2</span>
+          <span class="comment">// Velocity in y direction</span>
+          };
+
+          <span class="tag">function</span>
+          <span class="property">drawBall</span>() { ctx.<span class="property"
+            >beginPath</span
+          >(); ctx.<span class="property">arc</span>(ball.x, ball.y,
+          ball.radius, <span class="value">0</span>, Math.PI *
+          <span class="value">2</span>); ctx.<span class="property"
+            >fillStyle</span
+          >
+          = <span class="value">"#ff6b35"</span>; ctx.<span class="property"
+            >fill</span
+          >(); ctx.<span class="property">closePath</span>(); }
+
+          <span class="tag">function</span>
+          <span class="property">update</span>() { ctx.<span class="property"
+            >clearRect</span
+          >(<span class="value">0</span>, <span class="value">0</span>,
+          canvas.width, canvas.height);
+          <span class="property">drawBall</span>();
+
+          <span class="comment">// Check boundaries and bounce</span>
+          <span class="tag">if</span> (ball.x + ball.radius > canvas.width ||
+          ball.x - ball.radius < <span class="value">0</span>) { ball.dx =
+          -ball.dx; } <span class="tag">if</span> (ball.y + ball.radius >
+          canvas.height || ball.y - ball.radius < <span class="value">0</span>)
+          { ball.dy = -ball.dy; } ball.x += ball.dx; ball.y += ball.dy;
+
+          <span class="property">requestAnimationFrame</span>(update); }
+
+          <span class="property">update</span>();
+        </div>
+
+        <div class="demo-box">
+          <canvas
+            id="canvas10"
+            width="500"
+            height="200"
+            style="border: 2px solid #ff6b35; background: white"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+      <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+        ← Previous
+      </button>
+      <span id="slideInfo">Slide 1 of 10</span>
+      <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+        Next →
+      </button>
+    </div>
+
+    <script src="slides.js"></script>
+    <script>
+      // Canvas demonstrations - run when slides are shown
+
+      // Slide 2: Simple text on canvas
+      function drawCanvas2() {
+        const canvas = document.getElementById("canvas2");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "24px Arial";
+        ctx.fillStyle = "#8b2b99";
+        ctx.fillText("This is a Canvas element!", 80, 50);
+      }
+
+      // Slide 3: Rectangles
+      function drawCanvas3() {
+        const canvas = document.getElementById("canvas3");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Filled rectangle
+        ctx.fillStyle = "orange";
+        ctx.fillRect(50, 50, 200, 100);
+
+        // Outlined rectangle
+        ctx.strokeStyle = "purple";
+        ctx.lineWidth = 5;
+        ctx.strokeRect(300, 50, 150, 100);
+
+        // Clear a rectangle area
+        ctx.clearRect(100, 75, 50, 50);
+      }
+
+      // Slide 4: Paths and lines
+      function drawCanvas4() {
+        const canvas = document.getElementById("canvas4");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Drawing a triangle
+        ctx.beginPath();
+        ctx.moveTo(100, 50);
+        ctx.lineTo(150, 150);
+        ctx.lineTo(50, 150);
+        ctx.closePath();
+        ctx.fillStyle = "#ff6b35";
+        ctx.fill();
+
+        // Drawing a line
+        ctx.beginPath();
+        ctx.moveTo(200, 50);
+        ctx.lineTo(300, 150);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      // Slide 5: Circles and arcs
+      function drawCanvas5() {
+        const canvas = document.getElementById("canvas5");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Full circle
+        ctx.beginPath();
+        ctx.arc(150, 75, 50, 0, Math.PI * 2);
+        ctx.fillStyle = "#8b2b99";
+        ctx.fill();
+
+        // Semi-circle (arc)
+        ctx.beginPath();
+        ctx.arc(350, 75, 50, 0, Math.PI);
+        ctx.strokeStyle = "orange";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      // Slide 6: Colors, gradients, and text
+      function drawCanvas6() {
+        const canvas = document.getElementById("canvas6");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Linear gradient
+        let gradient = ctx.createLinearGradient(0, 0, 200, 0);
+        gradient.addColorStop(0, "orange");
+        gradient.addColorStop(1, "purple");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(50, 20, 200, 80);
+
+        // Drawing text
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Hello Canvas!", 50, 130);
+
+        // Outlined text
+        ctx.strokeStyle = "#8b2b99";
+        ctx.lineWidth = 2;
+        ctx.strokeText("Outlined", 280, 130);
+      }
+
+      // Slide 8: Animation
+      let anim8Running = false;
+      function drawCanvas8() {
+        const canvas = document.getElementById("canvas8");
+        if (!canvas || anim8Running) return;
+        anim8Running = true;
+        const ctx = canvas.getContext("2d");
+
+        let x = 0;
+        let speed = 2;
+
+        function animate() {
+          if (!document.getElementById("canvas8")) {
+            anim8Running = false;
+            return;
+          }
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "orange";
+          ctx.fillRect(x, 25, 50, 50);
+
+          x += speed;
+
+          if (x + 50 > canvas.width || x < 0) {
+            speed = -speed;
+          }
+
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      }
+
+      // Slide 9: Mouse interaction
+      function setupCanvas9() {
+        const canvas = document.getElementById("canvas9");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+
+        function getMousePos(canvas, event) {
+          let rect = canvas.getBoundingClientRect();
+          return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+          };
+        }
+
+        canvas.addEventListener("click", function (event) {
+          let pos = getMousePos(canvas, event);
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2);
+          ctx.fillStyle = "#8b2b99";
+          ctx.fill();
+        });
+      }
+
+      // Slide 10: Bouncing ball
+      let anim10Running = false;
+      function drawCanvas10() {
+        const canvas = document.getElementById("canvas10");
+        if (!canvas || anim10Running) return;
+        anim10Running = true;
+        const ctx = canvas.getContext("2d");
+
+        let ball = {
+          x: 250,
+          y: 100,
+          radius: 20,
+          dx: 3,
+          dy: 2,
+        };
+
+        function drawBall() {
+          ctx.beginPath();
+          ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+          ctx.fillStyle = "#ff6b35";
+          ctx.fill();
+          ctx.closePath();
+        }
+
+        function update() {
+          if (!document.getElementById("canvas10")) {
+            anim10Running = false;
+            return;
+          }
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          drawBall();
+
+          if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+            ball.dx = -ball.dx;
+          }
+          if (
+            ball.y + ball.radius > canvas.height ||
+            ball.y - ball.radius < 0
+          ) {
+            ball.dy = -ball.dy;
+          }
+
+          ball.x += ball.dx;
+          ball.y += ball.dy;
+
+          requestAnimationFrame(update);
+        }
+
+        update();
+      }
+
+      // Draw canvases when slides change
+      const originalShowSlide = showSlide;
+      showSlide = function (index) {
+        originalShowSlide(index);
+
+        // Draw appropriate canvas based on slide
+        setTimeout(() => {
+          switch (index) {
+            case 1:
+              drawCanvas2();
+              break;
+            case 2:
+              drawCanvas3();
+              break;
+            case 3:
+              drawCanvas4();
+              break;
+            case 4:
+              drawCanvas5();
+              break;
+            case 5:
+              drawCanvas6();
+              break;
+            case 7:
+              drawCanvas8();
+              break;
+            case 8:
+              setupCanvas9();
+              break;
+            case 9:
+              drawCanvas10();
+              break;
+          }
+        }, 100);
+      };
+
+      // Initial draw for first slide
+      setTimeout(() => drawCanvas2(), 100);
+    </script>
+  </body>
+</html>
