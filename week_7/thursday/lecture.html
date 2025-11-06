@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIS 185 - Planning Your Midterm Web Project</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        /* Mid-November/Rainy Fall gradient - warm autumn tones with grey overcast */
+        background: linear-gradient(
+          135deg,
+          #8b7355 0%,
+          #cd853f 25%,
+          #696969 50%,
+          #4a5568 75%,
+          #2d3748 100%
+        );
+
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Rain droplets */
+      .rain {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .rain-drop {
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.5),
+          transparent
+        );
+        border-radius: 50%;
+        animation: rain-fall linear infinite;
+      }
+
+      @keyframes rain-fall {
+        from {
+          transform: translateY(-100px);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.6;
+        }
+        to {
+          transform: translateY(calc(100vh + 100px));
+          opacity: 0;
+        }
+      }
+
+      /* Generate just a few rain drops with different positions and delays */
+      .rain-drop:nth-child(1) {
+        left: 10%;
+        animation-duration: 3s;
+        animation-delay: 0s;
+      }
+      .rain-drop:nth-child(2) {
+        left: 30%;
+        animation-duration: 3.5s;
+        animation-delay: 1s;
+      }
+      .rain-drop:nth-child(3) {
+        left: 50%;
+        animation-duration: 2.8s;
+        animation-delay: 2s;
+      }
+      .rain-drop:nth-child(4) {
+        left: 70%;
+        animation-duration: 3.2s;
+        animation-delay: 0.5s;
+      }
+      .rain-drop:nth-child(5) {
+        left: 85%;
+        animation-duration: 3.7s;
+        animation-delay: 1.5s;
+      }
+      .rain-drop:nth-child(6) {
+        left: 20%;
+        animation-duration: 3.3s;
+        animation-delay: 2.5s;
+      }
+      .rain-drop:nth-child(7) {
+        left: 60%;
+        animation-duration: 3.1s;
+        animation-delay: 1.8s;
+      }
+      .rain-drop:nth-child(8) {
+        left: 90%;
+        animation-duration: 3.4s;
+        animation-delay: 0.8s;
+      }
+
+      .presentation-container {
+        width: 90%;
+        max-width: 1200px;
+        height: 90vh;
+        position: relative;
+        z-index: 2;
+      }
+
+      .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #fff8f0 0%, #faf0e6 100%);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        padding: 60px;
+        display: none;
+        overflow-y: auto;
+        animation: slideIn 0.5s ease-out;
+      }
+
+      .slide.active {
+        display: block;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      h1 {
+        color: #704214;
+        font-size: 3em;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #cd853f;
+        padding-bottom: 15px;
+      }
+
+      h2 {
+        color: #8b4513;
+        font-size: 2.2em;
+        margin-bottom: 20px;
+        margin-top: 30px;
+      }
+
+      h3 {
+        color: #704214;
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        margin-top: 25px;
+      }
+
+      p,
+      li {
+        font-size: 1.3em;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      ul,
+      ol {
+        margin-left: 30px;
+        margin-bottom: 20px;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      /* CODE BLOCK STYLING */
+      .code-block {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        font-family: "Courier New", monospace;
+        font-size: 1.1em;
+        overflow-x: auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        white-space: pre;
+        border-left: 4px solid #cd853f;
+      }
+
+      /* Syntax highlighting for code */
+      .code-block .tag {
+        color: #f6ad55;
+      }
+      .code-block .attribute {
+        color: #90cdf4;
+      }
+      .code-block .value {
+        color: #f6e05e;
+      }
+      .code-block .class {
+        color: #f6e05e;
+      }
+      .code-block .selector {
+        color: #fbd38d;
+      }
+      .code-block .property {
+        color: #90cdf4;
+      }
+      .code-block .comment {
+        color: #68d391;
+      }
+
+      /* NAVIGATION CONTROLS */
+      .navigation {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 1000;
+        background: linear-gradient(135deg, #fff8f0 0%, #faf0e6 100%);
+        padding: 15px 30px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-button {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #8b4513 0%, #cd853f 100%);
+        color: #fff8f0;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: all 0.3s ease;
+      }
+
+      .nav-button:hover {
+        background: linear-gradient(135deg, #a0522d 0%, #deb887 100%);
+        transform: scale(1.05);
+      }
+
+      .nav-button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: scale(1);
+      }
+
+      /* SLIDE NUMBER BADGE */
+      .slide-number {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, #8b4513 0%, #cd853f 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+
+      /* PROGRESS BAR */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #8b4513, #cd853f, #deb887);
+        transition: width 0.5s ease;
+        z-index: 1001;
+      }
+
+      /* HIGHLIGHT TEXT */
+      .highlight {
+        background: linear-gradient(120deg, #cd853f 0%, #deb887 100%);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      /* DEMO BOX */
+      .demo-box {
+        background: linear-gradient(135deg, #faf0e6 0%, #fff8dc 100%);
+        border: 2px dashed #8b4513;
+        padding: 30px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: center;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      /* WORKFLOW BOX */
+      .workflow-box {
+        background: linear-gradient(135deg, #fff8dc 0%, #faebd7 100%);
+        border: 3px solid #cd853f;
+        padding: 25px;
+        border-radius: 15px;
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .workflow-box::before {
+        content: "📋";
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: #fff8f0;
+        padding: 0 10px;
+        font-size: 1.5em;
+      }
+
+      /* PROJECT EXAMPLE BOX */
+      .project-example {
+        background: linear-gradient(135deg, #faebd7 0%, #ffe4b5 100%);
+        border: 2px solid #8b4513;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+      }
+
+      /* LINK BUTTONS */
+      .link-button {
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #8b4513 0%, #cd853f 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        margin: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .link-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+        color: white;
+      }
+
+      /* ASSIGNMENT BOX */
+      .assignment-box {
+        background: linear-gradient(135deg, #704214 0%, #8b4513 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin: 30px 0;
+      }
+
+      .assignment-box h3 {
+        color: white;
+        margin-bottom: 20px;
+      }
+
+      .assignment-box ul {
+        list-style-type: none;
+        margin-left: 0;
+      }
+
+      .assignment-box li {
+        margin-bottom: 15px;
+        padding-left: 30px;
+        position: relative;
+        color: white;
+      }
+
+      .assignment-box li::before {
+        content: "🍂";
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+      }
+
+      /* COMPARISON TABLE */
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .comparison-table th {
+        background: linear-gradient(135deg, #8b4513 0%, #cd853f 100%);
+        color: white;
+        padding: 15px;
+        text-align: left;
+        font-size: 1.1em;
+      }
+
+      .comparison-table td {
+        padding: 15px;
+        border-bottom: 1px solid #deb887;
+        font-size: 1em;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background: #faf0e6;
+      }
+
+      /* QUIZ PREVIEW BOX */
+      .quiz-preview {
+        background: linear-gradient(135deg, #ffe4b5 0%, #ffdead 100%);
+        border: 2px solid #cd853f;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+      }
+
+      /* WIREFRAME EXAMPLE */
+      .wireframe-demo {
+        background: white;
+        border: 2px solid #8b4513;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .wireframe-element {
+        background: #f0f0f0;
+        border: 2px dashed #999;
+        padding: 15px;
+        margin: 10px 0;
+        text-align: center;
+        color: #666;
+        font-family: "Courier New", monospace;
+      }
+
+      /* RAIN TOGGLE BUTTON */
+      .rain-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: linear-gradient(135deg, #8b4513 0%, #cd853f 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1em;
+        z-index: 1002;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .rain-toggle:hover {
+        background: linear-gradient(135deg, #a0522d 0%, #deb887 100%);
+        transform: scale(1.05);
+      }
+
+      .rain-toggle::before {
+        content: "💧 ";
+      }
+
+      /* Hide rain when disabled */
+      .rain.disabled {
+        display: none;
+      }
+
+      /* RESPONSIVE DESIGN */
+      @media (max-width: 768px) {
+        .slide {
+          padding: 30px;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Rain Toggle Button -->
+    <button class="rain-toggle" id="rainToggle" onclick="toggleRain()">
+      Rain: ON
+    </button>
+
+    <!-- Rain effect -->
+    <div class="rain" id="rainEffect">
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+      <div class="rain-drop"></div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+      <!-- SLIDE 1: Title Slide -->
+      <div class="slide active">
+        <div class="slide-number">1 / 13</div>
+        <h1>Planning Your Midterm Web Project</h1>
+        <h2>How to Design & Organize Your Website</h2>
+
+        <div class="demo-box">
+          <p><strong>🍂 CIS 185 - Project Planning Workshop 🍂</strong></p>
+          <p>Turning Your Ideas into Organized Web Projects</p>
+        </div>
+
+        <p>
+          Today we'll learn how to plan and organize your midterm project using
+          professional workflow techniques scaled for beginners!
+        </p>
+
+        <div class="workflow-box">
+          <p><strong>What You'll Learn:</strong></p>
+          <ul>
+            <li>How to plan a website from scratch</li>
+            <li>Creating simple wireframes and layouts</li>
+            <li>Setting clear goals for your project</li>
+            <li>Organizing your HTML, CSS, and JavaScript files</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: What is a Workflow? -->
+      <div class="slide">
+        <div class="slide-number">2 / 13</div>
+        <h1>What is a Project Workflow?</h1>
+
+        <p>
+          A <span class="highlight">workflow</span> is your step-by-step plan
+          for building your website.
+        </p>
+
+        <h2>Think of it like cooking:</h2>
+        <ul>
+          <li>📝 <strong>Recipe</strong> = Your project plan</li>
+          <li>
+            🥕 <strong>Ingredients</strong> = HTML, CSS, JavaScript, images
+          </li>
+          <li>
+            👨‍🍳 <strong>Preparation</strong> = Setting up files and folders
+          </li>
+          <li>🍳 <strong>Cooking</strong> = Writing your code</li>
+          <li>🍽️ <strong>Presentation</strong> = Making it look good</li>
+          <li>👅 <strong>Taste test</strong> = Testing your website</li>
+        </ul>
+
+        <div class="demo-box">
+          <p><strong>Key Point:</strong> A good workflow prevents chaos!</p>
+          <p>
+            No more "Where did I put that file?" or "What was I supposed to do
+            next?" 🎯
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: The Simple 5-Step Process -->
+      <div class="slide">
+        <div class="slide-number">3 / 13</div>
+        <h1>Your 5-Step Project Process</h1>
+
+        <h2>Keep It Simple!</h2>
+
+        <ol>
+          <li><strong>Define Your Project</strong> - What are you building?</li>
+          <li><strong>Sketch Your Ideas</strong> - Draw it on paper first</li>
+          <li>
+            <strong>Organize Your Files</strong> - Create a clean structure
+          </li>
+          <li>
+            <strong>Build Step-by-Step</strong> - Start simple, add features
+          </li>
+          <li><strong>Test & Polish</strong> - Make sure everything works</li>
+        </ol>
+
+        <div class="project-example">
+          <p><strong>Example Project Ideas:</strong></p>
+          <ul>
+            <li>Portfolio website showcasing your work</li>
+            <li>Small business website (bakery, pet store, etc.)</li>
+            <li>Interactive quiz or game</li>
+            <li>Recipe collection or blog</li>
+            <li>Event website (concert, conference, wedding)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: Step 1 - Define Your Project -->
+      <div class="slide">
+        <div class="slide-number">4 / 13</div>
+        <h1>Step 1: Define Your Project</h1>
+
+        <h2>Answer These Questions First:</h2>
+
+        <div class="workflow-box">
+          <ul>
+            <li>❓ <strong>What is my website about?</strong></li>
+            <li>
+              👥 <strong>Who will visit it?</strong> (friends, employers,
+              customers)
+            </li>
+            <li>
+              🎯 <strong>What do I want visitors to do?</strong> (read, buy,
+              contact, play)
+            </li>
+            <li>
+              📄 <strong>How many pages do I need?</strong> (home, about,
+              contact, etc.)
+            </li>
+            <li>
+              ⏰ <strong>What's my deadline?</strong> (work backwards from due
+              date)
+            </li>
+          </ul>
+        </div>
+
+        <h3>Example Project Definition:</h3>
+
+        <div class="project-example">
+          <p><strong>Project:</strong> "Cozy Coffee Shop Website"</p>
+          <p><strong>Purpose:</strong> Showcase our menu and atmosphere</p>
+          <p><strong>Audience:</strong> Local coffee lovers</p>
+          <p><strong>Goal:</strong> Get people to visit our shop</p>
+          <p><strong>Pages Needed:</strong></p>
+          <ul>
+            <li>Home (welcome & featured drinks)</li>
+            <li>Menu (coffee, food, prices)</li>
+            <li>About (our story)</li>
+            <li>Contact (location, hours)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Setting SMART Goals -->
+      <div class="slide">
+        <div class="slide-number">5 / 13</div>
+        <h1>Setting SMART Goals for Your Project</h1>
+
+        <h2>Make Your Goals Clear!</h2>
+
+        <div class="comparison-table">
+          <table class="comparison-table">
+            <tr>
+              <th>SMART</th>
+              <th>What it Means</th>
+              <th>Your Project Example</th>
+            </tr>
+            <tr>
+              <td><strong>S</strong>pecific</td>
+              <td>Clear and detailed</td>
+              <td>Build a 4-page coffee shop website</td>
+            </tr>
+            <tr>
+              <td><strong>M</strong>easurable</td>
+              <td>Can track progress</td>
+              <td>Complete 1 page per week</td>
+            </tr>
+            <tr>
+              <td><strong>A</strong>chievable</td>
+              <td>Realistic for you</td>
+              <td>Use HTML/CSS skills from class</td>
+            </tr>
+            <tr>
+              <td><strong>R</strong>elevant</td>
+              <td>Fits course requirements</td>
+              <td>Includes forms, responsive design</td>
+            </tr>
+            <tr>
+              <td><strong>T</strong>ime-bound</td>
+              <td>Has a deadline</td>
+              <td>Due by midterm date</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="demo-box">
+          <p><strong>Bad Goal:</strong> "Make a cool website"</p>
+          <p>
+            <strong>Good Goal:</strong> "Create a 4-page responsive portfolio by
+            March 15th with contact form"
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: Step 2 - Wireframing -->
+      <div class="slide">
+        <div class="slide-number">6 / 13</div>
+        <h1>Step 2: Wireframing (Sketching Your Layout)</h1>
+
+        <h2>Start with Paper and Pencil!</h2>
+
+        <p>
+          A <span class="highlight">wireframe</span> is just a simple sketch
+          showing where things go on your page.
+        </p>
+
+        <div class="wireframe-demo">
+          <div class="wireframe-element">[ LOGO / SITE NAME ]</div>
+          <div class="wireframe-element">[ HOME | MENU | ABOUT | CONTACT ]</div>
+          <div class="wireframe-element" style="height: 150px">
+            [ BIG HERO IMAGE ]<br />[ Welcome Message ]
+          </div>
+          <div style="display: flex; gap: 10px">
+            <div class="wireframe-element" style="flex: 1">
+              [ Feature 1 ]<br />Text here
+            </div>
+            <div class="wireframe-element" style="flex: 1">
+              [ Feature 2 ]<br />Text here
+            </div>
+            <div class="wireframe-element" style="flex: 1">
+              [ Feature 3 ]<br />Text here
+            </div>
+          </div>
+          <div class="wireframe-element">[ Footer with contact info ]</div>
+        </div>
+
+        <div class="workflow-box">
+          <p><strong>Wireframing Tips:</strong></p>
+          <ul>
+            <li>Don't worry about colors or fonts yet</li>
+            <li>Focus on where things go</li>
+            <li>Draw wireframes for each page</li>
+            <li>Show it to a friend - can they understand it?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Step 3 - File Organization -->
+      <div class="slide">
+        <div class="slide-number">7 / 13</div>
+        <h1>Step 3: Organizing Your Project Files</h1>
+
+        <h2>Create a Clean Folder Structure</h2>
+
+        <div class="code-block">
+          <span class="comment">/* Recommended Project Structure */</span>
+          my-project/ ├── index.html
+          <span class="comment">// Your homepage</span> ├── about.html
+          <span class="comment">// About page</span> ├── contact.html
+          <span class="comment">// Contact page</span> ├── css/ │ ├── style.css
+          <span class="comment">// Main stylesheet</span> │ └── responsive.css
+          <span class="comment">// Mobile styles</span> ├── js/ │ └── script.js
+          <span class="comment">// JavaScript file</span> ├── images/ │ ├──
+          logo.png │ ├── hero.jpg │ └── products/
+          <span class="comment">// Subfolder for product images</span> └──
+          README.txt <span class="comment">// Project description</span>
+        </div>
+
+        <div class="assignment-box">
+          <h3>File Naming Best Practices:</h3>
+          <ul>
+            <li>Use lowercase letters: style.css not Style.CSS</li>
+            <li>No spaces: use-dashes or underscores</li>
+            <li>Be descriptive: coffee-hero.jpg not img1.jpg</li>
+            <li>Keep it short but clear</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: Feature Planning -->
+      <div class="slide">
+        <div class="slide-number">8 / 13</div>
+        <h1>Planning Your Features</h1>
+
+        <h2>MoSCoW Method (Simple Version)</h2>
+
+        <div class="workflow-box">
+          <ul>
+            <li>
+              🔴 <strong>Must Have</strong> - Core features you absolutely need
+            </li>
+            <li>
+              🟡 <strong>Should Have</strong> - Important but not critical
+            </li>
+            <li>
+              🟢 <strong>Could Have</strong> - Nice extras if you have time
+            </li>
+            <li>⚪ <strong>Won't Have</strong> - Save for later</li>
+          </ul>
+        </div>
+
+        <h3>Example for Coffee Shop Site:</h3>
+
+        <div class="comparison-table">
+          <table class="comparison-table">
+            <tr>
+              <th>Priority</th>
+              <th>Features</th>
+            </tr>
+            <tr>
+              <td>🔴 Must Have</td>
+              <td>Navigation menu, Contact info, Menu page, Mobile-friendly</td>
+            </tr>
+            <tr>
+              <td>🟡 Should Have</td>
+              <td>Image gallery, Google Map, Social media links</td>
+            </tr>
+            <tr>
+              <td>🟢 Could Have</td>
+              <td>Animations, Newsletter signup, Reviews section</td>
+            </tr>
+            <tr>
+              <td>⚪ Won't Have</td>
+              <td>Online ordering, User accounts, Payment system</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Pro Tip:</strong> Start with Must Haves, then add Should
+            Haves. Only do Could Haves if you're ahead of schedule!
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: Step 4 - Building Your Project -->
+      <div class="slide">
+        <div class="slide-number">9 / 13</div>
+        <h1>Step 4: Building Your Project</h1>
+
+        <h2>Start Simple, Then Add Complexity</h2>
+
+        <div class="workflow-box">
+          <p><strong>Build in This Order:</strong></p>
+          <ol>
+            <li>
+              📄 <strong>HTML Structure First</strong> - All pages with basic
+              content
+            </li>
+            <li>🎨 <strong>Basic CSS</strong> - Layout, colors, fonts</li>
+            <li>
+              📱 <strong>Responsive Design</strong> - Make it work on mobile
+            </li>
+            <li>✨ <strong>Polish CSS</strong> - Hover effects, animations</li>
+            <li>⚡ <strong>JavaScript</strong> - Interactive features</li>
+            <li>
+              🔍 <strong>Final Details</strong> - Favicon, meta tags, etc.
+            </li>
+          </ol>
+        </div>
+
+        <h3>Example Building Timeline:</h3>
+
+        <div class="project-example">
+          <p><strong>Day 1-2:</strong> Create all HTML pages with content</p>
+          <p><strong>Day 3-4:</strong> Add CSS styling and layout</p>
+          <p>
+            <strong>Day 5-6:</strong> Make responsive, add JavaScript features
+          </p>
+          <p><strong>Day 7:</strong> Test everything, fix bugs, polish</p>
+        </div>
+
+        <div class="code-block">
+          <span class="comment"
+            >&lt;!-- Start with semantic HTML structure --&gt;</span
+          >
+          <span class="tag">&lt;header&gt;</span>
+          <span class="tag">&lt;nav&gt;</span>
+          <span class="tag">&lt;ul&gt;</span>
+          <span class="tag">&lt;li&gt;</span><span class="tag">&lt;a</span>
+          <span class="attribute">href</span>=<span class="value"
+            >"index.html"</span
+          ><span class="tag">&gt;</span>Home<span class="tag">&lt;/a&gt;</span
+          ><span class="tag">&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;</span><span class="tag">&lt;a</span>
+          <span class="attribute">href</span>=<span class="value"
+            >"menu.html"</span
+          ><span class="tag">&gt;</span>Menu<span class="tag">&lt;/a&gt;</span
+          ><span class="tag">&lt;/li&gt;</span>
+          <span class="tag">&lt;/ul&gt;</span>
+          <span class="tag">&lt;/nav&gt;</span>
+          <span class="tag">&lt;/header&gt;</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: Step 5 - Testing Your Website -->
+      <div class="slide">
+        <div class="slide-number">10 / 13</div>
+        <h1>Step 5: Testing Your Website</h1>
+
+        <h2>Make Sure Everything Works!</h2>
+
+        <div class="assignment-box">
+          <h3>Testing Checklist:</h3>
+          <ul>
+            <li>All links work (no broken links)</li>
+            <li>Images load properly</li>
+            <li>Forms submit correctly</li>
+            <li>Works on phone, tablet, and desktop</li>
+            <li>Works in Chrome, Firefox, Safari</li>
+            <li>No spelling or grammar errors</li>
+            <li>JavaScript features work without errors</li>
+            <li>Pages load quickly (under 3 seconds)</li>
+          </ul>
+        </div>
+
+        <h3>How to Test:</h3>
+
+        <div class="workflow-box">
+          <ul>
+            <li>
+              📱 <strong>Mobile Test:</strong> Use browser's device mode (F12)
+            </li>
+            <li>
+              👥 <strong>User Test:</strong> Ask a friend to try your site
+            </li>
+            <li>🔍 <strong>Link Test:</strong> Click every link</li>
+            <li>📝 <strong>Form Test:</strong> Submit test data</li>
+            <li>
+              🌐 <strong>Browser Test:</strong> Open in different browsers
+            </li>
+          </ul>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Pro Tip:</strong> Test as you build, not just at the end!
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 11: Common Mistakes to Avoid -->
+      <div class="slide">
+        <div class="slide-number">11 / 13</div>
+        <h1>Common Beginner Mistakes (And How to Avoid Them)</h1>
+
+        <h2>Learn from Others' Mistakes!</h2>
+
+        <div class="comparison-table">
+          <table class="comparison-table">
+            <tr>
+              <th>❌ Mistake</th>
+              <th>✅ Better Approach</th>
+            </tr>
+            <tr>
+              <td>Starting with complex features</td>
+              <td>Build basic structure first</td>
+            </tr>
+            <tr>
+              <td>Not planning before coding</td>
+              <td>Sketch wireframes first</td>
+            </tr>
+            <tr>
+              <td>Messy file organization</td>
+              <td>Use clear folder structure</td>
+            </tr>
+            <tr>
+              <td>Forgetting mobile users</td>
+              <td>Test on phone regularly</td>
+            </tr>
+            <tr>
+              <td>Huge image files</td>
+              <td>Optimize images (under 200KB)</td>
+            </tr>
+            <tr>
+              <td>No backup copies</td>
+              <td>Save versions as you go</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="project-example">
+          <p><strong>Time Management Tips:</strong></p>
+          <ul>
+            <li>Don't try to learn everything at once</li>
+            <li>Use code you understand (don't just copy-paste)</li>
+            <li>Ask for help when stuck for more than 30 minutes</li>
+            <li>Save working versions before adding new features</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 12: Summary & Your Midterm Project -->
+      <div class="slide">
+        <div class="slide-number">12 / 13</div>
+        <h1>Your Midterm Project Action Plan</h1>
+
+        <h2>Let's Put It All Together!</h2>
+
+        <div class="workflow-box">
+          <p><strong>Your 5-Step Process:</strong></p>
+          <ol>
+            <li>✅ Define your project (what, who, why)</li>
+            <li>✅ Sketch wireframes (paper is fine!)</li>
+            <li>✅ Organize files properly</li>
+            <li>✅ Build step-by-step (HTML → CSS → JS)</li>
+            <li>✅ Test everything thoroughly</li>
+          </ol>
+        </div>
+
+        <div class="assignment-box">
+          <h3>This Week's Tasks:</h3>
+          <ul>
+            <li>Choose your project topic</li>
+            <li>Write down your project definition (1 paragraph)</li>
+            <li>Draw wireframes for all pages</li>
+            <li>Create a flowchart using app.diagrams.net (submit image)</li>
+            <li>Create your project folder structure</li>
+            <li>Start with index.html</li>
+          </ul>
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Flowchart Submission:</strong> Use
+            <a
+              href="https://app.diagrams.net"
+              target="_blank"
+              style="color: #8b4513; font-weight: bold"
+              >app.diagrams.net</a
+            >
+            to create a flowchart showing your site structure and user flow.
+          </p>
+          <p>Export as image and submit with your project!</p>
+        </div>
+
+        <div class="project-example">
+          <p>
+            <strong>Remember:</strong> Your midterm project shows everything
+            you've learned!
+          </p>
+          <p>Start simple, build incrementally, and have fun with it! 🎉</p>
+        </div>
+      </div>
+
+      <!-- SLIDE 13: README Template -->
+      <div class="slide">
+        <div class="slide-number">13 / 13</div>
+        <h1>Project README Template</h1>
+
+        <h2>Document Your Project Properly!</h2>
+
+        <p>
+          Every project needs a README file that explains what you built and
+          why. Here's the template you should follow:
+        </p>
+
+        <div class="code-block">
+          <span class="comment"># Project Name: [Your Project Title]</span>
+          <span class="comment">## CIS 185 - Midterm Project</span>
+          <span class="comment">## Author: [Your Name]</span>
+          <span class="comment">## Date: [Submission Date]</span>
+
+          <span class="comment">---</span>
+
+          <span class="comment">## 1. Project Description</span>
+          What is your website about? (2-3 sentences) Example: "This is a coffee
+          shop website for 'Cozy Corner Café'. It showcases our menu, location,
+          and story to attract local customers and create an online presence for
+          our business."
+
+          <span class="comment">## 2. Target Audience</span>
+          Who will use your website? Why? Example: "Local coffee enthusiasts
+          aged 20-40 who are looking for a comfortable workspace or meeting
+          spot."
+
+          <span class="comment">## 3. Main Features</span>
+          - Feature 1: (e.g., Interactive menu with prices) - Feature 2: (e.g.,
+          Contact form for reservations) - Feature 3: (e.g., Photo gallery of
+          the café) - Feature 4: (e.g., Responsive design for mobile)
+
+          <span class="comment">## 4. Technologies Used</span>
+          - HTML5 (semantic structure) - CSS3 (styling, animations) - JavaScript
+          (form validation, image gallery) - [Any other tools/libraries]
+
+          <span class="comment">## 5. File Structure</span>
+          Explain your organization: - index.html - Homepage - menu.html - Menu
+          page - about.html - About us page - css/style.css - Main stylesheet -
+          js/script.js - JavaScript functionality
+
+          <span class="comment">## 6. Challenges Faced</span>
+          What was difficult? How did you solve it? Example: "Making the
+          navigation responsive was challenging. I solved it by using CSS
+          flexbox and a mobile menu toggle."
+
+          <span class="comment">## 7. AI Tools Used</span>
+          List any AI tools and how you used them: - ChatGPT: Used for debugging
+          JavaScript form validation - GitHub Copilot: Helped with CSS grid
+          layout suggestions - Claude: Assisted with color palette selection -
+          None: Did not use any AI tools [Be honest and specific about AI
+          assistance]
+
+          <span class="comment">## 8. Future Improvements</span>
+          What would you add with more time? - Online ordering system - Customer
+          reviews section - Newsletter signup
+
+          <span class="comment">## 9. Credits</span>
+          - Images from [source] - Icons from [source] - Tutorials used: [links]
+          - AI assistance as noted in Section 7
+        </div>
+
+        <div class="demo-box">
+          <p>
+            <strong>Pro Tip:</strong> A good README helps others (and future
+            you!) understand your project quickly!
+          </p>
+          <p>
+            Save as <strong>README.txt</strong> or <strong>README.md</strong> in
+            your project folder 📝
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+      <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+        ← Previous
+      </button>
+      <span id="slideInfo" style="color: #8b4513; font-weight: bold"
+        >Slide 1 of 13</span
+      >
+      <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+        Next →
+      </button>
+    </div>
+
+    <!-- JavaScript for Navigation -->
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const totalSlides = slides.length;
+      const slideInfo = document.getElementById("slideInfo");
+      const progressBar = document.getElementById("progressBar");
+
+      function showSlide(index) {
+        // Ensure index is within bounds
+        currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+
+        // Hide all slides
+        slides.forEach((slide) => slide.classList.remove("active"));
+
+        // Show current slide
+        slides[currentSlide].classList.add("active");
+
+        // Update navigation
+        slideInfo.textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+        document.getElementById("prevBtn").disabled = currentSlide === 0;
+        document.getElementById("nextBtn").disabled =
+          currentSlide === totalSlides - 1;
+
+        // Update progress bar
+        const progress = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = progress + "%";
+      }
+
+      function changeSlide(direction) {
+        showSlide(currentSlide + direction);
+      }
+
+      // Keyboard navigation
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") changeSlide(-1);
+        if (e.key === "ArrowRight" || e.key === " ") {
+          e.preventDefault();
+          changeSlide(1);
+        }
+      });
+
+      // Touch/swipe navigation for mobile
+      let touchStartX = 0;
+      document.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const difference = touchStartX - touchEndX;
+
+        if (Math.abs(difference) > 50) {
+          if (difference > 0) {
+            changeSlide(1); // Swipe left, go to next
+          } else {
+            changeSlide(-1); // Swipe right, go to previous
+          }
+        }
+      });
+
+      // Initialize
+      showSlide(0);
+
+      // Rain toggle function
+      let rainEnabled = true;
+      function toggleRain() {
+        const rainEffect = document.getElementById("rainEffect");
+        const rainToggle = document.getElementById("rainToggle");
+
+        rainEnabled = !rainEnabled;
+
+        if (rainEnabled) {
+          rainEffect.classList.remove("disabled");
+          rainToggle.textContent = "Rain: ON";
+        } else {
+          rainEffect.classList.add("disabled");
+          rainToggle.textContent = "Rain: OFF";
+        }
+      }
+    </script>
+  </body>
+</html>
