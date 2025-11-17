@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - React Development</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+
+        <!-- SLIDE 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 24</div>
+            <h1>React Development</h1>
+            <h2>State Management, Props, and Component Lifecycle</h2>
+
+            <p>In this lecture, we'll explore:</p>
+            <ul>
+                <li>State management with useState Hook</li>
+                <li>Understanding component re-rendering</li>
+                <li>Advanced props patterns</li>
+                <li>useEffect and component lifecycle</li>
+                <li>Building interactive applications</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 2: What is State? -->
+        <div class="slide">
+            <div class="slide-number">2 / 24</div>
+            <h1>What is State?</h1>
+            <h2>Data That Changes Over Time</h2>
+
+            <p>State is data that can change during the lifetime of a component:</p>
+
+            <ul>
+                <li><strong>Props:</strong> Data passed from parent (read-only)</li>
+                <li><strong>State:</strong> Data managed within a component (can change)</li>
+            </ul>
+
+            <div class="concept-box">
+                <p><strong>Examples of State:</strong></p>
+                <ul>
+                    <li>Form input values</li>
+                    <li>Toggle switches (on/off)</li>
+                    <li>Counter values</li>
+                    <li>User authentication status</li>
+                    <li>Shopping cart items</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: useState Hook -->
+        <div class="slide">
+            <div class="slide-number">3 / 24</div>
+            <h1>The useState Hook</h1>
+            <h2>Adding State to Function Components</h2>
+
+            <div class="code-block">
+<span class="keyword">import</span> { <span class="hook">useState</span> } <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">function</span> <span class="component">Counter</span>() {
+    <span class="comment">// useState returns [currentValue, setterFunction]</span>
+    <span class="keyword">const</span> [count, setCount] = <span class="hook">useState</span>(<span class="value">0</span>);
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Count: {count}<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;button</span> <span class="attribute">onClick</span>={() => <span class="function">setCount</span>(count + <span class="value">1</span>)}<span class="tag">&gt;</span>
+                Increment
+            <span class="tag">&lt;/button&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Key Point:</strong> When state changes, React re-renders the component!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: useState Syntax -->
+        <div class="slide">
+            <div class="slide-number">4 / 24</div>
+            <h1>useState Breakdown</h1>
+            <h2>Understanding the Syntax</h2>
+
+            <div class="code-block">
+<span class="keyword">const</span> [stateVariable, setStateFunction] = <span class="hook">useState</span>(initialValue);
+
+<span class="comment">// Examples:</span>
+<span class="keyword">const</span> [name, setName] = <span class="hook">useState</span>(<span class="string">""</span>);           <span class="comment">// String</span>
+<span class="keyword">const</span> [age, setAge] = <span class="hook">useState</span>(<span class="value">0</span>);             <span class="comment">// Number</span>
+<span class="keyword">const</span> [isActive, setIsActive] = <span class="hook">useState</span>(<span class="keyword">false</span>);  <span class="comment">// Boolean</span>
+<span class="keyword">const</span> [items, setItems] = <span class="hook">useState</span>([]);        <span class="comment">// Array</span>
+<span class="keyword">const</span> [user, setUser] = <span class="hook">useState</span>({});          <span class="comment">// Object</span>
+<span class="keyword">const</span> [data, setData] = <span class="hook">useState</span>(<span class="keyword">null</span>);        <span class="comment">// Null</span>
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Convention:</strong> Name setter functions as "set" + StateName (e.g., setCount, setName)</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Multiple State Variables -->
+        <div class="slide">
+            <div class="slide-number">5 / 24</div>
+            <h1>Multiple State Variables</h1>
+            <h2>Managing Complex Component State</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">UserForm</span>() {
+    <span class="keyword">const</span> [firstName, setFirstName] = <span class="hook">useState</span>(<span class="string">""</span>);
+    <span class="keyword">const</span> [lastName, setLastName] = <span class="hook">useState</span>(<span class="string">""</span>);
+    <span class="keyword">const</span> [email, setEmail] = <span class="hook">useState</span>(<span class="string">""</span>);
+    <span class="keyword">const</span> [isSubscribed, setIsSubscribed] = <span class="hook">useState</span>(<span class="keyword">false</span>);
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;form&gt;</span>
+            <span class="tag">&lt;input</span>
+                <span class="attribute">value</span>={firstName}
+                <span class="attribute">onChange</span>={(e) => <span class="function">setFirstName</span>(e.target.value)}
+                <span class="attribute">placeholder</span>=<span class="string">"First Name"</span>
+            <span class="tag">/&gt;</span>
+            <span class="comment">{/* More inputs... */}</span>
+        <span class="tag">&lt;/form&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 6: State with Objects -->
+        <div class="slide">
+            <div class="slide-number">6 / 24</div>
+            <h1>State with Objects</h1>
+            <h2>Grouping Related State</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">UserProfile</span>() {
+    <span class="keyword">const</span> [user, setUser] = <span class="hook">useState</span>({
+        name: <span class="string">""</span>,
+        email: <span class="string">""</span>,
+        age: <span class="value">0</span>
+    });
+
+    <span class="keyword">const</span> <span class="function">updateName</span> = (newName) => {
+        <span class="comment">// IMPORTANT: Spread operator to keep other properties</span>
+        <span class="function">setUser</span>({
+            ...user,
+            name: newName
+        });
+    };
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;input</span>
+            <span class="attribute">value</span>={user.name}
+            <span class="attribute">onChange</span>={(e) => <span class="function">updateName</span>(e.target.value)}
+        <span class="tag">/&gt;</span>
+    );
+}
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Never mutate state directly!</strong> Always create a new object with spread operator.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: State with Arrays -->
+        <div class="slide">
+            <div class="slide-number">7 / 24</div>
+            <h1>State with Arrays</h1>
+            <h2>Adding and Removing Items</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">TodoList</span>() {
+    <span class="keyword">const</span> [todos, setTodos] = <span class="hook">useState</span>([]);
+    <span class="keyword">const</span> [newTodo, setNewTodo] = <span class="hook">useState</span>(<span class="string">""</span>);
+
+    <span class="keyword">const</span> <span class="function">addTodo</span> = () => {
+        <span class="comment">// Add to array - spread existing, add new</span>
+        <span class="function">setTodos</span>([...todos, { id: Date.<span class="function">now</span>(), text: newTodo }]);
+        <span class="function">setNewTodo</span>(<span class="string">""</span>);
+    };
+
+    <span class="keyword">const</span> <span class="function">removeTodo</span> = (id) => {
+        <span class="comment">// Remove from array - filter out</span>
+        <span class="function">setTodos</span>(todos.<span class="function">filter</span>(todo => todo.id !== id));
+    };
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attribute">value</span>={newTodo} <span class="attribute">onChange</span>={(e) => <span class="function">setNewTodo</span>(e.target.value)} <span class="tag">/&gt;</span>
+            <span class="tag">&lt;button</span> <span class="attribute">onClick</span>={addTodo}<span class="tag">&gt;</span>Add<span class="tag">&lt;/button&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Event Handling -->
+        <div class="slide">
+            <div class="slide-number">8 / 24</div>
+            <h1>Event Handling in React</h1>
+            <h2>Responding to User Actions</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">EventExamples</span>() {
+    <span class="keyword">const</span> <span class="function">handleClick</span> = () => {
+        console.<span class="function">log</span>(<span class="string">"Button clicked!"</span>);
+    };
+
+    <span class="keyword">const</span> <span class="function">handleChange</span> = (event) => {
+        console.<span class="function">log</span>(<span class="string">"Input value:"</span>, event.target.value);
+    };
+
+    <span class="keyword">const</span> <span class="function">handleSubmit</span> = (event) => {
+        event.<span class="function">preventDefault</span>();  <span class="comment">// Prevent form reload</span>
+        console.<span class="function">log</span>(<span class="string">"Form submitted!"</span>);
+    };
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;form</span> <span class="attribute">onSubmit</span>={handleSubmit}<span class="tag">&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attribute">onChange</span>={handleChange} <span class="tag">/&gt;</span>
+            <span class="tag">&lt;button</span> <span class="attribute">onClick</span>={handleClick}<span class="tag">&gt;</span>Click Me<span class="tag">&lt;/button&gt;</span>
+        <span class="tag">&lt;/form&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Controlled Components -->
+        <div class="slide">
+            <div class="slide-number">9 / 24</div>
+            <h1>Controlled Components</h1>
+            <h2>React Controlling Form Inputs</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">ControlledInput</span>() {
+    <span class="keyword">const</span> [text, setText] = <span class="hook">useState</span>(<span class="string">""</span>);
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;input</span>
+                <span class="attribute">type</span>=<span class="string">"text"</span>
+                <span class="attribute">value</span>={text}  <span class="comment">{/* Controlled by state */}</span>
+                <span class="attribute">onChange</span>={(e) => <span class="function">setText</span>(e.target.value)}
+            <span class="tag">/&gt;</span>
+            <span class="tag">&lt;p&gt;</span>You typed: {text}<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Characters: {text.length}<span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+
+            <div class="concept-box">
+                <p><strong>Controlled Component:</strong> React state is the "single source of truth" for the input value.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Lifting State Up -->
+        <div class="slide">
+            <div class="slide-number">10 / 24</div>
+            <h1>Lifting State Up</h1>
+            <h2>Sharing State Between Components</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">Parent</span>() {
+    <span class="keyword">const</span> [sharedValue, setSharedValue] = <span class="hook">useState</span>(<span class="string">""</span>);
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;</span><span class="component">ChildA</span> <span class="attribute">value</span>={sharedValue} <span class="attribute">onChange</span>={setSharedValue} <span class="tag">/&gt;</span>
+            <span class="tag">&lt;</span><span class="component">ChildB</span> <span class="attribute">value</span>={sharedValue} <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+
+<span class="keyword">function</span> <span class="component">ChildA</span>({ value, onChange }) {
+    <span class="keyword">return</span> <span class="tag">&lt;input</span> <span class="attribute">value</span>={value} <span class="attribute">onChange</span>={(e) => <span class="function">onChange</span>(e.target.value)} <span class="tag">/&gt;</span>;
+}
+
+<span class="keyword">function</span> <span class="component">ChildB</span>({ value }) {
+    <span class="keyword">return</span> <span class="tag">&lt;p&gt;</span>Mirror: {value}<span class="tag">&lt;/p&gt;</span>;
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 11: useEffect Introduction -->
+        <div class="slide">
+            <div class="slide-number">11 / 24</div>
+            <h1>useEffect Hook</h1>
+            <h2>Side Effects in React</h2>
+
+            <p>useEffect lets you perform "side effects" in components:</p>
+
+            <ul>
+                <li>Fetching data from APIs</li>
+                <li>Setting up subscriptions</li>
+                <li>Manually changing the DOM</li>
+                <li>Timers and intervals</li>
+                <li>Logging</li>
+            </ul>
+
+            <div class="code-block">
+<span class="keyword">import</span> { <span class="hook">useState</span>, <span class="hook">useEffect</span> } <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">function</span> <span class="component">Example</span>() {
+    <span class="hook">useEffect</span>(() => {
+        <span class="comment">// This runs after render</span>
+        console.<span class="function">log</span>(<span class="string">"Component rendered!"</span>);
+    });
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 12: useEffect with Dependencies -->
+        <div class="slide">
+            <div class="slide-number">12 / 24</div>
+            <h1>useEffect Dependencies</h1>
+            <h2>Controlling When Effects Run</h2>
+
+            <div class="code-block">
+<span class="comment">// Runs on EVERY render</span>
+<span class="hook">useEffect</span>(() => {
+    console.<span class="function">log</span>(<span class="string">"Every render"</span>);
+});
+
+<span class="comment">// Runs ONCE on mount (empty dependency array)</span>
+<span class="hook">useEffect</span>(() => {
+    console.<span class="function">log</span>(<span class="string">"Component mounted"</span>);
+}, []);
+
+<span class="comment">// Runs when 'count' changes</span>
+<span class="hook">useEffect</span>(() => {
+    console.<span class="function">log</span>(<span class="string">"Count changed to:"</span>, count);
+}, [count]);
+
+<span class="comment">// Runs when count OR name changes</span>
+<span class="hook">useEffect</span>(() => {
+    console.<span class="function">log</span>(<span class="string">"Count or name changed"</span>);
+}, [count, name]);
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Data Fetching with useEffect -->
+        <div class="slide">
+            <div class="slide-number">13 / 24</div>
+            <h1>Fetching Data</h1>
+            <h2>API Calls with useEffect</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">UserList</span>() {
+    <span class="keyword">const</span> [users, setUsers] = <span class="hook">useState</span>([]);
+    <span class="keyword">const</span> [loading, setLoading] = <span class="hook">useState</span>(<span class="keyword">true</span>);
+
+    <span class="hook">useEffect</span>(() => {
+        <span class="function">fetch</span>(<span class="string">'https://jsonplaceholder.typicode.com/users'</span>)
+            .<span class="function">then</span>(response => response.<span class="function">json</span>())
+            .<span class="function">then</span>(data => {
+                <span class="function">setUsers</span>(data);
+                <span class="function">setLoading</span>(<span class="keyword">false</span>);
+            });
+    }, []);  <span class="comment">// Empty array = run once on mount</span>
+
+    <span class="keyword">if</span> (loading) <span class="keyword">return</span> <span class="tag">&lt;p&gt;</span>Loading...<span class="tag">&lt;/p&gt;</span>;
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;ul&gt;</span>
+            {users.<span class="function">map</span>(user => <span class="tag">&lt;li</span> <span class="attribute">key</span>={user.id}<span class="tag">&gt;</span>{user.name}<span class="tag">&lt;/li&gt;</span>)}
+        <span class="tag">&lt;/ul&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Cleanup in useEffect -->
+        <div class="slide">
+            <div class="slide-number">14 / 24</div>
+            <h1>Cleanup Functions</h1>
+            <h2>Preventing Memory Leaks</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">Timer</span>() {
+    <span class="keyword">const</span> [seconds, setSeconds] = <span class="hook">useState</span>(<span class="value">0</span>);
+
+    <span class="hook">useEffect</span>(() => {
+        <span class="comment">// Set up interval</span>
+        <span class="keyword">const</span> intervalId = <span class="function">setInterval</span>(() => {
+            <span class="function">setSeconds</span>(s => s + <span class="value">1</span>);
+        }, <span class="value">1000</span>);
+
+        <span class="comment">// Cleanup function - runs when component unmounts</span>
+        <span class="keyword">return</span> () => {
+            <span class="function">clearInterval</span>(intervalId);
+        };
+    }, []);
+
+    <span class="keyword">return</span> <span class="tag">&lt;p&gt;</span>Seconds: {seconds}<span class="tag">&lt;/p&gt;</span>;
+}
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Important:</strong> Always clean up subscriptions, timers, and event listeners to prevent memory leaks!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Component Lifecycle -->
+        <div class="slide">
+            <div class="slide-number">15 / 24</div>
+            <h1>Component Lifecycle</h1>
+            <h2>Mounting, Updating, Unmounting</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Phase</th>
+                    <th>What Happens</th>
+                    <th>useEffect Pattern</th>
+                </tr>
+                <tr>
+                    <td><strong>Mount</strong></td>
+                    <td>Component added to DOM</td>
+                    <td>useEffect(() => {...}, [])</td>
+                </tr>
+                <tr>
+                    <td><strong>Update</strong></td>
+                    <td>State/Props change</td>
+                    <td>useEffect(() => {...}, [dep])</td>
+                </tr>
+                <tr>
+                    <td><strong>Unmount</strong></td>
+                    <td>Component removed</td>
+                    <td>return () => cleanup()</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 16: Prop Drilling Problem -->
+        <div class="slide">
+            <div class="slide-number">16 / 24</div>
+            <h1>Prop Drilling</h1>
+            <h2>A Common Challenge</h2>
+
+            <div class="code-block">
+<span class="comment">// Problem: Passing props through many levels</span>
+<span class="tag">&lt;</span><span class="component">GrandParent</span> <span class="attribute">user</span>={user}<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span><span class="component">Parent</span> <span class="attribute">user</span>={user}<span class="tag">&gt;</span>
+        <span class="tag">&lt;</span><span class="component">Child</span> <span class="attribute">user</span>={user}<span class="tag">&gt;</span>
+            <span class="tag">&lt;</span><span class="component">GrandChild</span> <span class="attribute">user</span>={user} <span class="tag">/&gt;</span>  <span class="comment">{/* Finally uses it! */}</span>
+        <span class="tag">&lt;/</span><span class="component">Child</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;/</span><span class="component">Parent</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/</span><span class="component">GrandParent</span><span class="tag">&gt;</span>
+            </div>
+
+            <div class="concept-box">
+                <p><strong>Solution:</strong> Context API or state management libraries (Redux, Zustand) - topics for future exploration!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Default Props -->
+        <div class="slide">
+            <div class="slide-number">17 / 24</div>
+            <h1>Default Props</h1>
+            <h2>Fallback Values for Props</h2>
+
+            <div class="code-block">
+<span class="comment">// Method 1: Default parameters (Recommended)</span>
+<span class="keyword">function</span> <span class="component">Button</span>({ text = <span class="string">"Click me"</span>, color = <span class="string">"blue"</span> }) {
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;button</span> <span class="attribute">style</span>={{ backgroundColor: color }}<span class="tag">&gt;</span>
+            {text}
+        <span class="tag">&lt;/button&gt;</span>
+    );
+}
+
+<span class="comment">// Usage:</span>
+<span class="tag">&lt;</span><span class="component">Button</span> <span class="tag">/&gt;</span>                     <span class="comment">{/* Uses defaults */}</span>
+<span class="tag">&lt;</span><span class="component">Button</span> <span class="attribute">text</span>=<span class="string">"Submit"</span> <span class="tag">/&gt;</span>        <span class="comment">{/* Custom text */}</span>
+<span class="tag">&lt;</span><span class="component">Button</span> <span class="attribute">color</span>=<span class="string">"red"</span> <span class="tag">/&gt;</span>          <span class="comment">{/* Custom color */}</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Children Prop -->
+        <div class="slide">
+            <div class="slide-number">18 / 24</div>
+            <h1>The Children Prop</h1>
+            <h2>Composing Components</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">Card</span>({ title, children }) {
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div</span> <span class="attribute">className</span>=<span class="string">"card"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;h2&gt;</span>{title}<span class="tag">&lt;/h2&gt;</span>
+            <span class="tag">&lt;div</span> <span class="attribute">className</span>=<span class="string">"card-body"</span><span class="tag">&gt;</span>
+                {children}  <span class="comment">{/* Whatever is between opening/closing tags */}</span>
+            <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+
+<span class="comment">// Usage:</span>
+<span class="tag">&lt;</span><span class="component">Card</span> <span class="attribute">title</span>=<span class="string">"Welcome"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>This is the card content!<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;button&gt;</span>Click here<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/</span><span class="component">Card</span><span class="tag">&gt;</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Complete Example -->
+        <div class="slide">
+            <div class="slide-number">19 / 24</div>
+            <h1>Complete Example</h1>
+            <h2>Todo App with State and Effects</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">TodoApp</span>() {
+    <span class="keyword">const</span> [todos, setTodos] = <span class="hook">useState</span>([]);
+    <span class="keyword">const</span> [input, setInput] = <span class="hook">useState</span>(<span class="string">""</span>);
+
+    <span class="hook">useEffect</span>(() => {
+        document.title = <span class="string">`</span><span class="value">${todos.length}</span><span class="string"> todos`</span>;
+    }, [todos]);
+
+    <span class="keyword">const</span> <span class="function">addTodo</span> = () => {
+        <span class="keyword">if</span> (input.<span class="function">trim</span>()) {
+            <span class="function">setTodos</span>([...todos, { id: Date.<span class="function">now</span>(), text: input }]);
+            <span class="function">setInput</span>(<span class="string">""</span>);
+        }
+    };
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attribute">value</span>={input} <span class="attribute">onChange</span>={(e) => <span class="function">setInput</span>(e.target.value)} <span class="tag">/&gt;</span>
+            <span class="tag">&lt;button</span> <span class="attribute">onClick</span>={addTodo}<span class="tag">&gt;</span>Add<span class="tag">&lt;/button&gt;</span>
+            <span class="tag">&lt;ul&gt;</span>{todos.<span class="function">map</span>(t => <span class="tag">&lt;li</span> <span class="attribute">key</span>={t.id}<span class="tag">&gt;</span>{t.text}<span class="tag">&lt;/li&gt;</span>)}<span class="tag">&lt;/ul&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Best Practices -->
+        <div class="slide">
+            <div class="slide-number">20 / 24</div>
+            <h1>State Management Best Practices</h1>
+            <h2>Writing Clean React Code</h2>
+
+            <ul>
+                <li><strong>Keep state minimal</strong> - only store what you can't compute</li>
+                <li><strong>Lift state up</strong> - share state between siblings via parent</li>
+                <li><strong>Never mutate state directly</strong> - always use setter functions</li>
+                <li><strong>Use functional updates</strong> for state that depends on previous state</li>
+                <li><strong>Keep components small</strong> - single responsibility principle</li>
+                <li><strong>Name handlers clearly</strong> - handleClick, handleSubmit, etc.</li>
+            </ul>
+
+            <div class="tip-box">
+                <p><strong>Remember:</strong> React's declarative nature means you describe WHAT the UI should look like, not HOW to change it.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Assignment Introduction -->
+        <div class="slide">
+            <div class="slide-number">21 / 24</div>
+            <h1>Week 9 Assignment</h1>
+            <h2>Build an Interactive React Application</h2>
+
+            <div class="assignment-box">
+                <h3>Task: Create a Task Manager App</h3>
+                <ul>
+                    <li>Create a React app with multiple components</li>
+                    <li>Implement add, complete, and delete functionality</li>
+                    <li>Use useState for task management</li>
+                    <li>Use useEffect to save to localStorage</li>
+                    <li>Include task filtering (all, active, completed)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: Assignment Requirements -->
+        <div class="slide">
+            <div class="slide-number">22 / 24</div>
+            <h1>Assignment Requirements</h1>
+            <h2>Technical Specifications</h2>
+
+            <div class="code-block">
+<span class="comment">// Your app should include:</span>
+
+<span class="comment">// 1. Task object structure:</span>
+{
+    id: <span class="value">1234567890</span>,
+    text: <span class="string">"Complete assignment"</span>,
+    completed: <span class="keyword">false</span>,
+    createdAt: <span class="keyword">new</span> Date()
+}
+
+<span class="comment">// 2. Features to implement:</span>
+- Add new tasks with input field
+- Toggle task completion status
+- Delete tasks
+- Filter by status (All/Active/Completed)
+- Persist data in localStorage
+- Show task count
+
+<span class="comment">// 3. Components to create:</span>
+- App (main container)
+- TaskInput (add new tasks)
+- TaskList (render all tasks)
+- TaskItem (individual task)
+- FilterButtons (filter options)
+            </div>
+        </div>
+
+        <!-- SLIDE 23: Assignment Grading -->
+        <div class="slide">
+            <div class="slide-number">23 / 24</div>
+            <h1>Grading Criteria</h1>
+            <h2>How Your Assignment Will Be Evaluated</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Criteria</th>
+                    <th>Points</th>
+                </tr>
+                <tr>
+                    <td>Component Structure (proper separation)</td>
+                    <td>20 pts</td>
+                </tr>
+                <tr>
+                    <td>State Management (useState correctly)</td>
+                    <td>25 pts</td>
+                </tr>
+                <tr>
+                    <td>useEffect (localStorage persistence)</td>
+                    <td>20 pts</td>
+                </tr>
+                <tr>
+                    <td>All Features Working</td>
+                    <td>20 pts</td>
+                </tr>
+                <tr>
+                    <td>Code Quality & Styling</td>
+                    <td>15 pts</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>100 pts</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 24: Assignment Tips -->
+        <div class="slide">
+            <div class="slide-number">24 / 24</div>
+            <h1>Tips for Success</h1>
+            <h2>Getting Started</h2>
+
+            <ol>
+                <li><strong>Plan First:</strong> Sketch component hierarchy before coding</li>
+                <li><strong>Start Simple:</strong> Get basic add/display working first</li>
+                <li><strong>Add Features Incrementally:</strong> Complete, delete, then filter</li>
+                <li><strong>Test Often:</strong> Check React DevTools for state</li>
+                <li><strong>localStorage Tip:</strong> Use JSON.parse() and JSON.stringify()</li>
+            </ol>
+
+            <div class="code-block">
+<span class="comment">// localStorage example:</span>
+<span class="hook">useEffect</span>(() => {
+    <span class="keyword">const</span> saved = localStorage.<span class="function">getItem</span>(<span class="string">'tasks'</span>);
+    <span class="keyword">if</span> (saved) <span class="function">setTasks</span>(JSON.<span class="function">parse</span>(saved));
+}, []);
+
+<span class="hook">useEffect</span>(() => {
+    localStorage.<span class="function">setItem</span>(<span class="string">'tasks'</span>, JSON.<span class="function">stringify</span>(tasks));
+}, [tasks]);
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 24</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script src="slides.js"></script>
+</body>
+</html>

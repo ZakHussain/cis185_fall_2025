@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - AI Development Tools for Frontend</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+
+        <!-- SLIDE 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 24</div>
+            <h1>AI Development Tools</h1>
+            <h2>Revolutionizing Frontend Development</h2>
+
+            <p>In this lecture, we'll explore:</p>
+            <ul>
+                <li>The AI-assisted development landscape</li>
+                <li>Command line AI tools (Claude CLI, GitHub Copilot CLI)</li>
+                <li>Visual AI platforms (bolt.new, v0.dev)</li>
+                <li>Automated code generation workflows</li>
+                <li>Best practices for AI pair programming</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 2: The AI Revolution in Development -->
+        <div class="slide">
+            <div class="slide-number">2 / 24</div>
+            <h1>The AI Revolution</h1>
+            <h2>How AI is Changing Development</h2>
+
+            <p>AI tools are transforming how we write code:</p>
+
+            <ul>
+                <li><strong>Code Generation:</strong> Generate entire components from descriptions</li>
+                <li><strong>Code Completion:</strong> Smart autocomplete that understands context</li>
+                <li><strong>Debugging:</strong> AI identifies and fixes bugs</li>
+                <li><strong>Documentation:</strong> Auto-generate comments and docs</li>
+                <li><strong>Refactoring:</strong> Suggest improvements to existing code</li>
+            </ul>
+
+            <div class="ai-box">
+                <p><strong>Important:</strong> AI is a tool to enhance your skills, not replace them. Understanding fundamentals remains crucial!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Overview of AI Tools -->
+        <div class="slide">
+            <div class="slide-number">3 / 24</div>
+            <h1>AI Tool Categories</h1>
+            <h2>Different Tools for Different Needs</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Category</th>
+                    <th>Examples</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>IDE Extensions</strong></td>
+                    <td>GitHub Copilot, Cursor</td>
+                    <td>Real-time code suggestions</td>
+                </tr>
+                <tr>
+                    <td><strong>CLI Tools</strong></td>
+                    <td>Claude CLI, Aider</td>
+                    <td>Terminal-based coding</td>
+                </tr>
+                <tr>
+                    <td><strong>Web Platforms</strong></td>
+                    <td>bolt.new, v0.dev</td>
+                    <td>Rapid prototyping</td>
+                </tr>
+                <tr>
+                    <td><strong>Chat Interfaces</strong></td>
+                    <td>ChatGPT, Claude</td>
+                    <td>Code explanations, debugging</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 4: GitHub Copilot -->
+        <div class="slide">
+            <div class="slide-number">4 / 24</div>
+            <h1>GitHub Copilot</h1>
+            <h2>Your AI Pair Programmer</h2>
+
+            <div class="tool-card">
+                <h3>Features:</h3>
+                <ul>
+                    <li>Real-time code suggestions in VS Code</li>
+                    <li>Complete functions from comments</li>
+                    <li>Learn from your codebase patterns</li>
+                    <li>Support for multiple languages</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Just type a comment describing what you want:</span>
+<span class="comment">// Function to validate email address</span>
+<span class="ai">// Copilot suggests:</span>
+<span class="command">function</span> validateEmail(email) {
+    <span class="command">const</span> regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    <span class="command">return</span> regex.test(email);
+}
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Free for Students:</strong> Get GitHub Copilot free with your .edu email!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Claude CLI -->
+        <div class="slide">
+            <div class="slide-number">5 / 24</div>
+            <h1>Claude CLI</h1>
+            <h2>AI in Your Terminal</h2>
+
+            <p>Claude Code brings AI assistance directly to your command line:</p>
+
+            <div class="code-block">
+<span class="comment"># Install Claude CLI</span>
+<span class="prompt">$</span> <span class="command">npm</span> install -g @anthropic-ai/claude-code
+
+<span class="comment"># Start a session</span>
+<span class="prompt">$</span> <span class="command">claude</span>
+
+<span class="comment"># Ask for help with code</span>
+<span class="prompt">&gt;</span> Create a React component for a user profile card
+
+<span class="ai">Claude: I'll create a UserProfileCard component for you...</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Power Feature:</strong> Claude can read your codebase and make contextual suggestions!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Claude CLI Commands -->
+        <div class="slide">
+            <div class="slide-number">6 / 24</div>
+            <h1>Claude CLI in Action</h1>
+            <h2>Common Workflows</h2>
+
+            <div class="code-block">
+<span class="comment"># Generate a new component</span>
+<span class="prompt">&gt;</span> Create a responsive navbar with React
+
+<span class="comment"># Fix bugs in existing code</span>
+<span class="prompt">&gt;</span> Why is my useEffect causing infinite loops?
+
+<span class="comment"># Refactor code</span>
+<span class="prompt">&gt;</span> Refactor this class component to use hooks
+
+<span class="comment"># Add features</span>
+<span class="prompt">&gt;</span> Add dark mode toggle to my app
+
+<span class="comment"># Write tests</span>
+<span class="prompt">&gt;</span> Write unit tests for my UserService
+
+<span class="comment"># Explain code</span>
+<span class="prompt">&gt;</span> Explain what this regex does: /^[A-Za-z0-9._%+-]+@/
+            </div>
+        </div>
+
+        <!-- SLIDE 7: bolt.new Introduction -->
+        <div class="slide">
+            <div class="slide-number">7 / 24</div>
+            <h1>bolt.new</h1>
+            <h2>Full-Stack Apps from Prompts</h2>
+
+            <p>bolt.new by StackBlitz generates complete applications from natural language:</p>
+
+            <ul>
+                <li><strong>Instant Setup:</strong> No local environment needed</li>
+                <li><strong>Full Stack:</strong> Frontend + Backend + Database</li>
+                <li><strong>Live Preview:</strong> See changes in real-time</li>
+                <li><strong>Deploy Ready:</strong> One-click deployment</li>
+                <li><strong>AI Iterations:</strong> Refine with follow-up prompts</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Try it:</strong> <span class="highlight">bolt.new</span> - Just describe what you want to build!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Using bolt.new -->
+        <div class="slide">
+            <div class="slide-number">8 / 24</div>
+            <h1>bolt.new Workflow</h1>
+            <h2>From Idea to App in Minutes</h2>
+
+            <ol>
+                <li><strong>Visit bolt.new</strong> - Opens in your browser</li>
+                <li><strong>Describe your app:</strong></li>
+            </ol>
+
+            <div class="code-block">
+<span class="prompt">Prompt:</span> <span class="string">"Create a todo app with React that has:
+- Add/delete tasks
+- Mark tasks as complete
+- Filter by status
+- Dark mode toggle
+- LocalStorage persistence"</span>
+
+<span class="ai">bolt.new generates:</span>
+<span class="output">✓ React + Vite project</span>
+<span class="output">✓ All components</span>
+<span class="output">✓ Styling with Tailwind</span>
+<span class="output">✓ Working functionality</span>
+<span class="output">✓ Live preview</span>
+            </div>
+
+            <ol start="3">
+                <li><strong>Iterate:</strong> "Add a priority level to tasks"</li>
+                <li><strong>Deploy:</strong> One click to make it live</li>
+            </ol>
+        </div>
+
+        <!-- SLIDE 9: v0.dev by Vercel -->
+        <div class="slide">
+            <div class="slide-number">9 / 24</div>
+            <h1>v0.dev</h1>
+            <h2>AI-Powered UI Generation</h2>
+
+            <div class="tool-card">
+                <h3>What is v0?</h3>
+                <p>Vercel's AI tool that generates UI components from text descriptions or images.</p>
+            </div>
+
+            <div class="code-block">
+<span class="prompt">Prompt:</span> <span class="string">"A pricing table with 3 tiers: Basic, Pro, Enterprise.
+Include feature lists, prices, and call-to-action buttons."</span>
+
+<span class="ai">v0 generates:</span>
+<span class="output">• Responsive pricing component</span>
+<span class="output">• shadcn/ui components</span>
+<span class="output">• Tailwind CSS styling</span>
+<span class="output">• Copy-paste ready code</span>
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Pro Tip:</strong> Upload a screenshot of a design, and v0 will recreate it in code!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Comparing Platforms -->
+        <div class="slide">
+            <div class="slide-number">10 / 24</div>
+            <h1>Platform Comparison</h1>
+            <h2>Choosing the Right Tool</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Feature</th>
+                    <th>bolt.new</th>
+                    <th>v0.dev</th>
+                </tr>
+                <tr>
+                    <td>Focus</td>
+                    <td>Full applications</td>
+                    <td>UI components</td>
+                </tr>
+                <tr>
+                    <td>Output</td>
+                    <td>Complete projects</td>
+                    <td>Individual components</td>
+                </tr>
+                <tr>
+                    <td>Environment</td>
+                    <td>In-browser IDE</td>
+                    <td>Code snippets</td>
+                </tr>
+                <tr>
+                    <td>Best For</td>
+                    <td>Prototypes, MVPs</td>
+                    <td>Design implementation</td>
+                </tr>
+                <tr>
+                    <td>Learning Curve</td>
+                    <td>Very low</td>
+                    <td>Very low</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 11: Effective Prompting -->
+        <div class="slide">
+            <div class="slide-number">11 / 24</div>
+            <h1>Effective AI Prompting</h1>
+            <h2>Getting Better Results</h2>
+
+            <div class="code-block">
+<span class="comment">// BAD PROMPT - Too vague</span>
+<span class="string">"Make a website"</span>
+
+<span class="comment">// GOOD PROMPT - Specific and detailed</span>
+<span class="string">"Create a React landing page for a coffee shop with:
+- Hero section with background image and CTA button
+- Menu section displaying 6 items in a grid
+- Contact form with name, email, and message fields
+- Footer with social media links
+- Responsive design for mobile and desktop
+- Warm brown and cream color palette"</span>
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Key Elements:</strong> Technology, features, layout, styling, behavior</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Prompt Engineering Tips -->
+        <div class="slide">
+            <div class="slide-number">12 / 24</div>
+            <h1>Prompt Engineering Tips</h1>
+            <h2>Maximize AI Effectiveness</h2>
+
+            <ul>
+                <li><strong>Be Specific:</strong> Include exact requirements</li>
+                <li><strong>Provide Context:</strong> Mention technologies and constraints</li>
+                <li><strong>Break It Down:</strong> Complex tasks into smaller prompts</li>
+                <li><strong>Iterate:</strong> Refine with follow-up requests</li>
+                <li><strong>Examples Help:</strong> "Similar to Netflix's card layout"</li>
+            </ul>
+
+            <div class="code-block">
+<span class="comment">// Iterative prompting:</span>
+<span class="prompt">1.</span> <span class="string">"Create a user card component"</span>
+<span class="prompt">2.</span> <span class="string">"Add a hover effect with shadow"</span>
+<span class="prompt">3.</span> <span class="string">"Include a badge for online status"</span>
+<span class="prompt">4.</span> <span class="string">"Make it accessible with ARIA labels"</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Automated Workflows -->
+        <div class="slide">
+            <div class="slide-number">13 / 24</div>
+            <h1>Automated Code Generation</h1>
+            <h2>Streamlining Development Workflows</h2>
+
+            <p>AI tools can automate repetitive tasks:</p>
+
+            <div class="code-block">
+<span class="comment"># Generate boilerplate</span>
+<span class="prompt">&gt;</span> Create CRUD operations for a Product model
+
+<span class="comment"># Generate types from API</span>
+<span class="prompt">&gt;</span> Create TypeScript interfaces from this JSON response
+
+<span class="comment"># Generate documentation</span>
+<span class="prompt">&gt;</span> Add JSDoc comments to all functions in utils.js
+
+<span class="comment"># Generate tests</span>
+<span class="prompt">&gt;</span> Create Jest tests for the authentication module
+            </div>
+        </div>
+
+        <!-- SLIDE 14: AI-Assisted Debugging -->
+        <div class="slide">
+            <div class="slide-number">14 / 24</div>
+            <h1>AI-Assisted Debugging</h1>
+            <h2>Fixing Bugs Faster</h2>
+
+            <div class="code-block">
+<span class="comment">// Share your error with AI:</span>
+<span class="prompt">&gt;</span> I'm getting this error:
+<span class="output">TypeError: Cannot read property 'map' of undefined</span>
+
+<span class="comment">// AI response:</span>
+<span class="ai">This error occurs because you're trying to map over data
+that hasn't loaded yet. Add a loading check:</span>
+
+<span class="command">if</span> (!data) <span class="command">return</span> &lt;p&gt;Loading...&lt;/p&gt;;
+
+<span class="command">return</span> (
+    &lt;ul&gt;
+        {data.map(item => &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;)}
+    &lt;/ul&gt;
+);
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Code Review with AI -->
+        <div class="slide">
+            <div class="slide-number">15 / 24</div>
+            <h1>AI Code Review</h1>
+            <h2>Improving Code Quality</h2>
+
+            <div class="code-block">
+<span class="prompt">&gt;</span> Review this code for best practices:
+
+<span class="command">function</span> getData() {
+    <span class="command">var</span> data = [];
+    fetch(<span class="string">'/api/data'</span>).then(r => r.json()).then(d => data = d);
+    <span class="command">return</span> data;
+}
+
+<span class="ai">Issues found:</span>
+<span class="output">1. Use const/let instead of var</span>
+<span class="output">2. Async operation returns before completion</span>
+<span class="output">3. No error handling</span>
+<span class="output">4. Should use async/await for clarity</span>
+
+<span class="ai">Suggested fix:</span>
+<span class="command">async function</span> getData() {
+    <span class="command">try</span> {
+        <span class="command">const</span> response = <span class="command">await</span> fetch(<span class="string">'/api/data'</span>);
+        <span class="command">return await</span> response.json();
+    } <span class="command">catch</span> (error) {
+        console.error(<span class="string">'Fetch failed:'</span>, error);
+        <span class="command">throw</span> error;
+    }
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Best Practices -->
+        <div class="slide">
+            <div class="slide-number">16 / 24</div>
+            <h1>Best Practices</h1>
+            <h2>Using AI Tools Responsibly</h2>
+
+            <ul>
+                <li><strong>Understand the Code:</strong> Don't blindly copy-paste</li>
+                <li><strong>Verify Output:</strong> AI can make mistakes</li>
+                <li><strong>Security Check:</strong> Review for vulnerabilities</li>
+                <li><strong>Test Thoroughly:</strong> AI-generated code needs testing</li>
+                <li><strong>Learn from AI:</strong> Study the patterns it uses</li>
+                <li><strong>Combine Tools:</strong> Use multiple AI tools together</li>
+            </ul>
+
+            <div class="warning-box">
+                <p><strong>Warning:</strong> Never share sensitive data (API keys, passwords) with AI tools!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Limitations of AI Tools -->
+        <div class="slide">
+            <div class="slide-number">17 / 24</div>
+            <h1>AI Tool Limitations</h1>
+            <h2>What AI Can't Do (Yet)</h2>
+
+            <ul>
+                <li><strong>Complex Architecture:</strong> May not understand large system design</li>
+                <li><strong>Business Logic:</strong> Can't fully grasp domain-specific requirements</li>
+                <li><strong>Latest Updates:</strong> Knowledge cutoff means missing new features</li>
+                <li><strong>Perfect Code:</strong> Generated code may need optimization</li>
+                <li><strong>Security:</strong> May introduce vulnerabilities</li>
+                <li><strong>Creative Decisions:</strong> Can't replace human judgment</li>
+            </ul>
+
+            <div class="ai-box">
+                <p><strong>Remember:</strong> AI is a powerful assistant, but you are the developer making the final decisions.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Real-World Workflow -->
+        <div class="slide">
+            <div class="slide-number">18 / 24</div>
+            <h1>Real-World AI Workflow</h1>
+            <h2>Professional Development Process</h2>
+
+            <ol>
+                <li><strong>Plan:</strong> Define requirements and architecture</li>
+                <li><strong>Prototype:</strong> Use bolt.new for quick MVP</li>
+                <li><strong>Develop:</strong> Copilot for code completion</li>
+                <li><strong>Debug:</strong> Claude CLI for fixing issues</li>
+                <li><strong>Review:</strong> AI code review for improvements</li>
+                <li><strong>Document:</strong> Auto-generate documentation</li>
+                <li><strong>Test:</strong> AI-generated test cases</li>
+            </ol>
+
+            <div class="demo-box">
+                <p><strong>Key Insight:</strong> AI tools work best when integrated into a structured workflow!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Future of AI Development -->
+        <div class="slide">
+            <div class="slide-number">19 / 24</div>
+            <h1>The Future</h1>
+            <h2>Where AI Development is Heading</h2>
+
+            <ul>
+                <li><strong>More Context-Aware:</strong> AI that understands entire codebases</li>
+                <li><strong>Multi-Modal:</strong> Generate from sketches, voice, designs</li>
+                <li><strong>Autonomous Agents:</strong> AI that can execute multi-step tasks</li>
+                <li><strong>Better Testing:</strong> Automated test generation and running</li>
+                <li><strong>Personalization:</strong> AI that learns your coding style</li>
+            </ul>
+
+            <div class="tip-box">
+                <p><strong>Career Tip:</strong> Learning to effectively use AI tools is becoming an essential skill for developers!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Summary -->
+        <div class="slide">
+            <div class="slide-number">20 / 24</div>
+            <h1>Key Takeaways</h1>
+            <h2>What We Learned</h2>
+
+            <ul>
+                <li>AI tools dramatically speed up development</li>
+                <li>Multiple tool types for different use cases</li>
+                <li>Effective prompting is a skill to develop</li>
+                <li>Always verify and understand AI-generated code</li>
+                <li>Combine AI with your own knowledge</li>
+                <li>Stay updated - this field evolves rapidly</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Next Step:</strong> Try these tools yourself in today's practice!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Practice Assignment Introduction -->
+        <div class="slide">
+            <div class="slide-number">21 / 24</div>
+            <h1>Practice Assignment</h1>
+            <h2>Hands-On with AI Tools</h2>
+
+            <div class="practice-box">
+                <h3>Goal: Build a Portfolio Section Using AI</h3>
+                <ul>
+                    <li>Use bolt.new to generate a project showcase</li>
+                    <li>Create 3 project cards with AI assistance</li>
+                    <li>Add filtering functionality</li>
+                    <li>Implement responsive design</li>
+                    <li>Document your AI prompts</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: Practice Requirements -->
+        <div class="slide">
+            <div class="slide-number">22 / 24</div>
+            <h1>Practice Requirements</h1>
+            <h2>What to Create</h2>
+
+            <div class="code-block">
+<span class="comment">// Use this prompt as a starting point for bolt.new:</span>
+
+<span class="string">"Create a portfolio project showcase section with:
+- Grid of project cards (minimum 3)
+- Each card has: title, description, tech stack tags, GitHub link
+- Filter buttons to filter by technology
+- Smooth animations on hover
+- Mobile responsive design
+- Modern, professional styling"</span>
+
+<span class="comment">// Then iterate with:</span>
+<span class="string">"Add a search bar to filter projects by name"</span>
+<span class="string">"Make the cards flip on click to show more details"</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: Practice Steps -->
+        <div class="slide">
+            <div class="slide-number">23 / 24</div>
+            <h1>Step-by-Step Guide</h1>
+            <h2>Complete These Steps</h2>
+
+            <ol>
+                <li><strong>Go to bolt.new</strong> - Open in browser</li>
+                <li><strong>Enter initial prompt</strong> - Describe your project showcase</li>
+                <li><strong>Review generated code</strong> - Understand what was created</li>
+                <li><strong>Iterate 2-3 times</strong> - Add features with follow-up prompts</li>
+                <li><strong>Customize</strong> - Modify colors, content to your preference</li>
+                <li><strong>Document</strong> - Save all prompts you used</li>
+                <li><strong>Export</strong> - Download or screenshot your work</li>
+            </ol>
+
+            <div class="tip-box">
+                <p><strong>Deliverable:</strong> Screenshot of your project + list of prompts used</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: Practice Tips -->
+        <div class="slide">
+            <div class="slide-number">24 / 24</div>
+            <h1>Tips for Success</h1>
+            <h2>Get the Most from This Practice</h2>
+
+            <ul>
+                <li><strong>Experiment freely</strong> - Try different prompts</li>
+                <li><strong>Read the generated code</strong> - Learn from AI patterns</li>
+                <li><strong>Compare tools</strong> - Try same prompt in different tools</li>
+                <li><strong>Note what works</strong> - Document effective prompt strategies</li>
+                <li><strong>Ask questions</strong> - Why did AI make certain choices?</li>
+            </ul>
+
+            <div class="ai-box">
+                <p><strong>Reflection Question:</strong> How did AI assistance change your development speed? What would you still prefer to code manually?</p>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Thursday:</strong> Happy Thanksgiving! No class. Next week: Performance & Deployment</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 24</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script src="slides.js"></script>
+</body>
+</html>

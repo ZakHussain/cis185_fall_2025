@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - Performance & Deployment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+
+        <!-- SLIDE 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 24</div>
+            <h1>Performance & Deployment</h1>
+            <h2>Optimization Techniques, Hosting, and Portfolio Development</h2>
+
+            <p>In this lecture, we'll explore:</p>
+            <ul>
+                <li>Web performance fundamentals and metrics</li>
+                <li>Optimization techniques for faster sites</li>
+                <li>Deployment platforms and hosting options</li>
+                <li>Building your developer portfolio</li>
+                <li>Making your work production-ready</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 2: Why Performance Matters -->
+        <div class="slide">
+            <div class="slide-number">2 / 24</div>
+            <h1>Why Performance Matters</h1>
+            <h2>The Business Impact of Speed</h2>
+
+            <ul>
+                <li><strong>User Experience:</strong> 53% of users leave if page takes > 3 seconds</li>
+                <li><strong>SEO:</strong> Google uses page speed as ranking factor</li>
+                <li><strong>Conversions:</strong> 1 second delay = 7% reduction in conversions</li>
+                <li><strong>Bounce Rate:</strong> Slow sites have higher bounce rates</li>
+                <li><strong>Mobile Users:</strong> Often on slower connections</li>
+            </ul>
+
+            <div class="metric-card">
+                <h3>Amazon Study</h3>
+                <div class="value">100ms delay = 1% sales loss</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Core Web Vitals -->
+        <div class="slide">
+            <div class="slide-number">3 / 24</div>
+            <h1>Core Web Vitals</h1>
+            <h2>Google's Key Performance Metrics</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>What It Measures</th>
+                    <th>Good Score</th>
+                </tr>
+                <tr>
+                    <td><strong>LCP</strong><br>Largest Contentful Paint</td>
+                    <td>Loading performance</td>
+                    <td>&lt; 2.5 seconds</td>
+                </tr>
+                <tr>
+                    <td><strong>FID</strong><br>First Input Delay</td>
+                    <td>Interactivity</td>
+                    <td>&lt; 100 ms</td>
+                </tr>
+                <tr>
+                    <td><strong>CLS</strong><br>Cumulative Layout Shift</td>
+                    <td>Visual stability</td>
+                    <td>&lt; 0.1</td>
+                </tr>
+            </table>
+
+            <div class="tip-box">
+                <p><strong>Check Your Scores:</strong> Use Google PageSpeed Insights or Lighthouse in Chrome DevTools</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Measuring Performance -->
+        <div class="slide">
+            <div class="slide-number">4 / 24</div>
+            <h1>Measuring Performance</h1>
+            <h2>Tools for Analysis</h2>
+
+            <div class="code-block">
+<span class="comment"># Built-in Browser Tools</span>
+<span class="output">Chrome DevTools → Network tab</span>
+<span class="output">Chrome DevTools → Performance tab</span>
+<span class="output">Chrome DevTools → Lighthouse</span>
+
+<span class="comment"># Online Tools</span>
+<span class="url">PageSpeed Insights: pagespeed.web.dev</span>
+<span class="url">WebPageTest: webpagetest.org</span>
+<span class="url">GTmetrix: gtmetrix.com</span>
+
+<span class="comment"># Lighthouse in Terminal</span>
+<span class="command">npx</span> lighthouse https://yoursite.com --view
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Try it:</strong> Open DevTools (F12) → Lighthouse → Generate Report</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Image Optimization -->
+        <div class="slide">
+            <div class="slide-number">5 / 24</div>
+            <h1>Image Optimization</h1>
+            <h2>The Biggest Performance Win</h2>
+
+            <p>Images often account for 50-90% of page weight!</p>
+
+            <div class="code-block">
+<span class="comment">&lt;!-- Use modern formats --&gt;</span>
+<span class="command">&lt;picture&gt;</span>
+    <span class="command">&lt;source</span> <span class="flag">srcset</span>=<span class="string">"image.webp"</span> <span class="flag">type</span>=<span class="string">"image/webp"</span><span class="command">&gt;</span>
+    <span class="command">&lt;source</span> <span class="flag">srcset</span>=<span class="string">"image.jpg"</span> <span class="flag">type</span>=<span class="string">"image/jpeg"</span><span class="command">&gt;</span>
+    <span class="command">&lt;img</span> <span class="flag">src</span>=<span class="string">"image.jpg"</span> <span class="flag">alt</span>=<span class="string">"Description"</span><span class="command">&gt;</span>
+<span class="command">&lt;/picture&gt;</span>
+
+<span class="comment">&lt;!-- Lazy loading --&gt;</span>
+<span class="command">&lt;img</span> <span class="flag">src</span>=<span class="string">"photo.jpg"</span> <span class="flag">loading</span>=<span class="string">"lazy"</span> <span class="flag">alt</span>=<span class="string">"Photo"</span><span class="command">&gt;</span>
+
+<span class="comment">&lt;!-- Responsive images --&gt;</span>
+<span class="command">&lt;img</span> <span class="flag">srcset</span>=<span class="string">"small.jpg 300w,
+              medium.jpg 600w,
+              large.jpg 1200w"</span>
+     <span class="flag">sizes</span>=<span class="string">"(max-width: 600px) 300px, 600px"</span>
+     <span class="flag">src</span>=<span class="string">"medium.jpg"</span> <span class="flag">alt</span>=<span class="string">"Responsive"</span><span class="command">&gt;</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: CSS Optimization -->
+        <div class="slide">
+            <div class="slide-number">6 / 24</div>
+            <h1>CSS Optimization</h1>
+            <h2>Faster Styling</h2>
+
+            <div class="code-block">
+<span class="comment">/* 1. Critical CSS - Inline above-the-fold styles */</span>
+<span class="command">&lt;style&gt;</span>
+    <span class="comment">/* Only styles needed for initial view */</span>
+    body { margin: 0; font-family: sans-serif; }
+    .header { background: #333; color: white; }
+<span class="command">&lt;/style&gt;</span>
+
+<span class="comment">/* 2. Defer non-critical CSS */</span>
+<span class="command">&lt;link</span> <span class="flag">rel</span>=<span class="string">"preload"</span> <span class="flag">href</span>=<span class="string">"styles.css"</span> <span class="flag">as</span>=<span class="string">"style"</span>
+      <span class="flag">onload</span>=<span class="string">"this.rel='stylesheet'"</span><span class="command">&gt;</span>
+
+<span class="comment">/* 3. Minify CSS */</span>
+<span class="comment">Remove whitespace, comments, shorten names</span>
+<span class="metric">style.css: 50KB → style.min.css: 35KB</span>
+
+<span class="comment">/* 4. Remove unused CSS */</span>
+<span class="comment">Tools: PurgeCSS, UnCSS</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: JavaScript Optimization -->
+        <div class="slide">
+            <div class="slide-number">7 / 24</div>
+            <h1>JavaScript Optimization</h1>
+            <h2>Making Scripts Lean and Fast</h2>
+
+            <div class="code-block">
+<span class="comment">&lt;!-- 1. Defer non-critical scripts --&gt;</span>
+<span class="command">&lt;script</span> <span class="flag">src</span>=<span class="string">"app.js"</span> <span class="flag">defer</span><span class="command">&gt;&lt;/script&gt;</span>
+
+<span class="comment">&lt;!-- 2. Async for independent scripts --&gt;</span>
+<span class="command">&lt;script</span> <span class="flag">src</span>=<span class="string">"analytics.js"</span> <span class="flag">async</span><span class="command">&gt;&lt;/script&gt;</span>
+
+<span class="comment">// 3. Code splitting (React/Webpack)</span>
+<span class="command">const</span> LazyComponent = React.lazy(() =>
+    <span class="command">import</span>(<span class="string">'./HeavyComponent'</span>)
+);
+
+<span class="comment">// 4. Tree shaking - import only what you need</span>
+<span class="command">import</span> { debounce } <span class="command">from</span> <span class="string">'lodash'</span>;  <span class="output">// Bad: imports all</span>
+<span class="command">import</span> debounce <span class="command">from</span> <span class="string">'lodash/debounce'</span>;  <span class="output">// Good: imports one</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Caching Strategies -->
+        <div class="slide">
+            <div class="slide-number">8 / 24</div>
+            <h1>Caching Strategies</h1>
+            <h2>Don't Re-download What You Have</h2>
+
+            <div class="code-block">
+<span class="comment"># Browser Caching (set in server config)</span>
+<span class="comment"># Cache-Control header examples:</span>
+
+<span class="comment"># Static assets (cache for 1 year)</span>
+<span class="string">Cache-Control: public, max-age=31536000, immutable</span>
+
+<span class="comment"># HTML files (always revalidate)</span>
+<span class="string">Cache-Control: no-cache</span>
+
+<span class="comment"># Service Workers (offline caching)</span>
+<span class="command">self</span>.addEventListener(<span class="string">'fetch'</span>, event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => response || fetch(event.request))
+    );
+});
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Cache Busting:</strong> Use versioned filenames (app.v2.js) or hashes (app.abc123.js)</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Build Tools -->
+        <div class="slide">
+            <div class="slide-number">9 / 24</div>
+            <h1>Build Tools</h1>
+            <h2>Automating Optimization</h2>
+
+            <div class="code-block">
+<span class="comment"># Vite - Fast build tool</span>
+<span class="command">npm</span> run build
+
+<span class="output">Output:</span>
+<span class="metric">dist/index.html          0.45 kB</span>
+<span class="metric">dist/assets/index.css    1.42 kB (gzip)</span>
+<span class="metric">dist/assets/index.js    143.67 kB (gzip)</span>
+
+<span class="comment"># What build tools do:</span>
+<span class="output">✓ Minification (remove whitespace)</span>
+<span class="output">✓ Bundling (combine files)</span>
+<span class="output">✓ Tree shaking (remove unused code)</span>
+<span class="output">✓ Code splitting (lazy loading)</span>
+<span class="output">✓ Asset optimization</span>
+<span class="output">✓ Source maps (for debugging)</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Deployment Overview -->
+        <div class="slide">
+            <div class="slide-number">10 / 24</div>
+            <h1>Deployment Options</h1>
+            <h2>Where to Host Your Projects</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Platform</th>
+                    <th>Best For</th>
+                    <th>Free Tier</th>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Pages</strong></td>
+                    <td>Static sites, portfolios</td>
+                    <td>Unlimited</td>
+                </tr>
+                <tr>
+                    <td><strong>Netlify</strong></td>
+                    <td>JAMstack, React apps</td>
+                    <td>100GB/month</td>
+                </tr>
+                <tr>
+                    <td><strong>Vercel</strong></td>
+                    <td>Next.js, React, frontend</td>
+                    <td>100GB/month</td>
+                </tr>
+                <tr>
+                    <td><strong>Render</strong></td>
+                    <td>Full-stack apps</td>
+                    <td>Limited hours</td>
+                </tr>
+                <tr>
+                    <td><strong>Railway</strong></td>
+                    <td>Full-stack + databases</td>
+                    <td>$5 credit/month</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 11: GitHub Pages -->
+        <div class="slide">
+            <div class="slide-number">11 / 24</div>
+            <h1>GitHub Pages</h1>
+            <h2>Free Hosting for Static Sites</h2>
+
+            <div class="code-block">
+<span class="comment"># 1. Create a repository on GitHub</span>
+
+<span class="comment"># 2. Push your code</span>
+<span class="command">git</span> add .
+<span class="command">git</span> commit -m <span class="string">"Initial commit"</span>
+<span class="command">git</span> push origin main
+
+<span class="comment"># 3. Enable GitHub Pages</span>
+<span class="output">Repository → Settings → Pages</span>
+<span class="output">Source: Deploy from branch</span>
+<span class="output">Branch: main / root</span>
+
+<span class="comment"># 4. Your site is live!</span>
+<span class="url">https://username.github.io/repository-name</span>
+
+<span class="comment"># For React apps, use gh-pages package:</span>
+<span class="command">npm</span> install gh-pages
+<span class="command">npm</span> run deploy
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Netlify Deployment -->
+        <div class="slide">
+            <div class="slide-number">12 / 24</div>
+            <h1>Netlify</h1>
+            <h2>Continuous Deployment Made Easy</h2>
+
+            <div class="code-block">
+<span class="comment"># Option 1: Drag & Drop</span>
+<span class="output">1. Build your project locally (npm run build)</span>
+<span class="output">2. Go to netlify.com</span>
+<span class="output">3. Drag your /dist or /build folder</span>
+<span class="output">4. Done! Get instant URL</span>
+
+<span class="comment"># Option 2: Git Integration (Recommended)</span>
+<span class="output">1. Connect your GitHub repo</span>
+<span class="output">2. Configure build settings:</span>
+   <span class="string">Build command: npm run build</span>
+   <span class="string">Publish directory: dist</span>
+<span class="output">3. Every push auto-deploys!</span>
+
+<span class="comment"># Features:</span>
+<span class="output">✓ Automatic HTTPS</span>
+<span class="output">✓ Custom domains</span>
+<span class="output">✓ Preview deployments for PRs</span>
+<span class="output">✓ Form handling</span>
+<span class="output">✓ Serverless functions</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Vercel Deployment -->
+        <div class="slide">
+            <div class="slide-number">13 / 24</div>
+            <h1>Vercel</h1>
+            <h2>The Platform for Frontend Developers</h2>
+
+            <div class="code-block">
+<span class="comment"># Using Vercel CLI</span>
+<span class="command">npm</span> i -g vercel
+
+<span class="comment"># Deploy with one command</span>
+<span class="command">vercel</span>
+
+<span class="output">? Set up and deploy? Yes</span>
+<span class="output">? Which scope? your-username</span>
+<span class="output">? Link to existing project? No</span>
+<span class="output">? What's your project's name? my-app</span>
+<span class="output">? In which directory is your code located? ./</span>
+
+<span class="output">🔗 Linked to your-username/my-app</span>
+<span class="output">🔍 Inspect: https://vercel.com/...</span>
+<span class="output">✅ Production: https://my-app.vercel.app</span>
+
+<span class="comment"># Auto-detects:</span>
+<span class="output">React, Vue, Next.js, Vite, etc.</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Environment Variables -->
+        <div class="slide">
+            <div class="slide-number">14 / 24</div>
+            <h1>Environment Variables</h1>
+            <h2>Managing Configuration Securely</h2>
+
+            <div class="code-block">
+<span class="comment"># .env file (local development)</span>
+<span class="string">VITE_API_URL=https://api.example.com</span>
+<span class="string">VITE_API_KEY=your-secret-key</span>
+
+<span class="comment"># Access in React/Vite</span>
+<span class="command">const</span> apiUrl = <span class="command">import</span>.meta.env.VITE_API_URL;
+
+<span class="comment"># IMPORTANT: Add to .gitignore</span>
+<span class="string">.env</span>
+<span class="string">.env.local</span>
+<span class="string">.env.*.local</span>
+
+<span class="comment"># Set in deployment platform:</span>
+<span class="output">Netlify: Site settings → Environment variables</span>
+<span class="output">Vercel: Project settings → Environment Variables</span>
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Never commit secrets!</strong> API keys, passwords, and tokens should always be in environment variables, never in code.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Custom Domains -->
+        <div class="slide">
+            <div class="slide-number">15 / 24</div>
+            <h1>Custom Domains</h1>
+            <h2>Professional URLs for Your Projects</h2>
+
+            <div class="code-block">
+<span class="comment"># Default URLs:</span>
+<span class="url">username.github.io/project</span>
+<span class="url">project-name.netlify.app</span>
+<span class="url">project-name.vercel.app</span>
+
+<span class="comment"># With custom domain:</span>
+<span class="url">www.yourportfolio.com</span>
+<span class="url">projects.yourname.dev</span>
+
+<span class="comment"># Setup steps:</span>
+<span class="output">1. Buy domain (~$10-15/year)</span>
+<span class="output">   Namecheap, Google Domains, Cloudflare</span>
+<span class="output">2. Add domain in hosting platform</span>
+<span class="output">3. Update DNS records:</span>
+   <span class="string">A Record → Platform IP</span>
+   <span class="string">CNAME → your-site.platform.app</span>
+<span class="output">4. Wait for propagation (up to 48 hours)</span>
+<span class="output">5. Free SSL certificate auto-configured</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Portfolio Importance -->
+        <div class="slide">
+            <div class="slide-number">16 / 24</div>
+            <h1>Your Developer Portfolio</h1>
+            <h2>Why It's Essential</h2>
+
+            <ul>
+                <li><strong>Show, Don't Tell:</strong> Prove your skills with real projects</li>
+                <li><strong>First Impression:</strong> Often the first thing employers see</li>
+                <li><strong>Standing Out:</strong> Differentiate from other candidates</li>
+                <li><strong>Learning Journey:</strong> Document your growth as a developer</li>
+                <li><strong>Personal Branding:</strong> Control your professional narrative</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Fact:</strong> 56% of hiring managers consider portfolios more important than formal education!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Portfolio Structure -->
+        <div class="slide">
+            <div class="slide-number">17 / 24</div>
+            <h1>Portfolio Structure</h1>
+            <h2>Essential Sections</h2>
+
+            <ol>
+                <li><strong>Hero Section:</strong> Name, title, brief intro, CTA</li>
+                <li><strong>About:</strong> Your story, skills, passion</li>
+                <li><strong>Projects:</strong> 3-6 best works with details</li>
+                <li><strong>Skills:</strong> Technologies you know</li>
+                <li><strong>Contact:</strong> How to reach you</li>
+                <li><strong>Resume:</strong> Downloadable PDF link</li>
+            </ol>
+
+            <div class="tip-box">
+                <p><strong>Quality over Quantity:</strong> 3-4 polished projects beat 10 incomplete ones</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Project Showcases -->
+        <div class="slide">
+            <div class="slide-number">18 / 24</div>
+            <h1>Showcasing Projects</h1>
+            <h2>What to Include for Each Project</h2>
+
+            <div class="code-block">
+<span class="comment">// For each project, include:</span>
+
+<span class="output">1. Project Title & Screenshot/Demo</span>
+<span class="output">2. Brief Description (2-3 sentences)</span>
+<span class="output">3. Problem it solves</span>
+<span class="output">4. Technologies used (with icons)</span>
+<span class="output">5. Key features/challenges overcome</span>
+<span class="output">6. Links:</span>
+   <span class="url">- Live Demo</span>
+   <span class="url">- GitHub Repository</span>
+   <span class="url">- Case Study (optional)</span>
+
+<span class="comment">// Example description:</span>
+<span class="string">"A real-time task management app built with React and
+Firebase. Features include drag-and-drop reordering,
+collaborative editing, and offline support. This project
+taught me state management patterns and real-time databases."</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Portfolio Best Practices -->
+        <div class="slide">
+            <div class="slide-number">19 / 24</div>
+            <h1>Portfolio Best Practices</h1>
+            <h2>Making It Professional</h2>
+
+            <ul>
+                <li><strong>Mobile Responsive:</strong> Test on all devices</li>
+                <li><strong>Fast Loading:</strong> Under 3 seconds</li>
+                <li><strong>Clean Design:</strong> Professional, not flashy</li>
+                <li><strong>Working Links:</strong> Test all project links</li>
+                <li><strong>Spell Check:</strong> No typos or grammar errors</li>
+                <li><strong>Updated:</strong> Remove outdated projects</li>
+                <li><strong>Accessible:</strong> Good contrast, alt text</li>
+                <li><strong>Personal Touch:</strong> Show your personality</li>
+            </ul>
+
+            <div class="performance-box">
+                <p><strong>Performance Check:</strong> Run Lighthouse on your portfolio. Aim for 90+ scores!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Summary -->
+        <div class="slide">
+            <div class="slide-number">20 / 24</div>
+            <h1>Key Takeaways</h1>
+            <h2>What We Learned</h2>
+
+            <ul>
+                <li>Performance directly impacts user experience and business</li>
+                <li>Core Web Vitals are key metrics to track</li>
+                <li>Image optimization provides biggest performance gains</li>
+                <li>Modern build tools automate optimization</li>
+                <li>Multiple free hosting options available</li>
+                <li>Portfolios are essential for job hunting</li>
+                <li>Quality projects > quantity of projects</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Your Mission:</strong> Create and deploy a professional portfolio!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Practice Assignment Introduction -->
+        <div class="slide">
+            <div class="slide-number">21 / 24</div>
+            <h1>Practice Assignment</h1>
+            <h2>Deploy Your Portfolio</h2>
+
+            <div class="practice-box">
+                <h3>Goal: Create and Deploy a Portfolio Site</h3>
+                <ul>
+                    <li>Build a simple portfolio page</li>
+                    <li>Include at least 3 projects from this semester</li>
+                    <li>Optimize images and performance</li>
+                    <li>Deploy to GitHub Pages or Netlify</li>
+                    <li>Run Lighthouse audit and improve scores</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: Practice Requirements -->
+        <div class="slide">
+            <div class="slide-number">22 / 24</div>
+            <h1>Practice Requirements</h1>
+            <h2>What to Include</h2>
+
+            <div class="code-block">
+<span class="comment">// Your portfolio must have:</span>
+
+<span class="output">1. Hero section with:</span>
+   <span class="string">- Your name</span>
+   <span class="string">- Professional title/goal</span>
+   <span class="string">- Brief tagline</span>
+
+<span class="output">2. Projects section with:</span>
+   <span class="string">- At least 3 projects</span>
+   <span class="string">- Screenshots or demos</span>
+   <span class="string">- Technology tags</span>
+   <span class="string">- Links to live sites & code</span>
+
+<span class="output">3. Technical requirements:</span>
+   <span class="string">- Responsive design</span>
+   <span class="string">- Optimized images (WebP or compressed)</span>
+   <span class="string">- Deployed and accessible online</span>
+   <span class="string">- Lighthouse performance score > 80</span>
+
+<span class="output">4. Deliverable:</span>
+   <span class="string">- Live URL of your portfolio</span>
+   <span class="string">- Screenshot of Lighthouse scores</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: Practice Steps -->
+        <div class="slide">
+            <div class="slide-number">23 / 24</div>
+            <h1>Step-by-Step Guide</h1>
+            <h2>Building Your Portfolio</h2>
+
+            <ol>
+                <li><strong>Plan:</strong> Sketch out sections on paper</li>
+                <li><strong>Create:</strong> Build HTML/CSS (or use React)</li>
+                <li><strong>Content:</strong> Add your info and projects</li>
+                <li><strong>Images:</strong> Optimize all images</li>
+                <li><strong>Test:</strong> Check responsiveness</li>
+                <li><strong>Deploy:</strong> Push to GitHub Pages or Netlify</li>
+                <li><strong>Audit:</strong> Run Lighthouse, fix issues</li>
+                <li><strong>Share:</strong> Submit your live URL</li>
+            </ol>
+
+            <div class="tip-box">
+                <p><strong>Time Estimate:</strong> 2-3 hours for a basic version. You can always improve it later!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: Course Wrap-Up -->
+        <div class="slide">
+            <div class="slide-number">24 / 24</div>
+            <h1>Congratulations!</h1>
+            <h2>You've Completed CIS 185</h2>
+
+            <p>This semester you learned:</p>
+            <ul>
+                <li>HTML & CSS fundamentals</li>
+                <li>JavaScript and DOM manipulation</li>
+                <li>React and modern frameworks</li>
+                <li>AI-assisted development</li>
+                <li>Performance optimization</li>
+                <li>Deployment and hosting</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>What's Next?</strong> Keep building! Your portfolio is just the beginning. Every project makes you a better developer.</p>
+            </div>
+
+            <div class="practice-box">
+                <h3>Final Reminder</h3>
+                <ul>
+                    <li>Complete and deploy your portfolio</li>
+                    <li>Keep learning and building projects</li>
+                    <li>Connect with me on LinkedIn</li>
+                    <li>Best of luck in your web development journey!</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 24</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script src="slides.js"></script>
+</body>
+</html>

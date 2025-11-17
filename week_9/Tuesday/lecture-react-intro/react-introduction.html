@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 185 - React Introduction</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="presentation-container">
+
+        <!-- SLIDE 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-number">1 / 24</div>
+            <h1>Introduction to React</h1>
+            <h2>Components, JSX, and Modern JavaScript Frameworks</h2>
+
+            <p>In this lecture, we'll explore:</p>
+            <ul>
+                <li>What is React and why use it?</li>
+                <li>Modern JavaScript frameworks landscape</li>
+                <li>Components - the building blocks of React</li>
+                <li>JSX syntax and expressions</li>
+                <li>Setting up a React project</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 2: What is React? -->
+        <div class="slide">
+            <div class="slide-number">2 / 24</div>
+            <h1>What is React?</h1>
+            <h2>A JavaScript Library for Building User Interfaces</h2>
+
+            <p>React is an open-source JavaScript library created by Facebook (Meta) in 2013.</p>
+
+            <ul>
+                <li><strong>Component-based:</strong> Build encapsulated pieces that manage their own state</li>
+                <li><strong>Declarative:</strong> Describe what UI should look like, React handles the DOM</li>
+                <li><strong>Learn once, write anywhere:</strong> React Native for mobile, React for web</li>
+            </ul>
+
+            <div class="demo-box">
+                <p><strong>Fun Fact:</strong> React powers Facebook, Instagram, Netflix, Airbnb, and many more major applications.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Why React? -->
+        <div class="slide">
+            <div class="slide-number">3 / 24</div>
+            <h1>Why Choose React?</h1>
+            <h2>Benefits of Using React</h2>
+
+            <ul>
+                <li><strong>Virtual DOM:</strong> Efficient updates - only changes what needs to change</li>
+                <li><strong>Reusable Components:</strong> Write once, use everywhere</li>
+                <li><strong>Strong Ecosystem:</strong> Huge community, tons of libraries and tools</li>
+                <li><strong>Job Market:</strong> Most in-demand frontend framework</li>
+                <li><strong>Easy to Learn:</strong> If you know JavaScript, you're halfway there</li>
+            </ul>
+
+            <div class="tip-box">
+                <p><strong>Tip:</strong> React's popularity means extensive documentation, tutorials, and community support.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Framework Comparison -->
+        <div class="slide">
+            <div class="slide-number">4 / 24</div>
+            <h1>Modern JS Framework Landscape</h1>
+            <h2>React vs Angular vs Vue</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Feature</th>
+                    <th>React</th>
+                    <th>Angular</th>
+                    <th>Vue</th>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>Library</td>
+                    <td>Full Framework</td>
+                    <td>Framework</td>
+                </tr>
+                <tr>
+                    <td>Learning Curve</td>
+                    <td>Moderate</td>
+                    <td>Steep</td>
+                    <td>Gentle</td>
+                </tr>
+                <tr>
+                    <td>Size</td>
+                    <td>~42KB</td>
+                    <td>~500KB</td>
+                    <td>~80KB</td>
+                </tr>
+                <tr>
+                    <td>Created By</td>
+                    <td>Facebook</td>
+                    <td>Google</td>
+                    <td>Evan You</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 5: Virtual DOM Explained -->
+        <div class="slide">
+            <div class="slide-number">5 / 24</div>
+            <h1>The Virtual DOM</h1>
+            <h2>React's Secret Sauce</h2>
+
+            <p>Traditional DOM manipulation is slow. React uses a <span class="highlight">Virtual DOM</span> to optimize updates:</p>
+
+            <ol>
+                <li>React keeps a lightweight copy of the DOM in memory</li>
+                <li>When state changes, React creates a new Virtual DOM</li>
+                <li>React compares old vs new (called "diffing")</li>
+                <li>Only the differences are applied to the real DOM</li>
+            </ol>
+
+            <div class="demo-box">
+                <p><strong>Result:</strong> Faster updates and better performance!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: What is a Component? -->
+        <div class="slide">
+            <div class="slide-number">6 / 24</div>
+            <h1>Components</h1>
+            <h2>The Building Blocks of React</h2>
+
+            <p>Components are independent, reusable pieces of UI. Think of them like LEGO blocks:</p>
+
+            <div class="code-block">
+<span class="comment">// A simple component</span>
+<span class="keyword">function</span> <span class="component">Welcome</span>() {
+    <span class="keyword">return</span> <span class="tag">&lt;h1&gt;</span>Hello, React!<span class="tag">&lt;/h1&gt;</span>;
+}
+
+<span class="comment">// Using the component</span>
+<span class="tag">&lt;</span><span class="component">Welcome</span> <span class="tag">/&gt;</span>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Key Concept:</strong> Components can be nested, reused, and composed together to build complex UIs.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Types of Components -->
+        <div class="slide">
+            <div class="slide-number">7 / 24</div>
+            <h1>Types of Components</h1>
+            <h2>Function Components vs Class Components</h2>
+
+            <div class="code-block">
+<span class="comment">// Function Component (Modern - Preferred)</span>
+<span class="keyword">function</span> <span class="component">Greeting</span>() {
+    <span class="keyword">return</span> <span class="tag">&lt;p&gt;</span>Hello from function component!<span class="tag">&lt;/p&gt;</span>;
+}
+
+<span class="comment">// Class Component (Legacy)</span>
+<span class="keyword">class</span> <span class="component">Greeting</span> <span class="keyword">extends</span> React.Component {
+    <span class="function">render</span>() {
+        <span class="keyword">return</span> <span class="tag">&lt;p&gt;</span>Hello from class component!<span class="tag">&lt;/p&gt;</span>;
+    }
+}
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Modern React:</strong> Function components with Hooks are the standard. We'll focus on these.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: JSX Introduction -->
+        <div class="slide">
+            <div class="slide-number">8 / 24</div>
+            <h1>JSX - JavaScript XML</h1>
+            <h2>Writing HTML in JavaScript</h2>
+
+            <p>JSX is a syntax extension that looks like HTML but compiles to JavaScript:</p>
+
+            <div class="code-block">
+<span class="comment">// This JSX:</span>
+<span class="keyword">const</span> element = <span class="tag">&lt;h1&gt;</span>Hello, world!<span class="tag">&lt;/h1&gt;</span>;
+
+<span class="comment">// Compiles to this JavaScript:</span>
+<span class="keyword">const</span> element = React.<span class="function">createElement</span>(
+    <span class="string">'h1'</span>,
+    <span class="keyword">null</span>,
+    <span class="string">'Hello, world!'</span>
+);
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Why JSX?</strong> It makes React code more readable and easier to write.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: JSX Rules -->
+        <div class="slide">
+            <div class="slide-number">9 / 24</div>
+            <h1>JSX Rules</h1>
+            <h2>Important Syntax Differences</h2>
+
+            <div class="code-block">
+<span class="comment">// 1. Must return a single parent element</span>
+<span class="keyword">return</span> (
+    <span class="tag">&lt;div&gt;</span>
+        <span class="tag">&lt;h1&gt;</span>Title<span class="tag">&lt;/h1&gt;</span>
+        <span class="tag">&lt;p&gt;</span>Content<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+);
+
+<span class="comment">// 2. Use className instead of class</span>
+<span class="tag">&lt;div</span> <span class="attribute">className</span>=<span class="string">"container"</span><span class="tag">&gt;</span>
+
+<span class="comment">// 3. Use camelCase for attributes</span>
+<span class="tag">&lt;button</span> <span class="attribute">onClick</span>=<span class="string">{handleClick}</span><span class="tag">&gt;</span>
+
+<span class="comment">// 4. Self-closing tags must end with /&gt;</span>
+<span class="tag">&lt;img</span> <span class="attribute">src</span>=<span class="string">"pic.jpg"</span> <span class="tag">/&gt;</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: JSX Expressions -->
+        <div class="slide">
+            <div class="slide-number">10 / 24</div>
+            <h1>JSX Expressions</h1>
+            <h2>Embedding JavaScript in JSX</h2>
+
+            <p>Use curly braces <span class="highlight">{}</span> to embed JavaScript expressions:</p>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">UserGreeting</span>() {
+    <span class="keyword">const</span> name = <span class="string">"Alice"</span>;
+    <span class="keyword">const</span> age = <span class="value">25</span>;
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;h1&gt;</span>Hello, {name}!<span class="tag">&lt;/h1&gt;</span>
+            <span class="tag">&lt;p&gt;</span>You are {age} years old.<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Next year you'll be {age + <span class="value">1</span>}.<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Current time: {<span class="keyword">new</span> Date().<span class="function">toLocaleTimeString</span>()}<span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Conditional Rendering -->
+        <div class="slide">
+            <div class="slide-number">11 / 24</div>
+            <h1>Conditional Rendering</h1>
+            <h2>Displaying Content Based on Conditions</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">LoginStatus</span>() {
+    <span class="keyword">const</span> isLoggedIn = <span class="keyword">true</span>;
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="comment">{/* Method 1: Ternary operator */}</span>
+            {isLoggedIn ? (
+                <span class="tag">&lt;p&gt;</span>Welcome back!<span class="tag">&lt;/p&gt;</span>
+            ) : (
+                <span class="tag">&lt;p&gt;</span>Please log in.<span class="tag">&lt;/p&gt;</span>
+            )}
+
+            <span class="comment">{/* Method 2: Logical AND */}</span>
+            {isLoggedIn && <span class="tag">&lt;button&gt;</span>Logout<span class="tag">&lt;/button&gt;</span>}
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Rendering Lists -->
+        <div class="slide">
+            <div class="slide-number">12 / 24</div>
+            <h1>Rendering Lists</h1>
+            <h2>Using map() to Display Arrays</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">ShoppingList</span>() {
+    <span class="keyword">const</span> items = [<span class="string">"Apples"</span>, <span class="string">"Bananas"</span>, <span class="string">"Oranges"</span>];
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;ul&gt;</span>
+            {items.<span class="function">map</span>((item, index) => (
+                <span class="tag">&lt;li</span> <span class="attribute">key</span>={index}<span class="tag">&gt;</span>{item}<span class="tag">&lt;/li&gt;</span>
+            ))}
+        <span class="tag">&lt;/ul&gt;</span>
+    );
+}
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Important:</strong> Always provide a unique <code>key</code> prop when rendering lists. It helps React identify which items changed.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Props Introduction -->
+        <div class="slide">
+            <div class="slide-number">13 / 24</div>
+            <h1>Props (Properties)</h1>
+            <h2>Passing Data to Components</h2>
+
+            <p>Props allow you to pass data from parent to child components:</p>
+
+            <div class="code-block">
+<span class="comment">// Parent component passes props</span>
+<span class="keyword">function</span> <span class="component">App</span>() {
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;</span><span class="component">Greeting</span> <span class="attribute">name</span>=<span class="string">"Alice"</span> <span class="attribute">age</span>={<span class="value">25</span>} <span class="tag">/&gt;</span>
+            <span class="tag">&lt;</span><span class="component">Greeting</span> <span class="attribute">name</span>=<span class="string">"Bob"</span> <span class="attribute">age</span>={<span class="value">30</span>} <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+
+<span class="comment">// Child component receives props</span>
+<span class="keyword">function</span> <span class="component">Greeting</span>(props) {
+    <span class="keyword">return</span> <span class="tag">&lt;h1&gt;</span>Hello, {props.name}! Age: {props.age}<span class="tag">&lt;/h1&gt;</span>;
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Destructuring Props -->
+        <div class="slide">
+            <div class="slide-number">14 / 24</div>
+            <h1>Destructuring Props</h1>
+            <h2>Cleaner Syntax for Props</h2>
+
+            <div class="code-block">
+<span class="comment">// Instead of using props.name, props.age...</span>
+<span class="keyword">function</span> <span class="component">Greeting</span>(props) {
+    <span class="keyword">return</span> <span class="tag">&lt;h1&gt;</span>Hello, {props.name}!<span class="tag">&lt;/h1&gt;</span>;
+}
+
+<span class="comment">// Use destructuring for cleaner code</span>
+<span class="keyword">function</span> <span class="component">Greeting</span>({ name, age }) {
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;h1&gt;</span>Hello, {name}!<span class="tag">&lt;/h1&gt;</span>
+            <span class="tag">&lt;p&gt;</span>You are {age} years old.<span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Best Practice:</strong> Use destructuring to make your components more readable.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Creating a React Project -->
+        <div class="slide">
+            <div class="slide-number">15 / 24</div>
+            <h1>Setting Up React</h1>
+            <h2>Creating Your First React App</h2>
+
+            <p>The easiest way to start is using Vite (modern) or Create React App:</p>
+
+            <div class="code-block">
+<span class="comment"># Using Vite (Recommended - Faster)</span>
+npm create vite@latest my-react-app -- --template react
+cd my-react-app
+npm install
+npm run dev
+
+<span class="comment"># Using Create React App (Traditional)</span>
+npx create-react-app my-react-app
+cd my-react-app
+npm start
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Result:</strong> A fully configured React development environment ready to code!</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Project Structure -->
+        <div class="slide">
+            <div class="slide-number">16 / 24</div>
+            <h1>React Project Structure</h1>
+            <h2>Understanding the File Layout</h2>
+
+            <div class="code-block">
+my-react-app/
+├── node_modules/      <span class="comment"># Dependencies</span>
+├── public/            <span class="comment"># Static assets</span>
+│   └── index.html     <span class="comment"># Main HTML file</span>
+├── src/               <span class="comment"># Source code</span>
+│   ├── App.jsx        <span class="comment"># Main component</span>
+│   ├── main.jsx       <span class="comment"># Entry point</span>
+│   ├── App.css        <span class="comment"># Styles</span>
+│   └── index.css      <span class="comment"># Global styles</span>
+├── package.json       <span class="comment"># Project config</span>
+└── vite.config.js     <span class="comment"># Build config</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: App.jsx Example -->
+        <div class="slide">
+            <div class="slide-number">17 / 24</div>
+            <h1>Your First React Component</h1>
+            <h2>Understanding App.jsx</h2>
+
+            <div class="code-block">
+<span class="keyword">import</span> { useState } <span class="keyword">from</span> <span class="string">'react'</span>
+<span class="keyword">import</span> <span class="string">'./App.css'</span>
+
+<span class="keyword">function</span> <span class="component">App</span>() {
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div</span> <span class="attribute">className</span>=<span class="string">"App"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;header&gt;</span>
+                <span class="tag">&lt;h1&gt;</span>Welcome to React<span class="tag">&lt;/h1&gt;</span>
+                <span class="tag">&lt;p&gt;</span>Edit src/App.jsx and save to reload.<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;/header&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+
+<span class="keyword">export default</span> App
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Building a Simple Component -->
+        <div class="slide">
+            <div class="slide-number">18 / 24</div>
+            <h1>Building a Card Component</h1>
+            <h2>Practical Example</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">ProductCard</span>({ title, price, image, inStock }) {
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div</span> <span class="attribute">className</span>=<span class="string">"product-card"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="attribute">src</span>={image} <span class="attribute">alt</span>={title} <span class="tag">/&gt;</span>
+            <span class="tag">&lt;h2&gt;</span>{title}<span class="tag">&lt;/h2&gt;</span>
+            <span class="tag">&lt;p</span> <span class="attribute">className</span>=<span class="string">"price"</span><span class="tag">&gt;</span>${price.<span class="function">toFixed</span>(<span class="value">2</span>)}<span class="tag">&lt;/p&gt;</span>
+            {inStock ? (
+                <span class="tag">&lt;span</span> <span class="attribute">className</span>=<span class="string">"in-stock"</span><span class="tag">&gt;</span>In Stock<span class="tag">&lt;/span&gt;</span>
+            ) : (
+                <span class="tag">&lt;span</span> <span class="attribute">className</span>=<span class="string">"out-of-stock"</span><span class="tag">&gt;</span>Out of Stock<span class="tag">&lt;/span&gt;</span>
+            )}
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Composing Components -->
+        <div class="slide">
+            <div class="slide-number">19 / 24</div>
+            <h1>Composing Components</h1>
+            <h2>Building a Complete UI</h2>
+
+            <div class="code-block">
+<span class="keyword">function</span> <span class="component">ProductList</span>() {
+    <span class="keyword">const</span> products = [
+        { id: <span class="value">1</span>, title: <span class="string">"Laptop"</span>, price: <span class="value">999</span>, inStock: <span class="keyword">true</span> },
+        { id: <span class="value">2</span>, title: <span class="string">"Phone"</span>, price: <span class="value">699</span>, inStock: <span class="keyword">false</span> },
+        { id: <span class="value">3</span>, title: <span class="string">"Tablet"</span>, price: <span class="value">499</span>, inStock: <span class="keyword">true</span> }
+    ];
+
+    <span class="keyword">return</span> (
+        <span class="tag">&lt;div</span> <span class="attribute">className</span>=<span class="string">"product-list"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;h1&gt;</span>Our Products<span class="tag">&lt;/h1&gt;</span>
+            {products.<span class="function">map</span>(product => (
+                <span class="tag">&lt;</span><span class="component">ProductCard</span>
+                    <span class="attribute">key</span>={product.id}
+                    <span class="attribute">title</span>={product.title}
+                    <span class="attribute">price</span>={product.price}
+                    <span class="attribute">inStock</span>={product.inStock}
+                <span class="tag">/&gt;</span>
+            ))}
+        <span class="tag">&lt;/div&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Fragment Syntax -->
+        <div class="slide">
+            <div class="slide-number">20 / 24</div>
+            <h1>React Fragments</h1>
+            <h2>Grouping Without Extra DOM Nodes</h2>
+
+            <p>Sometimes you don't want an extra wrapper div:</p>
+
+            <div class="code-block">
+<span class="keyword">import</span> { Fragment } <span class="keyword">from</span> <span class="string">'react'</span>
+
+<span class="keyword">function</span> <span class="component">TableRow</span>({ data }) {
+    <span class="keyword">return</span> (
+        <span class="comment">{/* Long syntax */}</span>
+        <span class="tag">&lt;Fragment&gt;</span>
+            <span class="tag">&lt;td&gt;</span>{data.name}<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span>{data.age}<span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/Fragment&gt;</span>
+
+        <span class="comment">{/* Short syntax - preferred */}</span>
+        <span class="tag">&lt;&gt;</span>
+            <span class="tag">&lt;td&gt;</span>{data.name}<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span>{data.age}<span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/&gt;</span>
+    );
+}
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Practice Assignment Introduction -->
+        <div class="slide">
+            <div class="slide-number">21 / 24</div>
+            <h1>Practice Assignment</h1>
+            <h2>Building Your First React Components</h2>
+
+            <div class="practice-box">
+                <h3>Goal: Create a Profile Card Component</h3>
+                <ul>
+                    <li>Set up a new React project using Vite</li>
+                    <li>Create a ProfileCard component with props</li>
+                    <li>Display user information: name, role, bio</li>
+                    <li>Use conditional rendering for online status</li>
+                    <li>Style your component with CSS</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: Practice Requirements -->
+        <div class="slide">
+            <div class="slide-number">22 / 24</div>
+            <h1>Practice Requirements</h1>
+            <h2>What Your Component Should Include</h2>
+
+            <div class="code-block">
+<span class="comment">// Your ProfileCard should accept these props:</span>
+<span class="tag">&lt;</span><span class="component">ProfileCard</span>
+    <span class="attribute">name</span>=<span class="string">"Jane Doe"</span>
+    <span class="attribute">role</span>=<span class="string">"Frontend Developer"</span>
+    <span class="attribute">bio</span>=<span class="string">"Loves building beautiful UIs"</span>
+    <span class="attribute">isOnline</span>={<span class="keyword">true</span>}
+    <span class="attribute">skills</span>={[<span class="string">"React"</span>, <span class="string">"CSS"</span>, <span class="string">"JavaScript"</span>]}
+<span class="tag">/&gt;</span>
+
+<span class="comment">// Display skills as a list</span>
+<span class="comment">// Show "Online" or "Offline" based on isOnline prop</span>
+<span class="comment">// Format the card nicely with CSS</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: Practice Steps -->
+        <div class="slide">
+            <div class="slide-number">23 / 24</div>
+            <h1>Step-by-Step Guide</h1>
+            <h2>Follow These Steps</h2>
+
+            <ol>
+                <li><strong>Setup:</strong> Create new Vite React project</li>
+                <li><strong>Clean:</strong> Remove default content from App.jsx</li>
+                <li><strong>Create:</strong> Make ProfileCard.jsx in src folder</li>
+                <li><strong>Code:</strong> Write component with destructured props</li>
+                <li><strong>List:</strong> Map over skills array</li>
+                <li><strong>Conditional:</strong> Show online/offline status</li>
+                <li><strong>Style:</strong> Add CSS for visual appeal</li>
+                <li><strong>Import:</strong> Use ProfileCard in App.jsx</li>
+                <li><strong>Test:</strong> Create 2-3 different profiles</li>
+            </ol>
+        </div>
+
+        <!-- SLIDE 24: Practice Tips -->
+        <div class="slide">
+            <div class="slide-number">24 / 24</div>
+            <h1>Tips for Success</h1>
+            <h2>Common Pitfalls to Avoid</h2>
+
+            <div class="tip-box">
+                <p><strong>Remember:</strong></p>
+                <ul>
+                    <li>Use className, not class</li>
+                    <li>Always add key prop to list items</li>
+                    <li>Return single parent element (use Fragment if needed)</li>
+                    <li>Close all tags properly</li>
+                    <li>Import your component before using it</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <p><strong>Next Lecture:</strong> We'll dive into State Management and Component Lifecycle!</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span id="slideInfo">Slide 1 of 24</span>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script src="slides.js"></script>
+</body>
+</html>
